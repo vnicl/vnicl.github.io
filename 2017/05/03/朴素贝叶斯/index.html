@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico">
+  <link rel="mask-icon" href="/images/avatar.jpeg" color="#222">
+  <meta name="google-site-verification" content="d2tAnXrr34Y8JpdeBBtXb3s6KJuDmbZk7Kq1mlFW3qs">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"vnicl.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="朴素贝叶斯算法是基于概率论的分类方法，在机器学习算法做分类判定的时候，有时我们并不需要算法给出一个明确的分类答案，因为分类器会产生错误结果，我们更偏向于获得分类器判定的一个最优的类别猜测结果，并用这个猜测的概率值来评估分类结果的可信度。 算法原理   贝叶斯决策理论是朴素贝叶斯的核心内容，贝叶斯决策理论是选择具有最高概率的决策，通俗点讲就是事物a属于$c_1$的概率如果大于事物a属于$c_2$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="朴素贝叶斯">
+<meta property="og:url" content="https://vnicl.github.io/2017/05/03/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/index.html">
+<meta property="og:site_name" content="攻城狮也文艺">
+<meta property="og:description" content="朴素贝叶斯算法是基于概率论的分类方法，在机器学习算法做分类判定的时候，有时我们并不需要算法给出一个明确的分类答案，因为分类器会产生错误结果，我们更偏向于获得分类器判定的一个最优的类别猜测结果，并用这个猜测的概率值来评估分类结果的可信度。 算法原理   贝叶斯决策理论是朴素贝叶斯的核心内容，贝叶斯决策理论是选择具有最高概率的决策，通俗点讲就是事物a属于$c_1$的概率如果大于事物a属于$c_2$">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-05-03T01:57:42.000Z">
+<meta property="article:modified_time" content="2017-05-08T02:03:12.000Z">
+<meta property="article:author" content="Iceberg">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="朴素贝叶斯">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://vnicl.github.io/2017/05/03/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://vnicl.github.io/2017/05/03/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/","path":"2017/05/03/朴素贝叶斯/","title":"朴素贝叶斯"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>朴素贝叶斯 | 攻城狮也文艺</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">攻城狮也文艺</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">渺小但执着</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">算法原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E4%BF%AE%E6%AD%A3"><span class="nav-number">2.</span> <span class="nav-text">算法修正</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">算法条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">算法实现</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Iceberg"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Iceberg</p>
+  <div class="site-description" itemprop="description">一个理想主义者 · 空想家 · LOSER</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_nd.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/04/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97/" rel="bookmark">
+        <time class="popular-posts-time">2017-04-28</time>
+        <br>
+      机器学习中的距离计算
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/" rel="bookmark">
+        <time class="popular-posts-time">2017-05-04</time>
+        <br>
+      Logistic回归
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" rel="bookmark">
+        <time class="popular-posts-time">2018-10-10</time>
+        <br>
+      曲线拟合原理和实现
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/04/30/k-%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95/" rel="bookmark">
+        <time class="popular-posts-time">2017-04-30</time>
+        <br>
+      k-近邻算法（kNN）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://vnicl.github.io/2017/05/03/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Iceberg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="攻城狮也文艺">
+      <meta itemprop="description" content="一个理想主义者 · 空想家 · LOSER">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="朴素贝叶斯 | 攻城狮也文艺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          朴素贝叶斯
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-05-03 09:57:42" itemprop="dateCreated datePublished" datetime="2017-05-03T09:57:42+08:00">2017-05-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2017-05-08 10:03:12" itemprop="dateModified" datetime="2017-05-08T10:03:12+08:00">2017-05-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>  朴素贝叶斯算法是基于概率论的分类方法，在机器学习算法做分类判定的时候，有时我们并不需要算法给出一个明确的分类答案，因为分类器会产生错误结果，我们更偏向于获得分类器判定的一个最优的类别猜测结果，并用这个猜测的概率值来评估分类结果的可信度。</p>
+<h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><hr>
+<p>  贝叶斯决策理论是朴素贝叶斯的核心内容，贝叶斯决策理论是选择具有最高概率的决策，通俗点讲就是事物a属于$c_1$的概率如果大于事物a属于$c_2$的概率，那么我们就判定事物a为$c_1$,相反则属于$c_2$，即公式<br>$$<br>C&#x3D;p(a|c_1) &gt; p(a|c_2) \Rightarrow c_1<br>$$</p>
+<p>$$<br>C&#x3D;p(a|c_1) &lt; p(a|c_2) \Rightarrow c_2<br>$$</p>
+<p>$p(a|c_1)$为条件概率，是限定条件为$c_1$的情况下，$a$的概率。贝叶斯准则是有效计算条件概率的方法：<br>$$<br>p(c|x) &#x3D; \frac{p(x|c)p(c)}{p(x)}<br>$$<br>即在限定条件为$x$，$c$的概率为限定条件为$c$，$x$的概率和$c$的概率的积除以$x$的概率。</p>
+<p>  朴素贝叶斯算法经常被用于文档分类的判定。在算法实现中，我们将算法训练样本集转换成词向量格式。在一个文档样本中，根据所有样本集中词或句子的集合，来用1和0表示词或句子是否出现作为文档样本的一个特征，这样可以将样本集中的每个文档样本都被表示为向量的方式：<br>$$<br>vector&#x3D;[0, 1, 1, 0, 1, 0, \cdots, 0]<br>$$<br>该方式叫做<code>词集模型</code>；如果一个词或句子在样本中出现不止一次，为了捕获这种不能表达的某种样本特征信息，在构建样本向量时，使用0表示词或句子没有出现，而大于0的数值表示该词或句子在样本文档中出现的次数<br>$$<br>vector&#x3D;[0, 1, 0, 2, 5, \cdots, 1]<br>$$<br>这种构建样本文档向量的方式叫做<code>词袋模型</code>。</p>
+<p>  根据贝叶斯准则公式，推导出计算样本文档类别概率的公式：<br>$$<br>p(c_i|w) &#x3D; \frac{p(w|c_i)p(c_i)}{p(w)}<br>$$<br>$p(c_i)$表示类别概率，通过类别$c_i$中样本文档数除以总的样本数量计算。$p(w|c_i)$表示在限定类别为$c_i$的条件下，样本文档$w$的概率，由于我们已经将文档$w$转换为向量的格式，所以$p(w|c_i)$把$w$展开为一个个独立的特征可以写成$p(w_0,w_1,w_2,\cdots,w_n)$，接下来我们假设文档向量中的所有词都相互独立，该假设也称作<code>条件独立性假设</code>，朴素贝叶斯算法中<code>朴素</code>一词也来源于算法中简单朴素的这些假设。现在我们计算文档类别概率的公式可以修改为：<br>$$<br>\begin{align}<br>p(c_i|w)<br>&amp;&#x3D; \frac{p(w_0|c_i)p(w_1|c_i)p(w_2|c_i) \cdots p(w_n|c_i)p(c_i)}{p(w)} \<br>&amp;&#x3D; \frac{\prod_{i&#x3D;1,j&#x3D;1}^np(w_j|c_i)p(c_i)}{p(w)} \<br>\end{align}<br>$$<br>  前面我们已经知道了$p(c_i)$的计算方式，$p(w_n|c_i)$的计算方法类似，在限定类别为$c_i$的条件下，计算特征$w_n$的出现的次数除以所有特征出现的总次数。由于在朴素贝叶斯算法中分母$p(w)$的值都相同，所以我们只需要计算公式中分子的内容。</p>
+<h2 id="算法修正"><a href="#算法修正" class="headerlink" title="算法修正"></a>算法修正</h2><hr>
+<p>  根据上面推导后得来的最终概率公式可以得知，如果分子中任意一个概率为0时，则因为相乘的关系，整个分子值都为0。显然这是不正确的，所以我为了避免这种特殊情况的发生，在计算概率$p(w_n|c_i)$时，特征$w_n$的出现的次数从1开始统计，并将分母所有特征出现的总次数起始值设定为2。</p>
+<p>  由于概率的值都是很小的数，所以在计算乘积时最后的结果会下溢出或得到不正确的答案。合理规避这个问题的方式就是对最终的乘积取自然对数，同时采用自然对数的处理不会对结果产生任何损失。在代数中对数公式有<br>$$<br>ln(a*b) &#x3D; ln(a)+ln(b)<br>$$<br>所以朴素贝叶斯算法中的概率公式可以改写为<br>$$<br>\begin{align}<br>p(c_i|w)<br>&amp;&#x3D; \frac{ln(p(w_0|c_i))+ln(p(w_1|c_i))+ \cdots + ln(p(w_n|c_i))+ln(p(c_i))}{p(w)} \<br>&amp;&#x3D; \frac{\sum_{i&#x3D;1,j&#x3D;1}^nln(p(w_j|c_i))+ln(p(c_i))}{p(w)} \<br>\end{align}<br>$$</p>
+<h2 id="算法条件"><a href="#算法条件" class="headerlink" title="算法条件"></a>算法条件</h2><hr>
+<ol>
+<li>朴素贝叶斯算法适用于标称型数据或数值型数据；</li>
+<li>算法结果对输入数据比较敏感，所以可能需要花费更多的时间在对算法输入数据的处理中；</li>
+</ol>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">loadDataSet</span>():</span><br><span class="line">    postingList=[[<span class="string">&#x27;my&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;has&#x27;</span>, <span class="string">&#x27;flea&#x27;</span>, <span class="string">&#x27;problems&#x27;</span>, <span class="string">&#x27;help&#x27;</span>, <span class="string">&#x27;please&#x27;</span>],</span><br><span class="line">                 [<span class="string">&#x27;maybe&#x27;</span>, <span class="string">&#x27;not&#x27;</span>, <span class="string">&#x27;take&#x27;</span>, <span class="string">&#x27;him&#x27;</span>, <span class="string">&#x27;to&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;park&#x27;</span>, <span class="string">&#x27;stupid&#x27;</span>],</span><br><span class="line">                 [<span class="string">&#x27;my&#x27;</span>, <span class="string">&#x27;dalmation&#x27;</span>, <span class="string">&#x27;is&#x27;</span>, <span class="string">&#x27;so&#x27;</span>, <span class="string">&#x27;cute&#x27;</span>, <span class="string">&#x27;I&#x27;</span>, <span class="string">&#x27;love&#x27;</span>, <span class="string">&#x27;him&#x27;</span>],</span><br><span class="line">                 [<span class="string">&#x27;stop&#x27;</span>, <span class="string">&#x27;posting&#x27;</span>, <span class="string">&#x27;stupid&#x27;</span>, <span class="string">&#x27;worthless&#x27;</span>, <span class="string">&#x27;garbage&#x27;</span>],</span><br><span class="line">                 [<span class="string">&#x27;mr&#x27;</span>, <span class="string">&#x27;licks&#x27;</span>, <span class="string">&#x27;ate&#x27;</span>, <span class="string">&#x27;my&#x27;</span>, <span class="string">&#x27;steak&#x27;</span>, <span class="string">&#x27;how&#x27;</span>, <span class="string">&#x27;to&#x27;</span>, <span class="string">&#x27;stop&#x27;</span>, <span class="string">&#x27;him&#x27;</span>],</span><br><span class="line">                 [<span class="string">&#x27;quit&#x27;</span>, <span class="string">&#x27;buying&#x27;</span>, <span class="string">&#x27;worthless&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;food&#x27;</span>, <span class="string">&#x27;stupid&#x27;</span>]]</span><br><span class="line">    classVec = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>]    <span class="comment">#1 is abusive, 0 not</span></span><br><span class="line">    <span class="keyword">return</span> postingList,classVec</span><br><span class="line">                 </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">createVocabList</span>(<span class="params">dataSet</span>):</span><br><span class="line">    vocabSet = <span class="built_in">set</span>([])  <span class="comment">#create empty set</span></span><br><span class="line">    <span class="keyword">for</span> document <span class="keyword">in</span> dataSet:</span><br><span class="line">        vocabSet = vocabSet | <span class="built_in">set</span>(document) <span class="comment">#union of the two sets</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>(vocabSet)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">setOfWords2Vec</span>(<span class="params">vocabList, inputSet</span>):</span><br><span class="line">    returnVec = [<span class="number">0</span>]*<span class="built_in">len</span>(vocabList)</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet:</span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocabList:</span><br><span class="line">            returnVec[vocabList.index(word)] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>: <span class="built_in">print</span> <span class="string">&quot;the word: %s is not in my Vocabulary!&quot;</span> % word</span><br><span class="line">    <span class="keyword">return</span> returnVec</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">trainNB0</span>(<span class="params">trainMatrix,trainCategory</span>):</span><br><span class="line">    numTrainDocs = <span class="built_in">len</span>(trainMatrix)</span><br><span class="line">    numWords = <span class="built_in">len</span>(trainMatrix[<span class="number">0</span>])</span><br><span class="line">    pAbusive = <span class="built_in">sum</span>(trainCategory)/<span class="built_in">float</span>(numTrainDocs)</span><br><span class="line">    p0Num = ones(numWords); p1Num = ones(numWords)      <span class="comment">#change to ones() </span></span><br><span class="line">    p0Denom = <span class="number">2.0</span>; p1Denom = <span class="number">2.0</span>                        <span class="comment">#change to 2.0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numTrainDocs):</span><br><span class="line">        <span class="keyword">if</span> trainCategory[i] == <span class="number">1</span>:</span><br><span class="line">            p1Num += trainMatrix[i]</span><br><span class="line">            p1Denom += <span class="built_in">sum</span>(trainMatrix[i])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            p0Num += trainMatrix[i]</span><br><span class="line">            p0Denom += <span class="built_in">sum</span>(trainMatrix[i])</span><br><span class="line">    p1Vect = log(p1Num/p1Denom)          <span class="comment">#change to log()</span></span><br><span class="line">    p0Vect = log(p0Num/p0Denom)          <span class="comment">#change to log()</span></span><br><span class="line">    <span class="keyword">return</span> p0Vect,p1Vect,pAbusive</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">classifyNB</span>(<span class="params">vec2Classify, p0Vec, p1Vec, pClass1</span>):</span><br><span class="line">    p1 = <span class="built_in">sum</span>(vec2Classify * p1Vec) + log(pClass1)    <span class="comment">#element-wise mult</span></span><br><span class="line">    p0 = <span class="built_in">sum</span>(vec2Classify * p0Vec) + log(<span class="number">1.0</span> - pClass1)</span><br><span class="line">    <span class="keyword">if</span> p1 &gt; p0:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>: </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bagOfWords2VecMN</span>(<span class="params">vocabList, inputSet</span>):</span><br><span class="line">    returnVec = [<span class="number">0</span>]*<span class="built_in">len</span>(vocabList)</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet:</span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocabList:</span><br><span class="line">            returnVec[vocabList.index(word)] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> returnVec</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">testingNB</span>():</span><br><span class="line">    listOPosts,listClasses = loadDataSet()</span><br><span class="line">    myVocabList = createVocabList(listOPosts)</span><br><span class="line">    trainMat=[]</span><br><span class="line">    <span class="keyword">for</span> postinDoc <span class="keyword">in</span> listOPosts:</span><br><span class="line">        trainMat.append(setOfWords2Vec(myVocabList, postinDoc))</span><br><span class="line">    p0V,p1V,pAb = trainNB0(array(trainMat),array(listClasses))</span><br><span class="line">    testEntry = [<span class="string">&#x27;love&#x27;</span>, <span class="string">&#x27;my&#x27;</span>, <span class="string">&#x27;dalmation&#x27;</span>]</span><br><span class="line">    thisDoc = array(setOfWords2Vec(myVocabList, testEntry))</span><br><span class="line">    <span class="built_in">print</span> testEntry,<span class="string">&#x27;classified as: &#x27;</span>,classifyNB(thisDoc,p0V,p1V,pAb)</span><br><span class="line">    testEntry = [<span class="string">&#x27;stupid&#x27;</span>, <span class="string">&#x27;garbage&#x27;</span>]</span><br><span class="line">    thisDoc = array(setOfWords2Vec(myVocabList, testEntry))</span><br><span class="line">    <span class="built_in">print</span> testEntry,<span class="string">&#x27;classified as: &#x27;</span>,classifyNB(thisDoc,p0V,p1V,pAb)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx.jpg" alt="Iceberg 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zfb.jpg" alt="Iceberg 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Iceberg
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://vnicl.github.io/2017/05/03/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" title="朴素贝叶斯">https://vnicl.github.io/2017/05/03/朴素贝叶斯/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" rel="tag"># 朴素贝叶斯</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/02/%E5%86%B3%E7%AD%96%E6%A0%91%EF%BC%88ID3%EF%BC%89/" rel="prev" title="决策树（ID3）">
+                  <i class="fa fa-angle-left"></i> 决策树（ID3）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/" rel="next" title="Logistic回归">
+                  Logistic回归 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2009 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Iceberg</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.umd.js" integrity="sha256-+2+qOqR8CKoHh/AsVR9k2qaDBKWjYNC2nozhYmv5j9k=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

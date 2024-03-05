@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico">
+  <link rel="mask-icon" href="/images/avatar.jpeg" color="#222">
+  <meta name="google-site-verification" content="d2tAnXrr34Y8JpdeBBtXb3s6KJuDmbZk7Kq1mlFW3qs">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"vnicl.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="支持向量机（SVM）号称最优秀的分类算法之一。SVM分类器可以得到低错误率的结果并能够对训练集之外的数据点作出很好的分类决策。   如果了解过Logistic回归算法，那么对SVM算法的原理会很容易了解，其实他们是一个问题，都是去找一个决策边界函数将数据集中的所有样本分隔为两类（即二分类问题），然后计算该决策边界函数中参数的最优解。     上面的示意图很好的展示了我们关注的二分类问题，图中所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支持向量机 (SVM)">
+<meta property="og:url" content="https://vnicl.github.io/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/index.html">
+<meta property="og:site_name" content="攻城狮也文艺">
+<meta property="og:description" content="支持向量机（SVM）号称最优秀的分类算法之一。SVM分类器可以得到低错误率的结果并能够对训练集之外的数据点作出很好的分类决策。   如果了解过Logistic回归算法，那么对SVM算法的原理会很容易了解，其实他们是一个问题，都是去找一个决策边界函数将数据集中的所有样本分隔为两类（即二分类问题），然后计算该决策边界函数中参数的最优解。     上面的示意图很好的展示了我们关注的二分类问题，图中所">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vnicl.github.io/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/svm.png">
+<meta property="og:image" content="https://vnicl.github.io/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/svm1.png">
+<meta property="og:image" content="https://vnicl.github.io/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/Lagrange_multiplier.png">
+<meta property="article:published_time" content="2017-05-09T03:15:12.000Z">
+<meta property="article:modified_time" content="2017-05-12T14:03:40.000Z">
+<meta property="article:author" content="Iceberg">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="支持向量机">
+<meta property="article:tag" content="SVM">
+<meta property="article:tag" content="拉格朗日乘子">
+<meta property="article:tag" content="KKT条件">
+<meta property="article:tag" content="SMO">
+<meta property="article:tag" content="核函数">
+<meta property="article:tag" content="径向基核函数">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vnicl.github.io/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/svm.png">
+
+
+<link rel="canonical" href="https://vnicl.github.io/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://vnicl.github.io/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/","path":"2017/05/09/支持向量机/","title":"支持向量机 (SVM)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>支持向量机 (SVM) | 攻城狮也文艺</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">攻城狮也文艺</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">渺小但执着</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">算法原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">拉格朗日乘子法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KKT%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">KKT条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMO%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">SMO算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8F%91%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">启发方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E5%BA%94%E7%94%A8%EF%BC%9A%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">非线性分类应用：核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%84%E5%90%91%E5%9F%BA%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-number">7.</span> <span class="nav-text">径向基核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">8.</span> <span class="nav-text">算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python"><span class="nav-number">8.1.</span> <span class="nav-text">Python</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Iceberg"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Iceberg</p>
+  <div class="site-description" itemprop="description">一个理想主义者 · 空想家 · LOSER</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_nd.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" rel="bookmark">
+        <time class="popular-posts-time">2018-10-10</time>
+        <br>
+      曲线拟合原理和实现
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/05/15/AdaBoost%E5%85%83%E7%AE%97%E6%B3%95/" rel="bookmark">
+        <time class="popular-posts-time">2017-05-15</time>
+        <br>
+      AdaBoost元算法
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/" rel="bookmark">
+        <time class="popular-posts-time">2017-05-04</time>
+        <br>
+      Logistic回归
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/04/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97/" rel="bookmark">
+        <time class="popular-posts-time">2017-04-28</time>
+        <br>
+      机器学习中的距离计算
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://vnicl.github.io/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Iceberg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="攻城狮也文艺">
+      <meta itemprop="description" content="一个理想主义者 · 空想家 · LOSER">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="支持向量机 (SVM) | 攻城狮也文艺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          支持向量机 (SVM)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-05-09 11:15:12" itemprop="dateCreated datePublished" datetime="2017-05-09T11:15:12+08:00">2017-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2017-05-12 22:03:40" itemprop="dateModified" datetime="2017-05-12T22:03:40+08:00">2017-05-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>10k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>  支持向量机（SVM）号称最优秀的分类算法之一。SVM分类器可以得到低错误率的结果并能够对训练集之外的数据点作出很好的分类决策。</p>
+<p>  如果了解过Logistic回归算法，那么对SVM算法的原理会很容易了解，其实他们是一个问题，都是去找一个决策边界函数将数据集中的所有样本分隔为两类（即二分类问题），然后计算该决策边界函数中参数的最优解。</p>
+<center><img data-src="/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/svm.png" class="" title="二分类问题分隔"></center>
+
+<p>  上面的示意图很好的展示了我们关注的二分类问题，图中所有的实心点和空心点共同构成了我们的数据集或称样本集，实心的点代表二分类中的一个分类，而空心点则代表了另一个分类，在Logistic回归中，两个分类用1和0的值来表示，那么上图中实心的点我们可以看作是属于1分类的点，空心的点则属于0分类的点。并且我们发现，我们可以找到一条直线将所有的实心点和空心点完全分隔到该条直线的上下两端，这样的数据集我们叫做<code>线性可分</code>数据。</p>
+<p>  通过观察我们知道，有直线可以将上面属于两个分类的数据点完全区分开来，并且这样的直线还不止一条，可以看出直线$H_2$和$H_3$都可以对数据集做切分，并且这样的直线还可以找到很多条。但是这么多可以做分隔的直线中，哪条才是最好的数据集分隔直线？这就是SVM算法中我们需要考虑的问题。</p>
+<p>  上图中直线$H_2$只是刚刚可以将数据集切分，但是如果离$H_2$最近的点往右移动一点距离$H_2$就不满足数据切分要求，但是直线$H_3$可以最大限度的将数据集切分为上下两个类别，我们暂且把$H_3$作为最好的数据集分隔线，该条线我们称作为<code>分隔超平面</code>，当前我们考虑的只是数据点在二维平面上，如果给定的数据点集是三维的，那么用来分隔数据的就是一个平面，如果更多维的时候呢？用来分隔数据集的分隔对象我们叫做<code>超平面</code>，也就是在分类问题中的分类决策边界。</p>
+<p>  如果将$H_3$作为最好的超平面，和$H_2$比较可以看出，选取最好超平面的唯一要求就是离超平面最近的数据点到超平面的距离尽可能远，这里我们称这些离超平面最近的点为<code>支持向量</code>，点到超平面的距离为<code>间隔</code>，这样可以在我们训练数据有限的情况下使得分类器尽可能的健壮和有一定的容错能力。</p>
+<p>  到这里，我们知道了SVM算法的目标，求给定数据集的最佳分隔线，且数据集离分割线最近的点到分隔线的间隔最大。</p>
+<h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><hr>
+<p>  由于二维数据集是比较基础的数据样本集，并且也比较容易理解，所以我们由二维数据集的二分类判定来研究和阐述算法，最终的结果也同样适用于多维数据集。</p>
+<p>  我们了解到SVM算法的算法目标就是找到一条将数据集分隔的最佳分隔超平面，分隔超平面的函数可以写成<br>$$<br>w^Tx+b &#x3D; 0<br>$$<br>这里的函数和Logistic回归中带入到Sigmoid函数的变量一致，即<br>$$<br>0&#x3D;w_0+w_1x_1+w_2x_2 + \cdots + w_nx_n<br>$$<br>在SVM的分隔超平面中，将$w_0$看作常量$b$，所以分隔超平面函数中的系数$w$和常量$b$就是构成最佳分割超平面函数的参数，也是SVM算法中需要训练得出的解。</p>
+<p>  我们现在知道了分隔超平面函数，那么找到距离分隔超平面距离最近的点A，根据最优化理论，使得点A到分隔超平面间隔最大，即该点到分隔面的法线或垂线的长度，表示为<br>$$<br>d&#x3D;\frac{|w^TA+b|}{\mid\mid w\mid\mid}<br>$$<br>同样的，因为我们考虑的是二分类问题，所以在分隔超平面的一边找到点A，那么在超平面的另一边也存在点B，而且要分别使点A和点B距离分隔超平面的距离最大则该分隔超平面在点A和点B的中线位置，我们设点A距离分隔超平面的距离为1，则点B距离分隔超平面的距离也为1，将距离分隔超平面的距离为1的所有点用线连接起来会得到两条线，相当于将分隔超平面上下移动了1个单位距离，用函数表示这两条线为<br>$$<br>w^TA_i+b&#x3D;1\<br>w^TB_i+b&#x3D;-1<br>$$</p>
+<center><img data-src="/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/svm1.png" class="" title="二分类问题分隔"></center>
+
+<p>通过观察上图我们可以很容易理解上面我们关于最大距离的描述。并且我们发现，在SVM算法中表示两个分类的值和Logistic回归中不同，在Logistic回归中，使用1和0来表示两个不同的分类，而在SVM算法中，我们改用1和-1来表示，这样做的好处是可以更直观的描述距离问题和方便计算，这样数据集中的所有点都会满足一个条件我们叫约束条件<br>$$<br>label (w^Tx+b) \ge 1<br>$$<br>$label$表示为数据点的标签1或-1。现在回来重新看看距离计算公式<br>$$<br>d&#x3D;\frac{|w^TA+b|}{\mid\mid w\mid\mid} &#x3D; \frac{1}{\mid\mid w\mid\mid}<br>$$<br>因为$w$是一个向量，$||w||$表示为一个范数，即$w$向量的各个元素的平方和的开平方<br>$$<br>d&#x3D;\frac{|w^TA+b|}{\mid\mid w\mid\mid} &#x3D; \frac{1}{\sqrt {w^Tw}}<br>$$<br>要求点到分隔超平面的距离$d$最大，就是求$w^Tw$的值最小，这样SVM算法的优化问题由<br>$$<br>arg\quad max_{w,b}\left\lbrace min_n(label(w^Tx+b))\frac1{\mid\mid w\mid\mid}\right \rbrace<br>$$<br>转变为<br>$$<br>min(\frac 12w^Tw) \<br>s.t. \quad y(w^Tx+b) \ge 1<br>$$<br>一个带约束条件的优化问题，这里我们乘以一个0.5的系数是为了方便后面的运算，当然前提并不会对算法结果有影响。求解上述问题，我们可以使用<code>拉格朗日乘子法</code>。</p>
+<h2 id="拉格朗日乘子法"><a href="#拉格朗日乘子法" class="headerlink" title="拉格朗日乘子法"></a>拉格朗日乘子法</h2><hr>
+<p>  在数学中的最优化问题中，<code>拉格朗日乘数法</code>（以数学家约瑟夫·拉格朗日命名）是一种寻找多元函数在其变量受到一个或多个条件的约束时的极值的方法。这种方法可以将一个有<em>n</em>个变量与<em>k</em>个约束条件的最优化问题转换为一个解有<em>n</em> + <em>k</em>个变量的方程组的解的问题。这种方法中引入了一个或一组新的未知数，即<code>拉格朗日乘数</code>，又称<code>拉格朗日乘子</code>，或<code>拉氏乘子</code>，它们是在转换后的方程，即约束方程中作为梯度（gradient）的线性组合中各个向量的系数。</p>
+<p>  比如我们要求<br>$$<br>max(f(x,y)) \<br>s.t. \quad g(x,y) &#x3D; c<br>$$<br>对不同$d_n$的值，不难想像出<br>$$<br>f \left( x, y \right)&#x3D;d_n<br>$$<br>的等高线。而方程$g$的可行集所构成的线正好是<br>$$<br>g ( x, y ) &#x3D; c<br>$$</p>
+<center><img data-src="/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/Lagrange_multiplier.png" class="" title="拉格朗日示意"></center>
+
+<p>  想像我们沿着$g &#x3D; c$的可行集走；因为大部分情况下$f$的等高线和$g$的可行集线不会重合，但在有解的情况下，这两条线会相交。想像此时我们移动$g &#x3D; c$上的点，因为$f$是连续的方程，我们因此能走到$f \left( x, y \right)&#x3D;d_n$更高或更低的等高线上，也就是说$d_n$可以变大或变小。只有当$g &#x3D; c$和$f \left( x, y \right)&#x3D;d_n$相切，也就是说，此时，我们正同时沿着$g &#x3D; c$和$f \left( x, y \right)&#x3D;d_n$走，那么这个时候就会出现极值。</p>
+<p>  对该优化问题求解我们引入新变量拉格朗日乘数$\alpha$，这是我们只需要下列拉格朗日函数的极值：<br>$$<br>L(x,y,\alpha) &#x3D; f(x,y) + \alpha (g(x,y)-c)<br>$$<br>根据上述推断，当出现极值时$f$和$g$的切线在某点上平行，同时也意味着两者的梯度平行，那么有<br>$$<br>\nabla \left[f(x,y) + \alpha(g(x,y)-c)\right] &#x3D; 0 \<br>s.t.\quad \alpha \neq 0<br>$$<br>求出$\alpha$的值后带入$g$和$f$中，转变为在无约束条件下的极值和对应极值点的求解，并且$L(x,y,\alpha)$在达到极值时与$f(x,y)$相等，因为$L(x,y,\alpha)$在达到极值时$g(x,y)-c$总等于0。</p>
+<p>  具体例子中应用格朗拉日乘子法，求<br>$$<br>f(x,y) &#x3D; x^2y \<br>s.t. \quad x^2+y^2&#x3D;1<br>$$<br>格朗拉日乘子法极值函数为<br>$$<br>L(x,y,\alpha)&#x3D;x^2y+\alpha(x^2+y^2-1)<br>$$<br>分别对函数中变量求导<br>$$<br>\frac {\partial L(x,y,\alpha)}{\partial x} \Rightarrow 2xy +2\alpha x&#x3D;0 \<br>\frac {\partial L(x,y,\alpha)}{\partial y} \Rightarrow x^2 +2\alpha y&#x3D;0 \<br>x^2+y^2-1&#x3D;0<br>$$<br>最小值就是上面方程组的解中的一个。</p>
+<p>  解释了半天格朗拉日乘子法，那用格朗拉日乘子法怎么求解我们SVM算法中的优化问题<br>$$<br>\frac 12min(w^Tw) \<br>s.t. \quad y(w^Tx+b) \ge 1<br>$$<br>然而没有我们想的那么顺利，格朗拉日乘子法并不适用我们的问题，因为格朗拉日乘子法中的约束条件时等式约束，我们的优化问题中约束条件时大于等于约束，没关系，我们使用另一个方法来求解我们的SVM算法中的优化问题，该方法是<code>KKT条件</code>，是一个广义化拉格朗日乘数，你可以理解成在拉格朗日乘数上拓展来的一个方法。</p>
+<h2 id="KKT条件"><a href="#KKT条件" class="headerlink" title="KKT条件"></a>KKT条件</h2><hr>
+<p>  KKT条件全名<code>卡罗需-库恩-塔克条件</code>（Karush-Kuhn-Tucker Conditions），是在满足一些有规则条件下，一个非线性规划问题能有最优解解法的一个必要和充分条件。这是一个广义化拉格朗日乘数的成果。</p>
+<p>  KKT条件和拉格朗日乘数的概念相似，所以我们直接讲。求<br>$$<br>min\quad f(x)\<br>s.t.\quad h(x) &#x3D; 0\<br>g(x) \le  0<br>$$<br>函数$h$为等式约束条件，函数$g$为不等式约束。将优化问题转为KKT条件极值函数<br>$$<br>L(x,\alpha,\beta) &#x3D; f(x) + \sum_{i&#x3D;1}^n\alpha_ig_i(x) + \sum_{i&#x3D;1}^n\beta_ih_i(x)<br>$$<br>该KKT条件极值函数必须满足条件</p>
+<ol>
+<li>L对各个x求导的结果为0</li>
+<li>$\beta_i \neq 0$ </li>
+<li>$\alpha_i \ge 0$</li>
+<li>$\alpha_ig_i(x) &#x3D; 0$</li>
+<li>$g_i(x) \le 0$</li>
+<li>$h_i(x) &#x3D; 0$</li>
+</ol>
+<p>条件1和2在拉格朗日乘数中有解释，条件5和6为为优化问题的约束条件。满足条件3是因为我们要求$f(x)$的最小值，那么KKT条件极值函数中的三项都越小越好，因为等式约束已经最小为0，不等式约束条件$g_i(x)\le0$，那么根据最小要求只有$\alpha_i \ge0$时$\alpha_ig_i(x)$才会最小。满足条件4是因为不等式条件约束在坐标系中的图形为一个扇面，当我们取值刚好在扇面的起点部分时$g_i(x)&#x3D;0$，该不等式参与约束，那么该不等式约束条件的系数$\alpha_i\ge0$，否则在其他点要么就是不满足不等式约束条件，要么就是不等式约束条件不参与约束，当不等式约束条件不参与约束时我们认为$\alpha_i&#x3D;0$，即任何时候$\alpha_ig_i(x) &#x3D; 0$。现在通过KKT条件理论，我们的优化目标成为<br>$$<br>L(x,\alpha,\beta) &#x3D; f(x) + \sum_{i&#x3D;1}^n\alpha_ig_i(x) + \sum_{i&#x3D;1}^n\beta_ih_i(x)\<br>s.t. \quad \sum_{i&#x3D;1}^n\alpha_i g_i(x)&#x3D;0\<br>\alpha_i \ge0<br>$$<br>现在看起来应该和我们SVM算法中的优化问题<br>$$<br>\frac 12 min(w^Tw) \<br>s.t. \quad y(w^Tx+b) \ge 1<br>$$<br>类似了，可以直接引入KKT条件，SVM算法中的优化问题成为<br>$$<br>\begin{align}<br>L(w,b,\alpha) &amp;&#x3D; \frac 12 w^Tw+\alpha_1g_1(x)+\cdots+\alpha_ng_n(x)\<br>&amp;&#x3D;\frac 12w^Tw+\alpha_1(1-y_i(w^Tx_i+b))+\cdots+\alpha_n(1-y_n(w^Tx_n+b))\<br>&amp;&#x3D;\frac 12w^Tw-\alpha_1(y_i(w^Tx_i+b)-1)-\cdots-\alpha_n(y_n(w^Tx_n+b)-1)\<br>&amp;&#x3D;\frac 12w^Tw-\sum_{i&#x3D;1}^n\alpha_iy_i(w^Tx_i+b)+\sum_{i&#x3D;1}^n\alpha_i\<br>\end{align}<br>$$<br>然后对目标函数$L(w,b,\alpha)$求导<br>$$<br>\frac {\partial L}{\partial w}&#x3D;w-\sum_{i&#x3D;1}^n\alpha_iy_ix_i&#x3D;0\Rightarrow w&#x3D;\sum_{i&#x3D;i}^n\alpha_iy_ix_i\<br>\frac{\partial L}{\partial b}&#x3D;-\sum_{i&#x3D;1}^n\alpha_iy_i&#x3D;0\Rightarrow \sum_{i&#x3D;1}^n\alpha_iy_i&#x3D;0<br>$$<br>然后带回函数$L(w,b,\alpha)$中<br>$$<br>\begin{align}<br>w(\alpha) &amp;&#x3D; L(w,b,\alpha)\<br>&amp;&#x3D;\frac 12 (\sum_{i&#x3D;i}^n\alpha_iy_ix_i)^T(\sum_{j&#x3D;1}^n\alpha_jy_jx_j)-\sum_{i&#x3D;1}^n\alpha_iy_i((\sum_{i&#x3D;i}^n\alpha_iy_ix_i)^Tx_i+b)+\sum_{i&#x3D;1}^n\alpha_i\<br>&amp;&#x3D;\frac 12 \sum_{i,j&#x3D;1}^n\alpha_iy_i\alpha_jy_jx_i^Tx_j-(\sum_{i,j&#x3D;1}^n\alpha_iy_i\alpha_jy_jx_i^Tx_j)+b\sum_{i&#x3D;1}^n\alpha_iy_i+\sum_{i&#x3D;1}^n\alpha_i\<br>&amp;&#x3D;-\frac12(\sum_{i,j&#x3D;1}^n\alpha_iy_i\alpha_jy_jx_i^Tx_j)+\sum_{i&#x3D;1}^n\alpha_i\<br>\end{align}<br>$$<br>最后我们SVM算法的优化目标函数被推导为<br>$$<br>max_\alpha\left[\sum_{i&#x3D;1}^m\alpha-\frac12\sum_{i,j&#x3D;1}^ny_iy_j\alpha_i\alpha_jx_i^Tx_j\right]\<br>s.t.\quad \alpha\ge0\<br>\sum_{i&#x3D;1}^n\alpha_iy_i&#x3D;0<br>$$<br>  得到了最终的优化目标函数，我们就可以开始算法实现了？理想很丰满，现实很骨感啊，事实上在平时我们接触到的数据集中很难可以找到完全线性可分的数据集，甚至有些点会越过分隔超平面错误的分类到错误的类别，这些不常规的点我们叫做离群点或噪声点，所以我们上面所做的一切工作会因为这些噪声点而失效。</p>
+<p>  为了在算法中避免一些噪声点的干扰导致算法结果的出错，所以我们引入一个<code>松弛变量</code>的概念，每个数据点的松弛变量被解释为允许该数据点在一定距离上的移动，就是给了所有数据点一定的容错机会，并且这个小的移动距离不会影响我们的类别判定，被认为是可接受范围。加入松弛变量后，意味着我们放弃了对这些点的精确分类，但是这种分类损失可以使超平面不必向这些点的方向移动而得到更大的几何间隔。SVM算法的约束条件就会更新，那么新的算法优化问题为<br>$$<br>min \quad \frac 12w^Tw+C\sum_{i&#x3D;1}^n\epsilon <em>i\<br>s.t. \quad y_i(w^Tx_i+b) \ge 1-\epsilon_i\<br>\epsilon \ge 0<br>$$<br>函数中的$C$被称作<code>惩罚因子</code>，惩罚因子决定了我们对噪声点带来的损失有多重视，如果惩罚因子的值越大，噪声点对算法结果的影响越严重，因为这样表明我们不愿意放弃这些离群点。所以惩罚因子的出现只是让不可分的数据集变成可分的数据集而已。那么我们重新根据KKT条件推断优化目标函数<br>$$<br>\begin{align}<br>L(w,b,\alpha,\beta,\epsilon)<br>&amp;&#x3D;\frac 12w^Tw+C\sum</em>{i&#x3D;1}^n\epsilon <em>i+\alpha_1g^1_1(x)+\cdots+\alpha_ng^1_n(x)+\beta_1g^2_1(x)+\cdots+\beta_ng^2_n(x)\<br>&amp;&#x3D;\frac 12w^Tw+C\sum</em>{i&#x3D;1}^n\epsilon <em>i+\sum</em>{i&#x3D;1}^n\alpha_ig_i^1(x)+\sum_{i&#x3D;1}^n\beta_ig_i^2(x)\<br>&amp;&#x3D;\frac 12w^Tw+C\sum_{i&#x3D;1}^n\epsilon <em>i+\sum</em>{i&#x3D;1}^n\alpha_i(1-\epsilon_i-y_i(w^Tx_i+b))+\sum_{i&#x3D;1}^n\beta_i(-\epsilon_i)\<br>&amp;&#x3D;\frac 12w^Tw+C\sum_{i&#x3D;1}^n\epsilon <em>i-\sum</em>{i&#x3D;1}^n\alpha_i(\epsilon_i+y_i(w^Tx_i+b)-1)-\sum_{i&#x3D;1}^n\beta_i\epsilon_i\<br>&amp;&#x3D;\frac 12w^Tw+C\sum_{i&#x3D;1}^n\epsilon_i-\sum_{i&#x3D;1}^n\alpha_iy_i(w^Tx_i+b)+\sum_{i&#x3D;1}^n\alpha_i-\sum_{i&#x3D;1}^n\beta_i\epsilon_i\<br>\end{align}<br>$$<br>然后对$w,b,\epsilon$分别求导<br>$$<br>\frac {\partial L}{\partial w}&#x3D;2w-\sum_{i&#x3D;1}^n\alpha_iy_ix_i&#x3D;0\Rightarrow w&#x3D;\sum_{i&#x3D;i}^n\alpha_iy_ix_i\<br>\frac{\partial L}{\partial b}&#x3D;-\sum_{i&#x3D;1}^n\alpha_iy_i&#x3D;0\Rightarrow \sum_{i&#x3D;1}^n\alpha_iy_i&#x3D;0\<br>\frac{\partial L}{\partial \epsilon}&#x3D;0\Rightarrow C-\alpha_i-\beta_i&#x3D;0<br>$$<br>通过上面的求导结果我可以观察到惩罚因子$C$的条件<br>$$<br>0\le \alpha_i \le C<br>$$<br>将上面求导的结果带入目标函数中<br>$$<br>\begin{align}<br>w(\alpha)<br>&amp;&#x3D;L(w,b,\alpha,\beta,\epsilon)\<br>&amp;&#x3D;\frac 12w^Tw-\sum_{i&#x3D;1}^n\alpha_iy_i(w^Tx_i+b)+C\sum_{i&#x3D;1}^n\epsilon_i+\sum_{i&#x3D;1}^n\alpha_i-\sum_{i&#x3D;1}^n\beta_i\epsilon_i\<br>&amp;&#x3D;(\sum_{i&#x3D;i}^n\alpha_iy_ix_i)^T(\sum_{j&#x3D;1}^n\alpha_jy_jx_j)-\sum_{i&#x3D;1}^n\alpha_iy_i((\sum_{i&#x3D;i}^n\alpha_iy_ix_i)^Tx_i+b)+C\sum_{i&#x3D;1}^n\epsilon_i+\sum_{i&#x3D;1}^n\alpha_i-\sum_{i&#x3D;1}^n\beta_i\epsilon_i\<br>&amp;&#x3D;\frac12(\sum_{i,j&#x3D;1}^n\alpha_iy_i\alpha_jy_jx_i^Tx_j)-\sum_{i,j&#x3D;1}^n\alpha_iy_i\alpha_jy_jx_i^Tx_j+C\sum_{i&#x3D;1}^n\epsilon_i+\sum_{i&#x3D;1}^n\alpha_i-\sum_{i&#x3D;1}^n\epsilon_i(C-\alpha_i)\<br>&amp;&#x3D;-\frac12(\sum_{i,j&#x3D;1}^n\alpha_iy_i\alpha_jy_jx_i^Tx_j)+\sum_{i&#x3D;1}^n\alpha_i\<br>\end{align}<br>$$<br>发现溜达了一圈回来SVM算法中优化目标函数和没加惩罚因子时一摸一样，只是条件更新了<br>$$<br>max_\alpha\left[\sum_{i&#x3D;1}^m\alpha-\frac12\sum_{i,j&#x3D;1}^ny_iy_j\alpha_i\alpha_jx_i^Tx_j\right]\<br>s.t.\quad C\ge\alpha\ge0\<br>\sum_{i&#x3D;1}^n\alpha_iy_i&#x3D;0<br>$$</p>
+<h2 id="SMO算法"><a href="#SMO算法" class="headerlink" title="SMO算法"></a>SMO算法</h2><hr>
+<p>  从上面对KKT条件的推导中，我们最后得出了最终的带约束条件的优化目标函数，现在的问题就剩下解这个目标函数得到一组$\alpha$的值使得目标函数的取值最大。SMO算法是很好的一个计算KKT条件目标函数的方法。</p>
+<p>  SMO算法的实现原理是首先对所有的$\alpha$取默认值，然后迭代去更新这些$\alpha$，SMO算法是一个逐渐被优化和逐渐完善到最优解的算法过程。我们知道在SVM算法的最终目标是找到一个超平面从数据类别的维度来最好的去分隔我们提供的数据集，SMO算法在逐渐优化的过程在SVM算法表现为分隔超平面从最差一直优化到一个最佳的分隔超平面。我们知道数据集中的一个数据点会对应一个$\alpha$的值，在SMO算法优化的某一次迭代更新中，我们假设SVM算法找到了一个分隔超平面，当然不是最佳分隔超平面，那么使用该分隔超平面分隔数据会有一部分数据点是被分到了正确的分类下面，还有一部分点是被分在了错误的分类下面或者是不能很好的做出分类判定的数据点，那么这些该次迭代就是针对这些点做点对应$\alpha$值的更新，因为我们会有很多的$\alpha$值需要更新，而往往是每更新一个$\alpha$则分隔超平面都会发生变化，分隔超平面的变化会使其他所有的$\alpha$产生变化，那么多的点我们需要怎么更新呢？SMO算法采取的策略就是选择当前迭代中被当前生成的分隔超平面分类错误数据点中的一个$\alpha$，因为修改这个错误数据点的$\alpha$值会使得其他所有的$\alpha$变化且我们一次兼顾不了那么多的$\alpha$，所以SMO算法会在剩下的数据点中在选择一个数据点的$\alpha$进行同步更新，虽然对这两个点的更新不会是最好的更新或者说因为考虑其他$\alpha$的影响所以对这两个点的更新不是最后的优化更新，但是我们可以知道这是一个慢慢变好的过程，因为至少每次都会有一个被当前迭代中生成的分隔超平面分隔错误的点被更新到正确的点，当然如果我们选取的第二个数据点刚好也是分类错误的点，那么我们就一次纠正了两个错误的数据点。这样在迭代中每次选择一个被当前迭代生成的分隔超平面分类错误的点进行更新，迭代直到找不到被分类错误的点为止，既然我们找不到任何一个被分类错误的点并且所有的数据点都满足KKT条件的目标函数和所有约束条件，那么我们就找到了那个最佳的超平面。</p>
+<p>  知道了SMO算法对实现KKT条件求解的策略，我们需要讨论的就是在SMO算法实现中每个小过程的解释和推导。首先我们回顾一下最终的SVM算法目标函数和约束条件<br>$$<br>max_\alpha\left[\sum_{i&#x3D;1}^m\alpha-\frac12\sum_{i,j&#x3D;1}^ny_iy_j\alpha_i\alpha_jx_i^Tx_j\right]\<br>s.t.\quad C\ge\alpha\ge0\<br>\sum_{i&#x3D;1}^n\alpha_iy_i&#x3D;0<br>$$<br>我们在所有的数据集中找到一个数据点，然后判定该数据点是否被正确的分类。我们知道数据点如果处在正确的分类位置，那么必须满足条件<br>$$<br>f(w,b)&#x3D;y_i(w^Tx_i+b) \ge1<br>$$<br>这也是SVM算法中对所有数据点的约束条件，在KKT条件中加入系数$\alpha$后<br>$$<br>a_i(1-y_i(w^Tx_i+b)) &#x3D; 0\<br>s.t.\quad \alpha_i \ge 0\<br>1-y_i(w^T+b) \le 0<br>$$<br>所以在两个约束条件$\alpha_i \ge 0$和$1-y_i(w^T+b) \le 0$中至少有一个为0，我们在KKT条件的阐述中表明当$\alpha_i$为0的时候，则表明该数据点是边界上的点或者是被正确分类的点。在坐标系中，分别在距离分隔超平面长度为1的位置两个分类的边界则数据集中所有的数据点必须满足下面的任意条件<br>$$<br>a_i&#x3D;0 \Rightarrow y_if(w,b) \ge1\quad(正确分类)\<br>0\le\alpha_i \le C \Rightarrow y_if(w,b) &#x3D; 1\quad(在边界上)\<br>a_i&#x3D;C \Rightarrow y_if(w,b) \le 1\quad(在边界之间)<br>$$<br>当一个数据点满足上面一个条件时表示该数据点不需要做$\alpha$调整，相反需要做调整的数据点需要满足下面任意条件<br>$$<br>y_if(w,b)\le1\quad但是\quad\alpha_i \lt C\<br>y_if(w,b)\ge1\quad但是\quad\alpha_i \gt 0\<br>y_if(w,b)\le1\quad但是\quad\alpha_i&#x3D;0 或 \alpha_i&#x3D;C<br>$$<br>找到需要调整的数据点之后，根据SMO算法的求解策略，我们还需要在剩下的所有数据点中找到一个数据点作为和需要调整的数据点的同步更新那个点。</p>
+<p>  现在我们找到需要调整的数据点A和剩余那部分点中的数据点B，数据点A对应$\alpha_A$，数据点B对应$\alpha_B$。还记得SVM算法的最终目标函数的约束条件么<br>$$<br>\sum_{i&#x3D;1}^n\alpha_iy_i&#x3D;0<br>$$<br>在只修改$\alpha_A$和$\alpha_B$且其他$\alpha$不变的情况下有等式<br>$$<br>\alpha_A^{new}y_A+\alpha_B^{new}y_B&#x3D;\alpha_A^{old}y_A+\alpha_B^{old}y_B&#x3D;K<br>$$<br>其中$K$只是一个常数值，因为SVM算法的分类值为1和-1中取值，所以上面式子有<br>$$<br>y_A&#x3D;y_B\quad \alpha_A^{new}+\alpha_B^{new} &#x3D; \alpha_A^{old}+\alpha_B^{old}\<br>y_A\neq y_B\quad \alpha_A^{new}-\alpha_B^{new} &#x3D; \alpha_A^{old}-\alpha_B^{old}\<br>s.t.\quad 0\le\alpha\le C<br>$$<br>通过分析可以获取$\alpha_B^{new}$的区间为<br>$$<br>y_A&#x3D; y_B\quad L&#x3D;max(0,\alpha_B^{old}+\alpha_A^{old}-C)，H&#x3D;min(C,\alpha_2^{old}+\alpha_1^{old})\<br>y_A\neq y_B\quad L&#x3D;max(0,\alpha_B^{old}-\alpha_A^{old})，H&#x3D;min(C,C+\alpha_2^{old}-\alpha_1^{old})<br>$$<br>  现在我们知道了$\alpha_B^{new}$的区间，但是我们最终是要计算$\alpha_B^{new}$的值。还记得KKT条件的目标函数<br>$$<br>w(\alpha)&#x3D;\sum_{i&#x3D;1}^n\alpha_i-\frac12(\sum_{i,j&#x3D;1}^n\alpha_iy_i\alpha_jy_jx_i^Tx_j)<br>$$<br>因为我们这里只用到数据点A和数据点B对应的$\alpha$，所以将函数分解并带入上面$\alpha_A$和$\alpha_B$的关系求导可以得到$\alpha_B^{new}$<br>$$<br>\alpha_B^{new} &#x3D; \alpha_B^{old}-\frac{y_B(E_A-E_B)}{\eta}\<br>E_i&#x3D;f(w,b)-y_i\<br>\eta&#x3D;2x_A^Tx_B-x_A^Tx_A-x_B^Tx_B<br>$$<br>然后对求出来的$\alpha_B^{new}$值使用上面计算得到的范围确定具体的值，然后带入计算$\alpha_A^{new}$。</p>
+<p>  SMO算法到这一步后，我们知道了新的$\alpha$，然后可以通过之前的推导出来的$w$计算公式<br>$$<br>w&#x3D;\sum_{i&#x3D;1}^n\alpha_iy_ix_i<br>$$</p>
+<p>计算出相对应$w$的值。回顾分类预测函数<br>$$<br>f(w,b)&#x3D;w^Tx+b<br>$$<br>发现我们还需要一个$b$的值，在回顾一下距离公式<br>$$<br>y(w^Tx+b)\ge1<br>$$<br>并且当前更新后的$\alpha$的值对应的数据点因为分割平面的变化成为边界点，所以有<br>$$<br>y_A(w_{new}^Tx_A+b_A^{new})&#x3D;1\<br>y_B(w_{new}^Tx_B+b_B^{new})&#x3D;1<br>$$<br>对方程求解后有<br>$$<br>b_A^{new}&#x3D;b^{old}-E_A-y_A(\alpha_A^{new}-\alpha_A^{old})x_A^Tx_A-y_B(\alpha_B^{new}-\alpha_B^{old})x_A^Tx_B\<br>b_B^{new}&#x3D;b^{old}-E_B-y_A(\alpha_A^{new}-\alpha_A^{old})x_A^Tx_B-y_B(\alpha_B^{new}-\alpha_B^{old})x_B^Tx_B<br>$$<br>结果中两个$b$的选择依据是更新$\alpha$后的数据点哪个在边界上就是哪个$b$<br>$$<br>b&#x3D; \begin{cases}<br>b_A, &amp; {if \quad 0\le \alpha_A^{new}\le C} \<br>b_B, &amp; {if \quad 0\le \alpha_B^{new}\le C}\<br>(b_A+b_B)&#x2F;2 &amp;others<br>\end{cases}<br>$$<br>  到这里我们得到了$\alpha、b$的值，针对简单线性并且带有松弛条件的SMO算法就完成了。</p>
+<h2 id="启发方法"><a href="#启发方法" class="headerlink" title="启发方法"></a>启发方法</h2><hr>
+<p>  这里引入启发式思想去讨论算法实现中的一些细节。</p>
+<p>  为了使算法在选择$\alpha$的时候可以更快的选择出最合适的$\alpha$，所以我们在选择第一个$\alpha$时候用两种方式，一种就是在所有数据集上进行单遍扫描，另一种就是在非边界点对应的$\alpha$中实现单遍扫描，我们知道非边界的$\alpha$值代表那些不等于边界0或$C$的$\alpha$值，并且第二种方式我们需要跳过那些已知不会改变的$\alpha$的值。</p>
+<p>  算法实现中，每次循环中使用哪种方式选择第一个$\alpha$的值去迭代更新取决于上一次循环的迭代中有没有$\alpha$的值被更新，如果上一次循环中没有$\alpha$的值被迭代更新，说明没有数据点处于边界中，但是并不表示我们找到的分隔超平面就是最佳分隔超平面，因为我们不知道上一次循环中取第一个$\alpha$的方式是哪种，如果是第一种，那么有可能当前的分隔超平面面就是最佳分隔超平面，但是如果是第二种则更不能确定该超平面就是我们要求的最佳超平面，所以本次循环还需要在数据集上进行单遍扫描去迭代更新$\alpha$的值；如果上一次循环中有$\alpha$的值被迭代更新，那么本次循环则优先调整上次迭代中处于数据集两个边界中的所有点对应的$\alpha$值，即$\alpha$在0和$C$区间内的数据点。这样我们就不知道什么时候我们选取到的分隔超平面就是最佳分隔超平面，所以我们会指定算法循环的次数，如果循环到一定次数就会停止算法训练，这样做的好处是如果算法在训练中不收敛或者有波动，可以避免算法一直不停的训练下去生成死循环问题。</p>
+<p>  我们选取到第一个待更新的$\alpha$的值后，如果该点不满足KKT条件，那么我们选择第二个待更新的$\alpha$。第二个$\alpha$选取的方式也有两种方式，第一种方式就是在数据集中随机取一个$\alpha$，另一种方式就是通过计算所有$\alpha$对应数据点分类预测结果和真实结果误差，然后选去一个误差最大的，就是噪声最大的噪声点进行更新，即选择具有最大步长的第二个点，这样做的好处就是可以使算法更快的收敛。那么选取第二个待更新数据点的$\alpha$的值用哪种方式，这就取决于当前算法训练处于那个阶段，也就是说在当前迭代中有没有在数据边界内的噪声点，如果有那么就使用第二种方式，否则选择第一种方式。</p>
+<h2 id="非线性分类应用：核函数"><a href="#非线性分类应用：核函数" class="headerlink" title="非线性分类应用：核函数"></a>非线性分类应用：核函数</h2><hr>
+<p>  在SVM算法的实际应用中，我们很难找到一个可以完全线性可分的算法训练数据集，往往我们接触到的数据集都是非线性可分的，但是非线性可分的数据集也存在一个可以识别的分隔模式，所以我们要做的就是使用一种工具来捕获这种模式使得数据集支持SVM的算法。下面我们介绍叫做<code>核函数</code>的一种工具。</p>
+<p>  核函数处理数据是对数据进行某种形式的转换来获取一些新的变量来表示数据，使数据更容易展示与之对应的类别，所以使用核函数来处理数据也是将数据从一个特征空间转换到另一个特征空间的的过程，经过转换后的的数据就可以在高维空间中解决线性问题，相当于我们在低维空间中解决非线性问题。</p>
+<p>  在SVM算法中所有的运算都是两个向量相乘之后得到耽搁标量或数值的内积形式，在非线性数据集中，我们可以将内积德运算替换成核函数方式，这种方式被称作<code>核技巧</code>。</p>
+<h2 id="径向基核函数"><a href="#径向基核函数" class="headerlink" title="径向基核函数"></a>径向基核函数</h2><hr>
+<p>  径向基函数是SVM算法中常被用到的一个核函数。径向基函数采用向量作为自变量函数，并且能够基于向量距离运算输出一个标量。径向基函数的高斯版本的公式为<br>$$<br>k(x,y)&#x3D;exp\left(\frac{-\mid\mid x-y\mid\mid^2}{2\sigma^2}\right)<br>$$<br>其中$\sigma$是用户定义的用户确定到达率或者说函数值跌落到0的速度。</p>
+<p>  径向基函数将数据从其特征空间映射到更高维的空间，并且我们不需要具体知道具体的维数，因为SVM算法的内积运算结果和核函数的结果都是一个表示距离的值。但是运用核函数的算法还是可控的，因为还有一个自定义的变量$\sigma$。在SVM算法实现中运用核函数的做法就是将算法中运用到内积运算的部分替换为核函数就完成了SVM算法训练数据集的转换。</p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><hr>
+<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"></span><br><span class="line"><span class="comment"># 核函数实现</span></span><br><span class="line"><span class="comment"># X：所有样本集数据</span></span><br><span class="line"><span class="comment"># A：将要被处理的一个样本数据</span></span><br><span class="line"><span class="comment"># kTup：径向基函数用到的参数，格式为（核函数类型，sigma）</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">kernelTrans</span>(<span class="params">X, A, kTup</span>): </span><br><span class="line">    <span class="comment"># 样本集矩阵规格</span></span><br><span class="line">    m,n = shape(X)</span><br><span class="line">    <span class="comment"># 将样本数据处理后的初始化数据</span></span><br><span class="line">    K = mat(zeros((m,<span class="number">1</span>)))</span><br><span class="line">    <span class="comment"># 根据核函数类型确定转换方式</span></span><br><span class="line">    <span class="keyword">if</span> kTup[<span class="number">0</span>]==<span class="string">&#x27;lin&#x27;</span>: </span><br><span class="line">        K = X * A.T</span><br><span class="line">    <span class="keyword">elif</span> kTup[<span class="number">0</span>]==<span class="string">&#x27;rbf&#x27;</span>:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            deltaRow = X[j,:] - A</span><br><span class="line">            K[j] = deltaRow*deltaRow.T</span><br><span class="line">        K = exp(K/(-<span class="number">1</span>*kTup[<span class="number">1</span>]**<span class="number">2</span>))</span><br><span class="line">    <span class="keyword">else</span>: <span class="keyword">raise</span> NameError(<span class="string">&#x27;Houston We Have a Problem -- That Kernel is not recognized&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> K</span><br><span class="line"><span class="comment"># 一个算法参数的集合结构，包括算法中用到的参数内容</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">optStruct</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,dataMatIn, classLabels, C, toler, kTup</span>):</span><br><span class="line">        <span class="comment"># 数据集矩阵</span></span><br><span class="line">        self.X = dataMatIn</span><br><span class="line">        <span class="comment"># 数据集中与数据对应的真实分类</span></span><br><span class="line">        self.labelMat = classLabels</span><br><span class="line">        <span class="comment"># 常数C，算法目标函数中约束条件中有出现</span></span><br><span class="line">        self.C = C</span><br><span class="line">        <span class="comment"># 理解为机器误差</span></span><br><span class="line">        self.tol = toler</span><br><span class="line">        <span class="comment"># 数据集的尺寸，即有多少样本在数据集中</span></span><br><span class="line">        self.m = shape(dataMatIn)[<span class="number">0</span>]</span><br><span class="line">        <span class="comment"># alpha列表，smo算法最终输出的内容，一个样本对应一个alpha，初始值为0</span></span><br><span class="line">        self.alphas = mat(zeros((self.m,<span class="number">1</span>)))</span><br><span class="line">        <span class="comment"># 预测函数中出现的参数b</span></span><br><span class="line">        self.b = <span class="number">0</span></span><br><span class="line">        <span class="comment"># 一个缓存数据的属性</span></span><br><span class="line">        self.eCache = mat(zeros((self.m,<span class="number">2</span>)))</span><br><span class="line">        <span class="comment"># 经过核函数转换过的样本集矩阵，将样本维度大小转为样本集尺寸大小相等</span></span><br><span class="line">        self.K = mat(zeros((self.m,self.m)))</span><br><span class="line">        <span class="comment"># 数据通过核函数处理填充上面的K矩阵</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(self.m):</span><br><span class="line">            <span class="comment"># 将数据调用核函数</span></span><br><span class="line">            self.K[:,i] = kernelTrans(self.X, self.X[i,:], kTup)</span><br><span class="line"><span class="comment"># 使用随机方法选择第二个alpha</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">selectJrand</span>(<span class="params">i,m</span>):</span><br><span class="line">    j=i</span><br><span class="line">    <span class="keyword">while</span> (j==i):</span><br><span class="line">        j = <span class="built_in">int</span>(random.uniform(<span class="number">0</span>,m))</span><br><span class="line">    <span class="keyword">return</span> j</span><br><span class="line"><span class="comment"># 实现查找第二个alpha的值</span></span><br><span class="line"><span class="comment"># i：第一个alpha的矩阵索引</span></span><br><span class="line"><span class="comment"># oS：算法数据结构实体</span></span><br><span class="line"><span class="comment"># Ei：第一个alpha的预测误差</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">selectJ</span>(<span class="params">i, oS, Ei</span>):</span><br><span class="line">    <span class="comment"># 步长最大的alpha矩阵索引</span></span><br><span class="line">    maxK = -<span class="number">1</span></span><br><span class="line">    <span class="comment"># 临时误差差距</span></span><br><span class="line">    maxDeltaE = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 第二个alpha的预测误差</span></span><br><span class="line">    Ej = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 更新第一个alpha的误差值到缓存列表</span></span><br><span class="line">    oS.eCache[i] = [<span class="number">1</span>,Ei]</span><br><span class="line">    <span class="comment"># 获取缓存列表中所有不为0的误差值的索引</span></span><br><span class="line">    validEcacheList = nonzero(oS.eCache[:,<span class="number">0</span>].A)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 如果所有数据点中有跟实际值有误差的点，大于0的原因是排除第一个点的影响</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">len</span>(validEcacheList)) &gt; <span class="number">1</span>:</span><br><span class="line">        <span class="comment"># 循环有误差的所有点列表</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> validEcacheList:</span><br><span class="line">            <span class="comment"># 第二个点确定不能和第一个点是同一个点</span></span><br><span class="line">            <span class="keyword">if</span> k == i: </span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="comment"># 计算当前循环到的点的新误差</span></span><br><span class="line">            Ek = calcEk(oS, k)</span><br><span class="line">            <span class="comment"># 计算步长</span></span><br><span class="line">            deltaE = <span class="built_in">abs</span>(Ei - Ek)</span><br><span class="line">            <span class="comment"># 如果当前点的步长大，则选定该点</span></span><br><span class="line">            <span class="keyword">if</span> (deltaE &gt; maxDeltaE):</span><br><span class="line">                maxK = k</span><br><span class="line">                maxDeltaE = deltaE</span><br><span class="line">                Ej = Ek</span><br><span class="line">        <span class="keyword">return</span> maxK, Ej</span><br><span class="line">    <span class="comment"># 如果不存在有误差的值则使用随机方法获取第二个alpha的值</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        j = selectJrand(i, oS.m)</span><br><span class="line">        Ej = calcEk(oS, j)</span><br><span class="line">    <span class="keyword">return</span> j, Ej</span><br><span class="line"><span class="comment"># 设置新alpha的值</span></span><br><span class="line"><span class="comment"># aj：新的值</span></span><br><span class="line"><span class="comment"># H：上限</span></span><br><span class="line"><span class="comment"># L：下限</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">clipAlpha</span>(<span class="params">aj,H,L</span>):</span><br><span class="line">    <span class="keyword">if</span> aj &gt; H: </span><br><span class="line">        aj = H</span><br><span class="line">    <span class="keyword">if</span> L &gt; aj:</span><br><span class="line">        aj = L</span><br><span class="line">    <span class="keyword">return</span> aj</span><br><span class="line"><span class="comment"># 计算误差的实现</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calcEk</span>(<span class="params">oS, k</span>):</span><br><span class="line">    <span class="comment"># 根据预测函数公式，计算处于索引k处的预测结果</span></span><br><span class="line">    <span class="comment"># 核函数推导：oS.K[:,k] = dataMatrix*dataMatrix[i,:].T)</span></span><br><span class="line">    fXk = <span class="built_in">float</span>(multiply(oS.alphas,oS.labelMat).T*oS.K[:,k] + oS.b)</span><br><span class="line">    <span class="comment"># 计算预测结果误差</span></span><br><span class="line">    Ek = fXk - <span class="built_in">float</span>(oS.labelMat[k])</span><br><span class="line">    <span class="keyword">return</span> Ek</span><br><span class="line"><span class="comment"># 更新缓存</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">updateEk</span>(<span class="params">oS, k</span>):</span><br><span class="line">    <span class="comment"># 使用最新的alpha值更新预测误差并更新缓存</span></span><br><span class="line">    Ek = calcEk(oS, k)</span><br><span class="line">    oS.eCache[k] = [<span class="number">1</span>,Ek]</span><br><span class="line"><span class="comment"># 进行选定alpha更新</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">innerL</span>(<span class="params">i, oS</span>):</span><br><span class="line">    <span class="comment"># 计算第一个alpha的误差</span></span><br><span class="line">    Ei = calcEk(oS, i)</span><br><span class="line">    <span class="comment"># 判断选取的alpha是否满足KKT条件</span></span><br><span class="line">    <span class="keyword">if</span> ((oS.labelMat[i]*Ei &lt; -oS.tol) <span class="keyword">and</span> (oS.alphas[i] &lt; oS.C)) <span class="keyword">or</span> ((oS.labelMat[i]*Ei &gt; oS.tol) <span class="keyword">and</span> (oS.alphas[i] &gt; <span class="number">0</span>)):</span><br><span class="line">        <span class="comment"># 选取第二个alpha的值</span></span><br><span class="line">        j,Ej = selectJ(i, oS, Ei)</span><br><span class="line">        <span class="comment"># 复制两个旧的alpha值，供后面计算</span></span><br><span class="line">        alphaIold = oS.alphas[i].copy()</span><br><span class="line">        alphaJold = oS.alphas[j].copy()</span><br><span class="line">        <span class="comment"># 根据alpha区间公式限定alpha的值</span></span><br><span class="line">        <span class="keyword">if</span> (oS.labelMat[i] != oS.labelMat[j]):</span><br><span class="line">            L = <span class="built_in">max</span>(<span class="number">0</span>, oS.alphas[j] - oS.alphas[i])</span><br><span class="line">            H = <span class="built_in">min</span>(oS.C, oS.C + oS.alphas[j] - oS.alphas[i])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            L = <span class="built_in">max</span>(<span class="number">0</span>, oS.alphas[j] + oS.alphas[i] - oS.C)</span><br><span class="line">            H = <span class="built_in">min</span>(oS.C, oS.alphas[j] + oS.alphas[i])</span><br><span class="line">        <span class="keyword">if</span> L==H: </span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="comment"># 计算公式推导中的eta参数，用来计算新的alpha</span></span><br><span class="line">        <span class="comment"># 核函数推导：oS.K[i,j] = dataMatrix[i,:]*dataMatrix[j,:].T</span></span><br><span class="line">        <span class="comment"># 核函数推导：oS.K[i,i] = dataMatrix[i,:]*dataMatrix[i,:].T</span></span><br><span class="line">        <span class="comment"># 核函数推导：oS.K[j,j] = dataMatrix[j,:]*dataMatrix[j,:].T</span></span><br><span class="line">        eta = <span class="number">2.0</span> * oS.K[i,j] - oS.K[i,i] - oS.K[j,j]</span><br><span class="line">        <span class="keyword">if</span> eta &gt;= <span class="number">0</span>: </span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="comment"># 通过公式计算新的alpha值</span></span><br><span class="line">        oS.alphas[j] -= oS.labelMat[j]*(Ei - Ej)/eta</span><br><span class="line">        <span class="comment"># 限定新alpha值的范围</span></span><br><span class="line">        oS.alphas[j] = clipAlpha(oS.alphas[j],H,L)</span><br><span class="line">        <span class="comment"># 通过新的alpha值更新预测误差</span></span><br><span class="line">        updateEk(oS, j)</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">abs</span>(oS.alphas[j] - alphaJold) &lt; <span class="number">0.00001</span>): </span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="comment"># 根据其中一个alpha的值，带入公式更新另一个alpha的值</span></span><br><span class="line">        oS.alphas[i] += oS.labelMat[j]*oS.labelMat[i]*(alphaJold - oS.alphas[j])</span><br><span class="line">        <span class="comment"># 更新另一个alpha值的缓存</span></span><br><span class="line">        updateEk(oS, i)</span><br><span class="line">        <span class="comment"># 计算两个alpha值的b</span></span><br><span class="line">        <span class="comment"># 核函数推导：oS.K[i,j] = dataMatrix[i,:]*dataMatrix[j,:].T</span></span><br><span class="line">        <span class="comment"># 核函数推导：oS.K[i,i] = dataMatrix[i,:]*dataMatrix[i,:].T</span></span><br><span class="line">        <span class="comment"># 核函数推导：oS.K[j,j] = dataMatrix[j,:]*dataMatrix[j,:].T</span></span><br><span class="line">        b1 = oS.b - Ei- oS.labelMat[i]*(oS.alphas[i]-alphaIold)*oS.K[i,i] - oS.labelMat[j]*(oS.alphas[j]-alphaJold)*oS.K[i,j]</span><br><span class="line">        b2 = oS.b - Ej- oS.labelMat[i]*(oS.alphas[i]-alphaIold)*oS.K[i,j]- oS.labelMat[j]*(oS.alphas[j]-alphaJold)*oS.K[j,j]</span><br><span class="line">        <span class="comment"># 根据参数b的选取条件确定算法中b的值</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="number">0</span> &lt; oS.alphas[i]) <span class="keyword">and</span> (oS.C &gt; oS.alphas[i]): </span><br><span class="line">            oS.b = b1</span><br><span class="line">        <span class="keyword">elif</span> (<span class="number">0</span> &lt; oS.alphas[j]) <span class="keyword">and</span> (oS.C &gt; oS.alphas[j]): </span><br><span class="line">            oS.b = b2</span><br><span class="line">        <span class="keyword">else</span>: </span><br><span class="line">            oS.b = (b1 + b2)/<span class="number">2.0</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>: </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"><span class="comment"># smo算法的实现函数</span></span><br><span class="line"><span class="comment"># dataMatIn：数据集特征列表</span></span><br><span class="line"><span class="comment"># classLabels：数据集对应分类列表</span></span><br><span class="line"><span class="comment"># C：算法推导中出现的常数C，也是最终目标函数中约束条件中出现的参数C</span></span><br><span class="line"><span class="comment"># toler：容错率，理解为允许的机器误差吧</span></span><br><span class="line"><span class="comment"># maxIter：最大循环次数</span></span><br><span class="line"><span class="comment"># kTup：核函数中使用到的值，0为径向基函数中的自定义变量sigma</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">smoP</span>(<span class="params">dataMatIn, classLabels, C, toler, maxIter,kTup=(<span class="params"><span class="string">&#x27;lin&#x27;</span>, <span class="number">0</span></span>)</span>):</span><br><span class="line">    <span class="comment"># 初始化一个跟算法相关的参数（数据）结构实体</span></span><br><span class="line">    oS = optStruct(mat(dataMatIn),mat(classLabels).transpose(),C,toler, kTup)</span><br><span class="line">    <span class="comment"># 记录当前循环次数</span></span><br><span class="line">    <span class="built_in">iter</span> = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 选择第一个alpha用那种方式</span></span><br><span class="line">    entireSet = <span class="literal">True</span></span><br><span class="line">    <span class="comment"># 是否有alpha的值被更新</span></span><br><span class="line">    alphaPairsChanged = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 同时满足两种情况会继续循环迭代，</span></span><br><span class="line">    <span class="comment"># 1、循环次数不能超过设置的最大循环次数</span></span><br><span class="line">    <span class="comment"># 2、alphaPairsChanged大于0或者entireSet为真</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">iter</span> &lt; maxIter) <span class="keyword">and</span> ((alphaPairsChanged &gt; <span class="number">0</span>) <span class="keyword">or</span> (entireSet)):</span><br><span class="line">        <span class="comment"># 将alpha的是否被更新初始化为否</span></span><br><span class="line">        alphaPairsChanged = <span class="number">0</span></span><br><span class="line">        <span class="comment"># 如果entireSet值为真，采用所有数据集遍历的方式找到第一个alpha的值</span></span><br><span class="line">        <span class="keyword">if</span> entireSet:</span><br><span class="line">            <span class="comment"># 遍历所有数据集</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(oS.m):</span><br><span class="line">                <span class="comment"># 完成alpha值的更新</span></span><br><span class="line">                alphaPairsChanged += innerL(i,oS)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 寻找数据集在边界上的所有数据点，使用乘法可以剔除那些分类正确的点</span></span><br><span class="line">            <span class="comment"># 该函数返回一个不为0的数据列表，列表项为之前列表项的索引值</span></span><br><span class="line">            nonBoundIs = nonzero((oS.alphas.A &gt; <span class="number">0</span>) * (oS.alphas.A &lt; C))[<span class="number">0</span>]</span><br><span class="line">            <span class="comment"># 遍历边界内的点</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> nonBoundIs:</span><br><span class="line">                <span class="comment"># 完成alpha值的更新</span></span><br><span class="line">                alphaPairsChanged += innerL(i,oS)</span><br><span class="line">        <span class="comment"># 递增循环次数</span></span><br><span class="line">        <span class="built_in">iter</span> += <span class="number">1</span></span><br><span class="line">        <span class="comment"># 如果当前循环中取第一个alpha的方式是全样本集遍历，那么设置下次循环为边界内数据点遍历</span></span><br><span class="line">        <span class="keyword">if</span> entireSet: </span><br><span class="line">            entireSet = <span class="literal">False</span></span><br><span class="line">        <span class="comment"># 如果当前循环中取第一个alpha的方式是边界内数据点遍历并且没有更新到alpha，那么设置下次为全样本集遍历</span></span><br><span class="line">        <span class="keyword">elif</span> (alphaPairsChanged == <span class="number">0</span>): </span><br><span class="line">            entireSet = <span class="literal">True</span></span><br><span class="line">    <span class="comment"># 最终计算出b的值和alpha列表</span></span><br><span class="line">    <span class="keyword">return</span> oS.b,oS.alphas</span><br><span class="line"><span class="comment"># 测试算法函数，k1:径向基函数中的自定义变量</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">testRbf</span>(<span class="params">k1=<span class="number">1.3</span></span>):</span><br><span class="line">    <span class="comment"># 从文件中加载训练样本集，dataArr：样本数据集的特征数据，labelArr：数据集中数据对应真实类别</span></span><br><span class="line">    dataArr,labelArr = loadDataSet(<span class="string">&#x27;testSetRBF.txt&#x27;</span>)</span><br><span class="line">    <span class="comment"># 调用smo算法函数计算参数b和alphas的值</span></span><br><span class="line">    b,alphas = smoP(dataArr, labelArr, <span class="number">200</span>, <span class="number">0.0001</span>, <span class="number">10000</span>, (<span class="string">&#x27;rbf&#x27;</span>, k1))</span><br><span class="line">    <span class="comment">### 算法测试部分 ###</span></span><br><span class="line">    datMat=mat(dataArr)</span><br><span class="line">    labelMat = mat(labelArr).transpose()</span><br><span class="line">    <span class="comment"># 所有支持向量的矩阵索引</span></span><br><span class="line">    svInd=nonzero(alphas.A&gt;<span class="number">0</span>)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 所有支持向量的样本数据</span></span><br><span class="line">    sVs=datMat[svInd]</span><br><span class="line">    <span class="comment"># 所有支持向量的类别数据</span></span><br><span class="line">    labelSV = labelMat[svInd];</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;there are %d Support Vectors&quot;</span> % shape(sVs)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 样本集矩阵规格</span></span><br><span class="line">    m,n = shape(datMat)</span><br><span class="line">    errorCount = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">        kernelEval = kernelTrans(sVs,datMat[i,:],(<span class="string">&#x27;rbf&#x27;</span>, k1))</span><br><span class="line">        <span class="comment"># 根据分类预测函数和w求解公式和核函数推导出的预测结果计算方法</span></span><br><span class="line">        predict=kernelEval.T * multiply(labelSV,alphas[svInd]) + b</span><br><span class="line">        <span class="keyword">if</span> sign(predict)!=sign(labelArr[i]): </span><br><span class="line">            errorCount += <span class="number">1</span></span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;the training error rate is: %f&quot;</span> % (<span class="built_in">float</span>(errorCount)/m)</span><br><span class="line">    <span class="comment"># 测试新的样本数据</span></span><br><span class="line">    dataArr,labelArr = loadDataSet(<span class="string">&#x27;testSetRBF2.txt&#x27;</span>)</span><br><span class="line">    errorCount = <span class="number">0</span></span><br><span class="line">    datMat=mat(dataArr)</span><br><span class="line">    labelMat = mat(labelArr).transpose()</span><br><span class="line">    m,n = shape(datMat)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">        kernelEval = kernelTrans(sVs,datMat[i,:],(<span class="string">&#x27;rbf&#x27;</span>, k1))</span><br><span class="line">        predict=kernelEval.T * multiply(labelSV,alphas[svInd]) + b</span><br><span class="line">        <span class="keyword">if</span> sign(predict)!=sign(labelArr[i]): </span><br><span class="line">            errorCount += <span class="number">1</span>    </span><br><span class="line">    <span class="built_in">print</span> <span class="string">&quot;the test error rate is: %f&quot;</span> % (<span class="built_in">float</span>(errorCount)/m)</span><br></pre></td></tr></table></figure>
+
+<p>上面算法中用到的公式有<br>$$<br>分类预测函数\quad f(w,b)&#x3D;w^Tx+b\<br>w值求解公式\quad w&#x3D;\sum_{i&#x3D;i}^n\alpha_iy_ix_i\<br>预测误差公式\quad E_i&#x3D;f(w,b)-y_i\<br>\alpha 区间判定\quad \begin{cases}y_A&#x3D; y_B\quad L&#x3D;max(0,\alpha_B^{old}+\alpha_A^{old}-C)，H&#x3D;min(C,\alpha_2^{old}+\alpha_1^{old})\<br>y_A\neq y_B\quad L&#x3D;max(0,\alpha_B^{old}-\alpha_A^{old})，H&#x3D;min(C,C+\alpha_2^{old}-\alpha_1^{old})\end{cases}\<br>\eta 求解公式\quad \eta&#x3D;2x_A^Tx_B-x_A^Tx_A-x_B^Tx_B\<br>新\alpha计算公式\quad \alpha_B^{new} &#x3D; \alpha_B^{old}-\frac{y_B(E_A-E_B)}{\eta}\<br>计算另一个\alpha公式推导\quad \alpha_A^{new}y_A+\alpha_B^{new}y_B&#x3D;\alpha_A^{old}y_A+\alpha_B^{old}y_B\<br>两个新b值的取值\quad \begin{cases}b_A^{new}&#x3D;b^{old}-E_A-y_A(\alpha_A^{new}-\alpha_A^{old})x_A^Tx_A-y_B(\alpha_B^{new}-\alpha_B^{old})x_A^Tx_B\<br>b_B^{new}&#x3D;b^{old}-E_B-y_A(\alpha_A^{new}-\alpha_A^{old})x_A^Tx_B-y_B(\alpha_B^{new}-\alpha_B^{old})x_B^Tx_B\end{cases}\<br>b值取值\quad b&#x3D; \begin{cases}<br>b_A, &amp; {if \quad 0\le \alpha_A^{new}\le C} \<br>b_B, &amp; {if \quad 0\le \alpha_B^{new}\le C}\<br>(b_A+b_B)&#x2F;2 &amp;others<br>\end{cases}<br>$$</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx.jpg" alt="Iceberg 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zfb.jpg" alt="Iceberg 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Iceberg
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://vnicl.github.io/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" title="支持向量机 (SVM)">https://vnicl.github.io/2017/05/09/支持向量机/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="tag"># 支持向量机</a>
+              <a href="/tags/SVM/" rel="tag"># SVM</a>
+              <a href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90/" rel="tag"># 拉格朗日乘子</a>
+              <a href="/tags/KKT%E6%9D%A1%E4%BB%B6/" rel="tag"># KKT条件</a>
+              <a href="/tags/SMO/" rel="tag"># SMO</a>
+              <a href="/tags/%E6%A0%B8%E5%87%BD%E6%95%B0/" rel="tag"># 核函数</a>
+              <a href="/tags/%E5%BE%84%E5%90%91%E5%9F%BA%E6%A0%B8%E5%87%BD%E6%95%B0/" rel="tag"># 径向基核函数</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/" rel="prev" title="Logistic回归">
+                  <i class="fa fa-angle-left"></i> Logistic回归
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/05/15/AdaBoost%E5%85%83%E7%AE%97%E6%B3%95/" rel="next" title="AdaBoost元算法">
+                  AdaBoost元算法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2009 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Iceberg</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.umd.js" integrity="sha256-+2+qOqR8CKoHh/AsVR9k2qaDBKWjYNC2nozhYmv5j9k=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

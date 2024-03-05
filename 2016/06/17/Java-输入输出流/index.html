@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico">
+  <link rel="mask-icon" href="/images/avatar.jpeg" color="#222">
+  <meta name="google-site-verification" content="d2tAnXrr34Y8JpdeBBtXb3s6KJuDmbZk7Kq1mlFW3qs">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"vnicl.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、I&#x2F;O(java.io)：操作必须抛出IOException异常 close() 关闭流；  二、in&#x2F;out&#x2F;err(标准输入&#x2F;输出&#x2F;错误流)(java.lang.System)方法： System.in是InputStream(字节流)类型 System.out&#x2F;System.err是printStream类型 System.ou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 输入输出流">
+<meta property="og:url" content="https://vnicl.github.io/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/index.html">
+<meta property="og:site_name" content="攻城狮也文艺">
+<meta property="og:description" content="一、I&#x2F;O(java.io)：操作必须抛出IOException异常 close() 关闭流；  二、in&#x2F;out&#x2F;err(标准输入&#x2F;输出&#x2F;错误流)(java.lang.System)方法： System.in是InputStream(字节流)类型 System.out&#x2F;System.err是printStream类型 System.ou">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vnicl.github.io/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/QQ20151228-2@2x.png">
+<meta property="og:image" content="https://vnicl.github.io/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/QQ20151228-3@2x.png">
+<meta property="article:published_time" content="2016-06-17T03:27:53.000Z">
+<meta property="article:modified_time" content="2016-06-23T10:56:24.000Z">
+<meta property="article:author" content="Iceberg">
+<meta property="article:tag" content="JAVA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vnicl.github.io/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/QQ20151228-2@2x.png">
+
+
+<link rel="canonical" href="https://vnicl.github.io/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://vnicl.github.io/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/","path":"2016/06/17/Java-输入输出流/","title":"Java 输入输出流"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java 输入输出流 | 攻城狮也文艺</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">攻城狮也文艺</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">渺小但执着</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Iceberg"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Iceberg</p>
+  <div class="site-description" itemprop="description">一个理想主义者 · 空想家 · LOSER</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_nd.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2016/06/17/Java-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" rel="bookmark">
+        <time class="popular-posts-time">2016-06-17</time>
+        <br>
+      Java 多线程基础
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2016/06/17/Java-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="bookmark">
+        <time class="popular-posts-time">2016-06-17</time>
+        <br>
+      Java 基础知识
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2016/06/17/Java-%E5%AF%B9%E8%B1%A1%E7%BE%A4%E4%BD%93%E7%BB%84%E7%BB%87/" rel="bookmark">
+        <time class="popular-posts-time">2016-06-17</time>
+        <br>
+      Java 对象群体组织
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://vnicl.github.io/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Iceberg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="攻城狮也文艺">
+      <meta itemprop="description" content="一个理想主义者 · 空想家 · LOSER">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java 输入输出流 | 攻城狮也文艺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java 输入输出流
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-06-17 11:27:53" itemprop="dateCreated datePublished" datetime="2016-06-17T11:27:53+08:00">2016-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2016-06-23 18:56:24" itemprop="dateModified" datetime="2016-06-23T18:56:24+08:00">2016-06-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JAVA/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">基础知识</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>862</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h4 id="一、I-O-java-io-：操作必须抛出IOException异常"><a href="#一、I-O-java-io-：操作必须抛出IOException异常" class="headerlink" title="一、I&#x2F;O(java.io)：操作必须抛出IOException异常"></a>一、I&#x2F;O(java.io)：操作必须抛出IOException异常</h4><ol>
+<li>close() 关闭流；</li>
+</ol>
+<h4 id="二、in-out-err-标准输入-输出-错误流-java-lang-System-方法："><a href="#二、in-out-err-标准输入-输出-错误流-java-lang-System-方法：" class="headerlink" title="二、in&#x2F;out&#x2F;err(标准输入&#x2F;输出&#x2F;错误流)(java.lang.System)方法："></a>二、in&#x2F;out&#x2F;err(标准输入&#x2F;输出&#x2F;错误流)(java.lang.System)方法：</h4><ol>
+<li>System.in是InputStream(字节流)类型</li>
+<li>System.out&#x2F;System.err是printStream类型</li>
+<li>System.out.print() 输出字符</li>
+<li>System.out.println() 输入字符并换行；</li>
+</ol>
+<h4 id="三、字符流Reader-Writer："><a href="#三、字符流Reader-Writer：" class="headerlink" title="三、字符流Reader&#x2F;Writer："></a>三、字符流Reader&#x2F;Writer：</h4><ol>
+<li>write() 写内容到流</li>
+<li>read() 读流内容</li>
+<li>read(byte b) 读取b大小的数据、返回－1则文件末位</li>
+<li>InputStreamReader：读取字节流并转换成字符流</li>
+<li>FileReader：打开一个指定文件名的输入流</li>
+<li>FileWriter：FileWriter(filename) 新建指定文件名的输出流</li>
+<li>FileWriter(filename, Boolean append) 指定文件名的输出流实现续写</li>
+<li>BufferedReader：对输入流缓存、readLine() 读取一行数据，如果没数据返回null</li>
+<li>BufferedWriter：对输出流缓存、newLine() 输出换行符</li>
+</ol>
+<h4 id="四、字节流InputStream-OutputStream："><a href="#四、字节流InputStream-OutputStream：" class="headerlink" title="四、字节流InputStream&#x2F;OutputStream："></a>四、字节流InputStream&#x2F;OutputStream：</h4><ol>
+<li>FileOutputStream：打开指定文件名的输出流</li>
+<li>FileInputStream：创建指定文件名的输入流</li>
+<li>DataOutputStream：提供写基本数据类型的方法</li>
+<li>DataInputStream：提供读基本数据类型的方法、文件末位会抛出EOFException异常</li>
+<li>BufferedOutputStream：缓存输出流</li>
+<li>BufferedInputStream：缓存输入流</li>
+</ol>
+<h4 id="五、处理压缩-java-util-zip-方法："><a href="#五、处理压缩-java-util-zip-方法：" class="headerlink" title="五、处理压缩(java.util.zip)方法："></a>五、处理压缩(java.util.zip)方法：</h4><ol>
+<li>GZIPOutputStream：指定输出流的压缩</li>
+<li>ZipOutputStream：指定输出流的压缩</li>
+<li>putNextEntry(ZipEntry)</li>
+<li>GZIPInputStream：指定输入流解压</li>
+<li>ZipInputStream：指定输入流解压</li>
+<li>getNextEntry() 获取压缩文件内下一个文件，返回ZipEntry对象，没有返回null</li>
+<li>ZipEntry：ZipEntry(filename) 压缩文件内每一个文件对象</li>
+<li>getName() 返回压缩文件最初名称</li>
+<li>isDirectory() 检测是否是文件夹</li>
+</ol>
+<h4 id="六、接口Serializable：实现对象序列化接口"><a href="#六、接口Serializable：实现对象序列化接口" class="headerlink" title="六、接口Serializable：实现对象序列化接口"></a>六、接口Serializable：实现对象序列化接口</h4><ol>
+<li>ObjectInputStream：对象的输入流</li>
+<li>writeObject() 写对象</li>
+<li>ObjectOutputStream：对象的输出流</li>
+<li>readObject() 读入对象</li>
+<li>RandomAccessFile(filename, model) 创建带model权限的一个随机文件读写</li>
+<li>seek(Int n) 移到n的地方</li>
+<li>writeType() 写Type类型的数据</li>
+<li>readType() 读Type类型的数据</li>
+</ol>
+<h4 id="七、File-文件读写-java-io-方法："><a href="#七、File-文件读写-java-io-方法：" class="headerlink" title="七、File(文件读写)(java.io)方法："></a>七、File(文件读写)(java.io)方法：</h4><ol>
+<li>public File(String name) 指定与File对象关联的文件或目录</li>
+<li>public File(String pathToName, String name) 使用pathToName来定位name指定的文件或目录</li>
+<li>public File(File directory, String name) 使用现有的File对象来定位name所指定的文件或目录</li>
+<li>public File(URI rui) 使用给定的资源定位符来定位文件</li>
+<li>public static final String pathSeparator 获取适用于本季的分隔符</li>
+<li>boolean canRead() 文件是否可读</li>
+<li>boolean canWrite() 文件是否可写</li>
+<li>boolean exists() 是否是文件或目录</li>
+<li>boolean createNewFile() 如果文件不存在则创建这个文件，返回真，否则返回假</li>
+<li>boolean isFile() 是否是一个文件</li>
+<li>boolean isDirectory() 是否是一个目录</li>
+<li>boolean isAbsolute() 是否是一个文件或绝对路径目录</li>
+<li>boolean delete() 删除文件或目录</li>
+<li>String getAbsolutePath() 返回一个包含文件或目录绝对路径的字符串</li>
+<li>String getName() 返回一个包含文件名或目录名的字符串</li>
+<li>String getPath() 返回一个半酣文件或目录路径的字符串</li>
+<li>String getParent() 返回父路径</li>
+<li>long length() 返回文件的字节长度，目录返回0</li>
+<li>long lastModified() 返回文件或目录最近一个修改时间</li>
+<li>String[] list() 返回一个目录中内容的字符串数组，不是目录返回null</li>
+</ol>
+<h4 id="附件：所有I-O类参考"><a href="#附件：所有I-O类参考" class="headerlink" title="附件：所有I&#x2F;O类参考"></a>附件：所有I&#x2F;O类参考</h4><img data-src="/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/QQ20151228-2@2x.png" class="" title="[所有I&#x2F;O类 附件1]">  
+<img data-src="/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/QQ20151228-3@2x.png" class="" title="[所有I&#x2F;O类 附件2]">
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx.jpg" alt="Iceberg 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zfb.jpg" alt="Iceberg 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Iceberg
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://vnicl.github.io/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/" title="Java 输入输出流">https://vnicl.github.io/2016/06/17/Java-输入输出流/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/06/17/Java-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" rel="prev" title="Java 多线程基础">
+                  <i class="fa fa-angle-left"></i> Java 多线程基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/06/17/Java-%E5%AF%B9%E8%B1%A1%E7%BE%A4%E4%BD%93%E7%BB%84%E7%BB%87/" rel="next" title="Java 对象群体组织">
+                  Java 对象群体组织 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2009 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Iceberg</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.umd.js" integrity="sha256-+2+qOqR8CKoHh/AsVR9k2qaDBKWjYNC2nozhYmv5j9k=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

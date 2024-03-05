@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico">
+  <link rel="mask-icon" href="/images/avatar.jpeg" color="#222">
+  <meta name="google-site-verification" content="d2tAnXrr34Y8JpdeBBtXb3s6KJuDmbZk7Kq1mlFW3qs">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"vnicl.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="零、准备工作 你需要确保当前环境以及安装过gcc和gcc-c++，否则按照下面的方法安装 12[root@localhost ~]# yum -y install gcc-c++.x86_64[root@localhost ~]# yum -y install gcc.x86_64  一、资源下载  nginx：下载页面 http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;download.html PHP：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS 7 配置nginx+PHP">
+<meta property="og:url" content="https://vnicl.github.io/2015/06/18/CentOS-7-%E9%85%8D%E7%BD%AEnginx-PHP/index.html">
+<meta property="og:site_name" content="攻城狮也文艺">
+<meta property="og:description" content="零、准备工作 你需要确保当前环境以及安装过gcc和gcc-c++，否则按照下面的方法安装 12[root@localhost ~]# yum -y install gcc-c++.x86_64[root@localhost ~]# yum -y install gcc.x86_64  一、资源下载  nginx：下载页面 http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;download.html PHP：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2015-06-18T05:27:43.000Z">
+<meta property="article:modified_time" content="2016-07-05T11:12:34.000Z">
+<meta property="article:author" content="Iceberg">
+<meta property="article:tag" content="CentOS 7">
+<meta property="article:tag" content="Nginx">
+<meta property="article:tag" content="PHP">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://vnicl.github.io/2015/06/18/CentOS-7-%E9%85%8D%E7%BD%AEnginx-PHP/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://vnicl.github.io/2015/06/18/CentOS-7-%E9%85%8D%E7%BD%AEnginx-PHP/","path":"2015/06/18/CentOS-7-配置nginx-PHP/","title":"CentOS 7 配置nginx+PHP"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CentOS 7 配置nginx+PHP | 攻城狮也文艺</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">攻城狮也文艺</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">渺小但执着</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%B6%E3%80%81%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">零、准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%B5%84%E6%BA%90%E4%B8%8B%E8%BD%BD"><span class="nav-number">2.</span> <span class="nav-text">一、资源下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85nginx"><span class="nav-number">3.</span> <span class="nav-text">二、安装nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%B8%8B%E8%BD%BD%E7%B3%BB%E7%BB%9F%E4%B8%AD%E5%B0%9A%E6%9C%AA%E5%AE%89%E8%A3%85%E7%9A%84%E4%BE%9D%E8%B5%96%EF%BC%88%E6%8B%93%E5%B1%95%EF%BC%89%E5%8C%85"><span class="nav-number">3.1.</span> <span class="nav-text">1、下载系统中尚未安装的依赖（拓展）包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%AE%8C%E6%88%90%E5%AE%89%E8%A3%85"><span class="nav-number">3.2.</span> <span class="nav-text">2、完成安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%90%AF%E5%8A%A8nginx%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.3.</span> <span class="nav-text">3、启动nginx服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C"><span class="nav-number">3.4.</span> <span class="nav-text">4、其他操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85PHP"><span class="nav-number">4.</span> <span class="nav-text">三、安装PHP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%BE%9D%E8%B5%96%EF%BC%88%E6%8B%93%E5%B1%95%EF%BC%89%E5%8C%85%E5%AE%89%E8%A3%85"><span class="nav-number">4.1.</span> <span class="nav-text">1、依赖（拓展）包安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%AE%8C%E6%88%90%E5%AE%89%E8%A3%85-1"><span class="nav-number">4.2.</span> <span class="nav-text">2、完成安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81PHP%E6%93%8D%E4%BD%9C"><span class="nav-number">4.3.</span> <span class="nav-text">3、PHP操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%AE%A9nginx%E6%94%AF%E6%8C%81PHP"><span class="nav-number">5.</span> <span class="nav-text">四、让nginx支持PHP</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Iceberg"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Iceberg</p>
+  <div class="site-description" itemprop="description">一个理想主义者 · 空想家 · LOSER</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_nd.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://vnicl.github.io/2015/06/18/CentOS-7-%E9%85%8D%E7%BD%AEnginx-PHP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Iceberg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="攻城狮也文艺">
+      <meta itemprop="description" content="一个理想主义者 · 空想家 · LOSER">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CentOS 7 配置nginx+PHP | 攻城狮也文艺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CentOS 7 配置nginx+PHP
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-06-18 13:27:43" itemprop="dateCreated datePublished" datetime="2015-06-18T13:27:43+08:00">2015-06-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2016-07-05 19:12:34" itemprop="dateModified" datetime="2016-07-05T19:12:34+08:00">2016-07-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CentOS-7/" itemprop="url" rel="index"><span itemprop="name">CentOS 7</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>812</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="零、准备工作"><a href="#零、准备工作" class="headerlink" title="零、准备工作"></a>零、准备工作</h2><hr>
+<p><strong>你需要确保当前环境以及安装过gcc和gcc-c++，否则按照下面的方法安装</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum -y install gcc-c++.x86_64</span><br><span class="line">[root@localhost ~]# yum -y install gcc.x86_64</span><br></pre></td></tr></table></figure>
+
+<h2 id="一、资源下载"><a href="#一、资源下载" class="headerlink" title="一、资源下载"></a>一、资源下载</h2><hr>
+<ul>
+<li>nginx：下载页面 <span class="exturl" data-url="aHR0cDovL25naW54Lm9yZy9lbi9kb3dubG9hZC5odG1s">http://nginx.org/en/download.html<i class="fa fa-external-link-alt"></i></span></li>
+<li>PHP：下载页面 <span class="exturl" data-url="aHR0cDovL3BocC5uZXQvZG93bmxvYWRzLnBocA==">http://php.net/downloads.php<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/* 下载nginx，文章发表前最新版本为1.8.0 */</span><br><span class="line">[root@localhost iceberg]# wget http://nginx.org/download/nginx-1.8.0.tar.gz </span><br><span class="line">/* 下载PHP，文章发表前最新版本为5.6.10 */ </span><br><span class="line">[root@localhost iceberg]# wget http://cn2.php.net/distributions/php-5.6.10.tar.gz </span><br><span class="line">/* 解压压缩包 */ </span><br><span class="line">[root@localhost iceberg]# tar -xzvf nginx-1.8.0.tar.gz </span><br><span class="line">[root@localhost iceberg]# tar -xzvf php-5.6.10</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、安装nginx"><a href="#二、安装nginx" class="headerlink" title="二、安装nginx"></a>二、安装nginx</h2><hr>
+<h3 id="1、下载系统中尚未安装的依赖（拓展）包"><a href="#1、下载系统中尚未安装的依赖（拓展）包" class="headerlink" title="1、下载系统中尚未安装的依赖（拓展）包"></a>1、下载系统中尚未安装的依赖（拓展）包</h3><ul>
+<li><p>pcre: nginx中很多功能需要pcre包的支持，比如rewrite模块</p>
+<p>下载页面：<span class="exturl" data-url="aHR0cDovL3NvdXJjZWZvcmdlLm5ldC9wcm9qZWN0cy9wY3JlL2ZpbGVzLw==">http://sourceforge.net/projects/pcre/files/<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>zlib: 使用 nginx支持内容压缩功能</p>
+<p>下载页面：<span class="exturl" data-url="aHR0cDovL3d3dy56bGliLm5ldC8=">http://www.zlib.net/<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>OpenSSL: ***</p>
+<p>下载页面：<span class="exturl" data-url="aHR0cDovL3d3dy5vcGVuc3NsLm9yZy9zb3VyY2Uv">http://www.openssl.org/source/<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/*截止文章发表前，pcre版本为8.37*/</span><br><span class="line">[root@localhost iceberg]# wget http://ncu.dl.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.gz</span><br><span class="line">[root@localhost iceberg]# tar -xzvf pcre-8.37.tar.gz</span><br><span class="line">/*截止文章发表前，zlib版本为1.2.8*/</span><br><span class="line">[root@localhost iceberg]# wget http://zlib.net/zlib-1.2.8.tar.gz</span><br><span class="line">[root@localhost iceberg]# tar -xzvf zlib-1.2.8.tar.gz</span><br><span class="line">/*openssl*/</span><br><span class="line">[root@localhost iceberg]# wget http://www.openssl.org/source/openssl-1.0.1p.tar.gz</span><br><span class="line">[root@localhost iceberg]# tar -xvzf openssl-1.0.1p.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、完成安装"><a href="#2、完成安装" class="headerlink" title="2、完成安装"></a>2、完成安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost iceberg]# cd nginx-1.8.0</span><br><span class="line">[root@localhost nginx-1.8.0]# ./configure --with-pcre=/home/iceberg/pcre-8.37 --with-zlib=/home/iceberg/zlib-1.2.8 --with-http_ssl_module --with-openssl=/home/iceberg/openssl-1.0.1p</span><br><span class="line">[root@localhost nginx-1.8.0]# make</span><br><span class="line">[root@localhost nginx-1.8.0]# make install</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、启动nginx服务"><a href="#3、启动nginx服务" class="headerlink" title="3、启动nginx服务"></a>3、启动nginx服务</h3><p><strong>启动前先检查80端口是否被其他程序占用</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost iceberg]# netstat -ano|grep 80</span><br><span class="line">如有有被占用，需要先kill掉占用的程序后开始启动nginx</span><br><span class="line">[root@localhost iceberg]# /usr/local/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、其他操作"><a href="#4、其他操作" class="headerlink" title="4、其他操作"></a>4、其他操作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/*编辑nginx配置文件*/</span><br><span class="line">[root@localhost iceberg]# vi /usr/local/nginx/conf/nginx.conf</span><br><span class="line">/*停止nginx服务*/</span><br><span class="line">[root@localhost iceberg]# /usr/local/nginx/sbin/nginx -s stop</span><br><span class="line">/*使配置文件生效*/</span><br><span class="line">[root@localhost iceberg]# /usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、安装PHP"><a href="#三、安装PHP" class="headerlink" title="三、安装PHP"></a>三、安装PHP</h2><hr>
+<h3 id="1、依赖（拓展）包安装"><a href="#1、依赖（拓展）包安装" class="headerlink" title="1、依赖（拓展）包安装"></a>1、依赖（拓展）包安装</h3><ul>
+<li>libxml2: 实现读、创建、以及操作xml数据功能的C语言库</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost php-5.6.10]# yum -y install libxml2.x86_64</span><br><span class="line">[root@localhost php-5.6.10]# yum -y install libxml2-devel.x86_64</span><br></pre></td></tr></table></figure>
+<h3 id="2、完成安装-1"><a href="#2、完成安装-1" class="headerlink" title="2、完成安装"></a>2、完成安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost iceberg]# cd php-5.6.10</span><br><span class="line">[root@localhost php-5.6.10]# ./configure --enable-fpm --with-mysql</span><br><span class="line">[root@localhost php-5.6.10]# make</span><br><span class="line">[root@localhost php-5.6.10]# make install</span><br><span class="line">/*安装完成，设置PHP*/</span><br><span class="line">[root@localhost php-5.6.10]# cp php.ini-development /usr/local/php/php.ini</span><br><span class="line">[root@localhost php-5.6.10]# cp /usr/local/etc/php-fpm.conf.default /usr/local/etc/php-fpm.conf</span><br><span class="line">[root@localhost php-5.6.10]# cp sapi/fpm/php-fpm /usr/local/bin/</span><br></pre></td></tr></table></figure>
+<h3 id="3、PHP操作"><a href="#3、PHP操作" class="headerlink" title="3、PHP操作"></a>3、PHP操作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/*启动PHP*/</span><br><span class="line">[root@localhost php-5.6.10]# /usr/local/bin/php-fpm</span><br><span class="line">/*重启PHP*/</span><br><span class="line">[root@localhost iceberg]# ps aux | grep php</span><br><span class="line">root 79441 0.0 0.6 147960 3168 ? Ss 04:51 0:00 php-fpm: master process (/usr/local/etc/php-fpm.conf)</span><br><span class="line">nobody 79442 0.0 0.5 147960 2812 ? S 04:51 0:00 php-fpm: pool www</span><br><span class="line">nobody 79443 0.0 0.5 147960 2812 ? S 04:51 0:00 php-fpm: pool www</span><br><span class="line">root 79446 0.0 0.1 112640 956 pts/0 S+ 04:51 0:00 grep --color=auto php</span><br><span class="line">[root@localhost iceberg]# kill -USR2 79441</span><br></pre></td></tr></table></figure>
+<h2 id="四、让nginx支持PHP"><a href="#四、让nginx支持PHP" class="headerlink" title="四、让nginx支持PHP"></a>四、让nginx支持PHP</h2><hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost iceberg]# vi /usr/local/nginx/conf/nginx.conf</span><br><span class="line">/*修改下面的位置，添加index.php,使nginx支持 .php 文件*/</span><br><span class="line">location / &#123;</span><br><span class="line">    root   html;</span><br><span class="line">    index  index.html index.htm index.php;</span><br><span class="line">&#125;</span><br><span class="line">/*保证对于 .php 文件的请求将被传送到后端的 PHP-FPM 模块*/</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">    root           html;</span><br><span class="line">    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">    fastcgi_index  index.php;</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</span><br><span class="line">    include        fastcgi_params;</span><br><span class="line">&#125;</span><br><span class="line">:wq</span><br><span class="line">/*重启nginx*/</span><br><span class="line">[root@localhost iceberg]# /usr/local/nginx/sbin/nginx -s reload</span><br><span class="line">/*测试PHP运行*/</span><br><span class="line">[root@localhost iceberg]# vi /usr/local/nginx/html/index.php</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">phpinfo();</span><br><span class="line"></span><br><span class="line">:wq</span><br><span class="line">[root@localhost iceberg]# </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>打开浏览器访问<span class="exturl" data-url="aHR0cDovL3lvdXJkb21haW4vaW5kZXgucGhwJUVGJUJDJThDJUU1JUE2JTgyJUU2JTlFJTlDJUU3JTlDJThCJUU1JTg4JUIwUEhQJUU0JUJGJUExJUU2JTgxJUFGJUU1JUIwJUIxJUU4JUExJUE4JUU3JUE0JUJBJUU1JUFFJTg5JUU4JUEzJTg1JUU2JTg4JTkwJUU1JThBJTlG">http://yourdomain/index.php，如果看到PHP信息就表示安装成功<i class="fa fa-external-link-alt"></i></span></strong></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx.jpg" alt="Iceberg 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zfb.jpg" alt="Iceberg 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Iceberg
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://vnicl.github.io/2015/06/18/CentOS-7-%E9%85%8D%E7%BD%AEnginx-PHP/" title="CentOS 7 配置nginx+PHP">https://vnicl.github.io/2015/06/18/CentOS-7-配置nginx-PHP/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/CentOS-7/" rel="tag"># CentOS 7</a>
+              <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+              <a href="/tags/PHP/" rel="tag"># PHP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2010/04/03/%E9%98%B4%E9%9B%A8%E5%A4%A9/" rel="prev" title="阴雨天">
+                  <i class="fa fa-angle-left"></i> 阴雨天
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/07/13/CentOS-7-PHP%E5%AE%89%E8%A3%85%E6%8B%93%E5%B1%95/" rel="next" title="CentOS 7 PHP安装拓展">
+                  CentOS 7 PHP安装拓展 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2009 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Iceberg</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.umd.js" integrity="sha256-+2+qOqR8CKoHh/AsVR9k2qaDBKWjYNC2nozhYmv5j9k=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

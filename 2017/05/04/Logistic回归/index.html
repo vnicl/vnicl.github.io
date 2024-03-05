@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico">
+  <link rel="mask-icon" href="/images/avatar.jpeg" color="#222">
+  <meta name="google-site-verification" content="d2tAnXrr34Y8JpdeBBtXb3s6KJuDmbZk7Kq1mlFW3qs">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"vnicl.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Logistic回归算法是一个求最优解的算法，算法的目标是训练一个非线性函数用于分类判定。   回归的定义是把平面上的一系列点用一条线对这些点进行拟合，这个拟合的过程叫做回归，这条线就做最佳拟合线。拟合的定义是把平面上一系列点用一条线连接起来。利用Logistic回归算法进行分类是根据现有数据对分类边界建立回归公式，且算法需要找到一个最佳拟合参数用来分类判定，所以Logistic回归算法在算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Logistic回归">
+<meta property="og:url" content="https://vnicl.github.io/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/index.html">
+<meta property="og:site_name" content="攻城狮也文艺">
+<meta property="og:description" content="Logistic回归算法是一个求最优解的算法，算法的目标是训练一个非线性函数用于分类判定。   回归的定义是把平面上的一系列点用一条线对这些点进行拟合，这个拟合的过程叫做回归，这条线就做最佳拟合线。拟合的定义是把平面上一系列点用一条线连接起来。利用Logistic回归算法进行分类是根据现有数据对分类边界建立回归公式，且算法需要找到一个最佳拟合参数用来分类判定，所以Logistic回归算法在算法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vnicl.github.io/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/sigmoid.jpg">
+<meta property="og:image" content="https://vnicl.github.io/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/tidu.png">
+<meta property="article:published_time" content="2017-05-04T06:27:47.000Z">
+<meta property="article:modified_time" content="2017-05-09T03:32:22.000Z">
+<meta property="article:author" content="Iceberg">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="回归">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vnicl.github.io/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/sigmoid.jpg">
+
+
+<link rel="canonical" href="https://vnicl.github.io/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://vnicl.github.io/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/","path":"2017/05/04/Logistic回归/","title":"Logistic回归"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Logistic回归 | 攻城狮也文艺</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">攻城狮也文艺</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">渺小但执着</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">算法原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">最大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8A%E5%8D%87%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">梯度上升算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8A%E5%8D%87%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">梯度上升算法的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python"><span class="nav-number">4.1.</span> <span class="nav-text">Python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%94%B6%E6%95%9B"><span class="nav-number">5.</span> <span class="nav-text">算法收敛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8A%E5%8D%87%E7%AE%97%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">随机梯度上升算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8A%E5%8D%87%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">7.</span> <span class="nav-text">随机梯度上升算法的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-1"><span class="nav-number">7.1.</span> <span class="nav-text">Python</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E8%BE%B9%E7%95%8C"><span class="nav-number">8.</span> <span class="nav-text">决策边界</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Iceberg"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Iceberg</p>
+  <div class="site-description" itemprop="description">一个理想主义者 · 空想家 · LOSER</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_nd.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/04/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97/" rel="bookmark">
+        <time class="popular-posts-time">2017-04-28</time>
+        <br>
+      机器学习中的距离计算
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="bookmark">
+        <time class="popular-posts-time">2017-05-09</time>
+        <br>
+      支持向量机 (SVM)
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/04/30/k-%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95/" rel="bookmark">
+        <time class="popular-posts-time">2017-04-30</time>
+        <br>
+      k-近邻算法（kNN）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" rel="bookmark">
+        <time class="popular-posts-time">2018-10-10</time>
+        <br>
+      曲线拟合原理和实现
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/05/03/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" rel="bookmark">
+        <time class="popular-posts-time">2017-05-03</time>
+        <br>
+      朴素贝叶斯
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://vnicl.github.io/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Iceberg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="攻城狮也文艺">
+      <meta itemprop="description" content="一个理想主义者 · 空想家 · LOSER">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Logistic回归 | 攻城狮也文艺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Logistic回归
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-05-04 14:27:47" itemprop="dateCreated datePublished" datetime="2017-05-04T14:27:47+08:00">2017-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2017-05-09 11:32:22" itemprop="dateModified" datetime="2017-05-09T11:32:22+08:00">2017-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.1k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>  Logistic回归算法是一个求最优解的算法，算法的目标是训练一个非线性函数用于分类判定。</p>
+<p>  回归的定义是把平面上的一系列点用一条线对这些点进行拟合，这个拟合的过程叫做<code>回归</code>，这条线就做<code>最佳拟合线</code>。拟合的定义是把平面上一系列点用一条线连接起来。利用Logistic回归算法进行分类是根据现有数据对分类边界建立回归公式，且算法需要找到一个最佳拟合参数用来分类判定，所以Logistic回归算法在算法训练过程中，主要就是为了找到最佳的分类回归系数。</p>
+<h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><hr>
+<p>  为了实现算法分类判定，我们需要有一个函数能接受所有的样本特征输入，然后预测出样本类别，在二分类判定中，我们要求该函数输出0或1，这种函数被称作<code>海维塞德阶跃函数</code>或<code>单位阶跃函数</code>，<code>Sigmoid</code>函数满足我们的要求，Sigmoid函数公式为：<br>$$<br>\sigma(z) &#x3D; \frac1{1+e^{-z}}<br>$$</p>
+<center><img data-src="/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/sigmoid.jpg" class="" title="可以看到将横坐标尺度放大时，Sigmoid函数很像一个阶跃函数"></center>
+
+<p>  所以为了实现Logistic回归分类器，我们可以在每一个特征上乘以一个回归系数，然后把所有结果相加并带入Sigmoid函数中得到一个0～1之间的数值，任何大于0.5的数据被分为1类，小于0.5则属于0类，即Sigmoid的输入公式为<br>$$<br>z&#x3D;w_0 + w_1x_1 + w_2x_2 + \cdots + w_ix_i<br>$$<br>这里将样本特征$x$个数定义为$i$，为了方便计算，将特征$x_0$的值设置为1，则上述公式可以表示为<br>$$<br>\begin{align}<br>z<br>&amp;&#x3D; w_0 + w_1x_1 + w_2x_2 + \cdots + w_ix_i \<br>&amp;&#x3D; w_0x_0 + w_1x_1 + w_2x_2 + \cdots + w_ix_i \<br>&amp;&#x3D; w^Tx<br>\end{align}<br>$$<br>因此可以推导出Logistic回归算法中的预测函数<br>$$<br>h(x_i) &#x3D; \sigma(w^Tx) &#x3D; \frac1{1+e^{-w^Tx}}<br>$$<br>  上面确定了分类器的函数形式，但是里面有个回归系数$w$，现在我们需要基于最优化方法来确定最佳回归系数来对样本数据做最佳拟合。</p>
+<h2 id="最大似然估计"><a href="#最大似然估计" class="headerlink" title="最大似然估计"></a>最大似然估计</h2><hr>
+<p>  在计算最佳回归系数的时候会用到<code>最大似然估计</code>方法，所以这里先介绍这个概念。</p>
+<p>  现在已经拿到了很多个样本，这些样本值已经实现，最大似然估计就是去找到那个参数估计值，使得前面已经实现的样本值发生概率最大。因为你手头上的样本已经实现了，其发生概率最大才符合逻辑。通俗一点的解释就是利用已知的样本结果，反推最有可能（最大概率）导致这样结果的参数值。</p>
+<p>  比如一个麻袋里有白球与黑球，但是我不知道它们之间的比例，那我就有放回的抽取10次，结果我发现我抽到了8次黑球2次白球，我要求最有可能的黑白球之间的比例时，就采取最大似然估计法：我假设我抽到黑球的概率为$p$,那得出8次黑球2次白球这个结果的概率为：$P&#x3D;p^8(1-p)^2$，现在我想要得出p是多少，使得P最大的p就是我要求的结果。</p>
+<p>  同理，在Logistic回归中，对单个样本分类为0或1的概率表示为<br>$$<br>p(y_1&#x3D;1|x_1) &#x3D; \sigma(z_1)<br>$$</p>
+<p>$$<br>p(y_1&#x3D;0|x_1) &#x3D; 1-\sigma(z_1)<br>$$</p>
+<p>用一个公式表示产生该样本的概率为<br>$$<br>p(y_1|x_1) &#x3D;\sigma(z_1)^{y_1}(1-\sigma(z_1))^{1-y_1}<br>$$<br>因为$y_1$表示0或1两个分类结果，所以$y_1$和$1-y_1$表示指定产生概率只有产生和没产生两种。根据上面描述的最大似然估计和单样本产生概率公式，可以得出生成当前样本集的最大似然估计函数，定义样本数量为$n$<br>$$<br>\begin{align}<br>L(z_i)<br>&amp;&#x3D; p(y_1|x_1)p(y_2|x_2)p(y_3|x_3) \cdots p(y_n|x_n) \<br>&amp;&#x3D; \prod_{i&#x3D;1}^np(y_i|x_i) \<br>&amp;&#x3D; \prod_{i&#x3D;1}^n(\sigma(z_i))^{y_i}(1-\sigma(z_i))^{1-y_i}<br>\end{align}<br>$$<br>为了方便计算，对$L(z_i)$取对数，这样连乘积变成了线性加总，且不会改变极值的位置（前面朴素贝叶斯算法中也有用到）<br>$$<br>\begin{align}<br>l(z_i)<br>&amp;&#x3D; logL(z_i) \<br>&amp;&#x3D;log(\sigma(z_i)^{y_i}(1-\sigma(z_i))^{1-y_i}) \<br>&amp;&#x3D; \sum_{i&#x3D;1}^n(y_ilog(\sigma(z_i))+(1-y_i)log(1-\sigma(z_i)))<br>\end{align}<br>$$<br>  现在我们知道通过计算最大似然估计函数$l(z_i)$就表示回归算法会更接近于当前样本的实际分类状态，根据公式中输入参数$z_i$的计算公式<br>$$<br>z&#x3D;w^Tx<br>$$<br>所以我们重新更新最大似然估计函数$l(z_i)$为$l(w_i)$<br>$$<br>\begin{align}<br>l(w_i)<br>&amp;&#x3D;l(z_i)  \<br>&amp;&#x3D; l(w_i^Tx_i) \<br>&amp;&#x3D; \sum_{i&#x3D;1}^n(y_ilog(\sigma(w_i^Tx_i))+(1-y_i)log(1-\sigma(w_i^Tx_i)))<br>\end{align}<br>$$<br>可以知道，在输入$x$（样本集样本）不变情况下，我们需要改变$w$的取值使得$l(w_i)$达到我们要求的最大，所以又回到训练最佳回归系数的问题。</p>
+<h2 id="梯度上升算法"><a href="#梯度上升算法" class="headerlink" title="梯度上升算法"></a>梯度上升算法</h2><hr>
+<p>  梯度上升算法是计算极值的一个有效方法，因为我们需要计算最大似然估计函数$l(w_i)$的最大值，所以我们采用沿着$l(w_i)$的梯度上升方向迭代，直到达到某个停止条件或设定的迭代次数，然后影响$l(w_i)$取值的$w_i$即是我们要求的最佳回归系数。下面先介绍梯度的概念。</p>
+<p>  梯度是一个立体概念，通俗点讲就好比有一些层峦叠嶂的山，而你要从山脚走到山顶，常规的走法就是你会先选择往比当前位置海拔更高一点的方向走，最后一直走到山顶结束，这就是梯度上升（当然还有梯度下降）。现在可以在脑海中构造梯度的图形，因为$w_i$取值的迭代变化，所以会产生很多大小不同的$l(w_i)$，把这些$l(w_i)$看成在立体坐标系中一系列点，把这些点连接起来之后就会生成一个梯度图像，这时候找到最大的$l(w_i)$取值就和上山是一个问题。</p>
+<p>  梯度上升算法到达每个点后都会重新估计移动的方向，并沿新的梯度方向移动，这样循环移动直到满足停止条件。</p>
+<center><img data-src="/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/tidu.png" class="" title="梯度概念"></center >
+
+<p>  梯度上升算法的迭代公式为<br>$$<br>w:&#x3D;w+\alpha \nabla_wf(w)<br>$$<br>公式中$w$即最佳回归系数，$\alpha$表示为上升算法中的移动步长即移动量的大小。在数学中，函数$f(x,y)$的梯度表示为<br>$$<br>\nabla f(x, y) &#x3D;<br>\begin{pmatrix}<br>     \frac {\partial f(x, y)}{\partial x} \<br>     \frac {\partial f(x, y)}{\partial y}<br>\end{pmatrix}<br>$$<br>即沿$x$的方向移动$\frac {\partial f(x, y)}{\partial x}$，沿$y$的方向移动$\frac {\partial f(x, y)}{\partial y}$。所以梯度上升算法的迭代公式推导为<br>$$<br>w:&#x3D;w+\alpha \frac {\partial f(w)}{\partial w}<br>$$<br>在Logistic回归中，$f(w)$函数为上面的最大似然估计函数$l(w_i)$<br>$$<br>l(w_i) &#x3D; \sum_{i&#x3D;1}^n(y_ilog(\sigma(w_i^Tx_i))+(1-y_i)log(1-\sigma(w_i^Tx_i)))<br>$$<br>所以公式推导为<br>$$<br>\begin{align}<br>\frac {\partial f(w_i)}{\partial w_i}<br>&amp;&#x3D;\frac {\partial}{\partial w_i} l(w_i)\<br>&amp;&#x3D;\sum_{i&#x3D;1}^n(y_i \frac1{\sigma(w_i^Tx_i)}\frac {\partial}{\partial w_i}\sigma(w_i^Tx_i)-(1-y_i)\frac 1{1-\sigma(w_i^Tx_i)} \frac \partial{\partial w_i}\sigma(w_i^Tx_i)) \<br>&amp;&#x3D;\sum_{i&#x3D;1}^n(y_i \frac1{\sigma(w_i^Tx_i)}-(1-y_i)\frac 1{1-\sigma(w_i^Tx_i)})\frac \partial{\partial w_i}\sigma(w_i^Tx_i) \<br>&amp;&#x3D;\sum_{i&#x3D;1}^n(y_i \frac1{\sigma(w_i^Tx_i)}-(1-y_i)\frac 1{1-\sigma(w_i^Tx_i)}) \sigma(w_i^Tx_i)(1-\sigma(w_i^Tx_i))\frac \partial{\partial w_i} w_i^Tx_i\<br>&amp;&#x3D;\sum_{i&#x3D;1}^n(y_i(1-\sigma(w_i^Tx_i))-(1-y_i)\sigma(w_i^Tx_i))x_i \<br>&amp;&#x3D;\sum_{i&#x3D;1}^n(y_i-\sigma(w_i^Tx_i))x_i<br>\end{align}<br>$$<br>即将输入值$x_i$看作常量的情况下对$w_i$求偏导。所以算法迭代公式更新为<br>$$<br>\begin{align}<br>w: &amp;&#x3D;w+\alpha \frac {\partial f(w)}{\partial w} \<br>&amp;&#x3D;w + \alpha \sum_{i&#x3D;1}^n(y_i-\sigma(w_i^Tx_i))x_i<br>\end{align}<br>$$</p>
+<h2 id="梯度上升算法的实现"><a href="#梯度上升算法的实现" class="headerlink" title="梯度上升算法的实现"></a>梯度上升算法的实现</h2><hr>
+<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>  算法实现中会使用到矩阵运算，所以先导入<code>NumPy</code>函数库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
+
+<p>  首先我们需要构造一个样本集数据的列表和一个和样本集样本对应的分类列表<br>$$<br>dataSet &#x3D;<br>\begin{pmatrix}<br>1 &amp; 2 &amp; 3 \<br>\cdots &amp; \cdots &amp; \cdots \<br>1 &amp; 4 &amp; 1 \<br>\end{pmatrix},<br>dataLabel &#x3D; \begin{pmatrix}<br>1,\cdots,0<br>\end{pmatrix}<br>$$<br>为了方便计算，并且构造的数据符合预测函数$\sigma(w^Tx)$需要的输入要求，所以样本集中开始的特征值始终为1，即$w_0&#x3D;1$。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataSet = array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], ...,[<span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>]])</span><br><span class="line">dataLabel = [<span class="number">1</span>, ..., <span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<p>  接下来我们做算法训练求最佳回归系数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将样本集数据dataSet转换为NumPy中的矩阵格式</span></span><br><span class="line">dataMat = mat(dataSet)</span><br></pre></td></tr></table></figure>
+
+<p>$$<br>dataMat &#x3D;<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 3 \<br>\cdots &amp; \cdots &amp; \cdots \<br>1 &amp; 4 &amp; 1 \<br>\end{bmatrix}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 样本集矩阵的规格</span></span><br><span class="line">m, n = shape(dataMat)</span><br><span class="line"><span class="comment"># 设置在梯度迭代中的移动步长，即每次迭代的移动距离</span></span><br><span class="line">alpha = <span class="number">0.001</span></span><br><span class="line"><span class="comment"># 设置最大迭代次数</span></span><br><span class="line">maxCycles = <span class="number">500</span></span><br><span class="line"><span class="comment"># 创建一个初始的回归系数，默认为1，回归系数的尺寸和样本集中样本的特征数量相同</span></span><br><span class="line">weights = ones((n, <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<p>$$<br>weights&#x3D;\begin{bmatrix}<br>1 \<br>1 \<br>1<br>\end{bmatrix}<br>$$</p>
+<p>  接下来我们实现梯度上升的迭代求出最佳回归系数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(maxCycles):</span><br><span class="line">    h = <span class="number">1.0</span>/(<span class="number">1</span>+exp(-dataMat*weights))</span><br><span class="line">    weights = weights + alpha * (mat(dataLabel).transpose() - h) * dataMat.transpose()</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>1.0/(1+exp(-dataMat*weights))</code>是迭代过程中，使用迭代当前的回归系数和样本特征值输入到预测函数$\frac1{1+e^{-w^Tx}}$做结果预测，且$w^Tx&#x3D;w_0 + w_1x_1 + w_2x_2 + \cdots + w_ix_i$，计算$w^Tx$使用矩阵计算很容易实现，过程如下<br>$$<br>\begin{align}<br>dataMat \times weights<br>&amp;&#x3D;<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 3 \<br>\cdots &amp; \cdots &amp; \cdots \<br>1 &amp; 4 &amp; 1 \<br>\end{bmatrix}<br>\times<br>\begin{bmatrix}<br>1 \<br>1 \<br>1<br>\end{bmatrix}<br>\<br>&amp;&#x3D;<br>\begin{bmatrix}<br>1\times1+2\times1+3\times1 \<br>\cdots  \<br>1\times1+4\times1+1\times1 \<br>\end{bmatrix}<br>\<br>\end{align}<br>$$<br>其中<code>weights + alpha * (mat(dataLabel).transpose() - h) * dataMat.transpose()</code>则完全是根据梯度迭代公式计算<br>$$<br>w: &#x3D; w + \alpha (y_i-\sigma(w_i^Tx_i))x_i^T<br>$$<br>迭代完成之后<code>weights</code>的值即为我们所求的最佳回归系数。</p>
+<h2 id="算法收敛"><a href="#算法收敛" class="headerlink" title="算法收敛"></a>算法收敛</h2><hr>
+<p>  收敛是判断一个优化算法好坏的方法，就是说该算法的参数是否达到了稳定值。通俗的讲就是在做最优化算法的时候，算法要找到一个最优解需要一个过程，在Logistic回归算法计算最佳回归系数的时候，回归系数会由一个最差的回归系数慢慢变成一个最佳回归系数，并且由于一般情况下数据集中的样本并不是线性可分的，在算法训练过程中回归系数的值还会有数据的波动或高频波动产生，但是回归系数的值在迭代更新一定次数后会趋于一个稳定值，尽管还会有稍许数据波动产生也是可以接受范围，这个时候我们就说算法已经收敛，这个趋于稳定的值就是我们所说的最佳回归系数。</p>
+<p>  在算法训练后观察优化算法收敛的状态可以让我们找到如何优化和完善算法的方向和评估算法的好坏。为了可以直观的看到算法收敛，我们需要在坐标系中，将$x$轴作为系数更新次数，$y$轴表示为某个特征系数的值，就会绘制出一条算法收敛示意图。</p>
+<p>  知道了收敛是判断一个优化算法的好坏，因此我们在做优化和改善算法的时候，我们的目标就是使得优化算法可以更好的收敛，即我们需要使收敛速度更快和数据波动或高频波动更少。</p>
+<p>  收敛速度的可控因素是算法训练中$\alpha$的值，即控制梯度上升中每次移动的步长。最好的方法是在梯度上升中使得回归系数的每次迭代更新中$\alpha$的值随着迭代次数的增加不断下降，即将梯度上升中的移动速度慢慢放缓。因为刚开始的迭代中系数的波动都比较大且不是我们需要计算的最佳回归系数状态，所以可以加快通过这个波动的速度。不过值得注意的是，需要保证$\alpha$的值永远不会减小到0，也就是需要保证在每次迭代更新后的新数据任然具有一定的影响。</p>
+<h2 id="随机梯度上升算法"><a href="#随机梯度上升算法" class="headerlink" title="随机梯度上升算法"></a>随机梯度上升算法</h2><hr>
+<p>  梯度上升算法中，在更新回归系数的迭代过程中，因为矩阵相乘的关系每次迭代都会遍历整个数据集，如果定义训练数据集中有$m$个样本，一个数据样本中有$n$个特征，算法训练中被迭代了$t$次，那么梯度上升算法的运算量为<br>$$<br>c &#x3D; n \times m \times t<br>$$<br>如果样本集中样本数量非常大的时候，梯度上升算法的运算复杂度就会很高，并且直接影响算法训练的效率。</p>
+<p>  基于上述原因，所以我们引入随机梯度上升算法，随机梯度上升算法是梯度上升算法的优化版本。随机梯度上升算法和梯度上升算法的不同在于梯度上升算法是每次迭代都将样本集中所有样本用于更新回归系数计算，而随机梯度上升算法是每次迭代都只使用样本集中的一条没有参与计算的新样本进行计算，是增量式的更新，这是一个<code>在线学习</code>的算法，而梯度上升算法是一个<code>批处理</code>的算法。正是随机梯度上升算法这个不同，大大降低了算法训练过程的计算复杂度和训练效率。</p>
+<h2 id="随机梯度上升算法的实现"><a href="#随机梯度上升算法的实现" class="headerlink" title="随机梯度上升算法的实现"></a>随机梯度上升算法的实现</h2><hr>
+<h3 id="Python-1"><a href="#Python-1" class="headerlink" title="Python"></a>Python</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="comment"># 构造样本集，这里需使用NumPy数组</span></span><br><span class="line">dataSet = array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], ...,[<span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>]])</span><br><span class="line"><span class="comment"># 样本集对应的样本类别</span></span><br><span class="line">dataLabel = [<span class="number">1</span>, ..., <span class="number">0</span>]</span><br><span class="line"><span class="comment"># 样本集数据的规格</span></span><br><span class="line">m, n = shape(dataSet)</span><br><span class="line"><span class="comment"># 创建一个初始的回归系数，默认为1，回归系数的尺寸和样本集中样本的特征数量相同</span></span><br><span class="line">weights = ones((n, <span class="number">1</span>))</span><br><span class="line"><span class="comment"># 设置循环迭代的次数</span></span><br><span class="line">maxCycles = <span class="number">200</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(maxCycles):</span><br><span class="line">    dataIndex = <span class="built_in">range</span>(m)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">        <span class="comment"># 每次迭代的移动步进距离，逐渐减小且不可能等于0</span></span><br><span class="line">        alpha = <span class="number">4</span>/(<span class="number">1.0</span>+k+i)+<span class="number">0.01</span></span><br><span class="line">        randIndex = <span class="built_in">int</span>(random.uniform(<span class="number">0</span>, <span class="built_in">len</span>(dataIndex)))</span><br><span class="line">        <span class="comment"># 这里没有使用矩阵乘法，所有需要用sum函数计算sigmoid的输入值</span></span><br><span class="line">        h = <span class="number">1.0</span> / (<span class="number">1</span> + exp(-<span class="built_in">sum</span>(dataSet[randIndex]*weights)))</span><br><span class="line">        weights = weights + alpha * (classLabel[randIndex] - h) * dataSet[randIndex]</span><br><span class="line">        <span class="keyword">del</span>(dataIndex[randIndex])</span><br></pre></td></tr></table></figure>
+
+<p>算法实现中<code>alpha = 4/(1.0+k+i)+0.01</code>可以根据实际样本集和训练情况做修改，<code>+0.01</code>为保证<code>alpha</code>不会等于0。在算法训练中采用增量更新，每次随机获取数据集中的一个样本输入并删除，保证不会重复输入相同的样本。</p>
+<h2 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h2><hr>
+<p>  Logistic回归算法在二分类的分类预测中，因为算法的过程是对已知分类的样本集做拟合的过程，所以最终可以生成一条线叫做最佳拟合线，也叫决策边界，这条线将所有的样本内容一分为二，一部分属于分类1，则另一部分属于分类2。为了更直观的展示算法训练效果，那么如何确定和在坐标系中画出这条线呢？</p>
+<p>  我们已经通过算法训练出了最佳回归系数，并且通过Sigmoid函数的曲线可以看出，预测函数的边界在0的位置，在坐标系中，横坐标0两边的部分分别表示两个不同的分类，所以设定边界函数为<br>$$<br>0&#x3D;w_0+w_1x_1 + w_2x_2 + \cdots + w_nx_n<br>$$<br>由于$x_0&#x3D;0$，所以$0&#x3D;w_0+w_1x_1+w_2x_2$，解出$x_2$和$x_1$的关系为<br>$$<br>x_1 &#x3D; \frac {-w_0-w_1 * x_2}{w_2}<br>$$<br>在坐标系中，将一系列$(x_1,x_2)$的点用线连接起来，这条线即算法在该样本集中的决策边界。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx.jpg" alt="Iceberg 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/zfb.jpg" alt="Iceberg 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Iceberg
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://vnicl.github.io/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/" title="Logistic回归">https://vnicl.github.io/2017/05/04/Logistic回归/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/%E5%9B%9E%E5%BD%92/" rel="tag"># 回归</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/03/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" rel="prev" title="朴素贝叶斯">
+                  <i class="fa fa-angle-left"></i> 朴素贝叶斯
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="next" title="支持向量机 (SVM)">
+                  支持向量机 (SVM) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2009 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Iceberg</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.umd.js" integrity="sha256-+2+qOqR8CKoHh/AsVR9k2qaDBKWjYNC2nozhYmv5j9k=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
