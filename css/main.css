@@ -18,10 +18,10 @@
   --btn-default-hover-bg: transparent;
   --btn-default-hover-color: var(--link-hover-color);
   --btn-default-hover-border-color: var(--link-hover-color);
-  --highlight-background: #f3f3f3;
-  --highlight-foreground: #444;
-  --highlight-gutter-background: #e1e1e1;
-  --highlight-gutter-foreground: #555;
+  --highlight-background: #fff;
+  --highlight-foreground: #000;
+  --highlight-gutter-background: #e5e5e5;
+  --highlight-gutter-foreground: #191919;
   color-scheme: light;
 }
 html {
@@ -380,114 +380,104 @@ pre code.hljs {
 code.hljs {
   padding: 3px 5px
 }
-/*!
-  Theme: Default
-  Description: Original highlight.js style
-  Author: (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
-  Maintainer: @highlightjs/core-team
-  Website: https://highlightjs.org/
-  License: see project LICENSE
-  Touched: 2021
-*/
 /*
-This is left on purpose making default.css the single file that can be lifted
-as-is from the repository directly without the need for a build step
 
-Typically this "required" baseline CSS is added by `makestuff.js` during build.
+Intellij-light style (c) Pegasis <me@pegasis.site>
+
 */
-pre code.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 1em
-}
-code.hljs {
-  padding: 3px 5px
-}
-/* end baseline CSS */
 .hljs {
-  background: #F3F3F3;
-  color: #444
+  color: #000;
+  background: #fff
 }
-/* Base color: saturation 0; */
-.hljs-subst {
-  /* default */
-  
+.hljs-subst,
+.hljs-title {
+  font-weight: normal;
+  color: #000
 }
-/* purposely ignored */
-.hljs-formula,
-.hljs-attr,
-.hljs-property,
-.hljs-params {
-  
+.hljs-title.function_ {
+  color: #7A7A43
 }
-.hljs-comment {
-  color: #697070
-}
-.hljs-tag,
-.hljs-punctuation {
-  color: #444a
-}
-.hljs-tag .hljs-name,
-.hljs-tag .hljs-attr {
-  color: #444
-}
-.hljs-keyword,
-.hljs-attribute,
-.hljs-selector-tag,
-.hljs-meta .hljs-keyword,
-.hljs-doctag,
-.hljs-name {
-  font-weight: bold
-}
-/* User color: hue: 0 */
-.hljs-type,
-.hljs-string,
-.hljs-number,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-quote,
-.hljs-template-tag,
-.hljs-deletion {
-  color: #880000
-}
-.hljs-title,
-.hljs-section {
-  color: #880000;
-  font-weight: bold
-}
-.hljs-regexp,
-.hljs-symbol,
-.hljs-variable,
-.hljs-template-variable,
-.hljs-link,
-.hljs-selector-attr,
-.hljs-operator,
-.hljs-selector-pseudo {
-  color: #ab5656
-}
-/* Language color: hue: 90; */
-.hljs-literal {
-  color: #695
-}
-.hljs-built_in,
-.hljs-bullet,
 .hljs-code,
-.hljs-addition {
-  color: #397300
+.hljs-comment,
+.hljs-quote {
+  color: #8C8C8C;
+  font-style: italic
 }
-/* Meta color: hue: 200 */
 .hljs-meta {
-  color: #1f7199
+  color: #9E880D
 }
-.hljs-meta .hljs-string {
-  color: #38a
+.hljs-section {
+  color: #871094
 }
-/* Misc effects */
+.hljs-variable.language_,
+.hljs-symbol,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-selector-tag,
+.hljs-template-tag,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-literal,
+.hljs-name,
+.hljs-built_in,
+.hljs-type {
+  color: #0033B3
+}
+.hljs-property,
+.hljs-attr {
+  color: #871094
+}
+.hljs-attribute {
+  color: #174AD4
+}
+.hljs-number {
+  color: #1750EB
+}
+.hljs-regexp {
+  color: #264EFF
+}
+.hljs-link {
+  text-decoration: underline;
+  color: #006DCC
+}
+.hljs-meta .hljs-string,
+.hljs-string {
+  color: #067D17
+}
+.hljs-char.escape_ {
+  color: #0037A6
+}
+.hljs-doctag {
+  text-decoration: underline
+}
+.hljs-template-variable {
+  color: #248F8F
+}
+.hljs-addition {
+  background: #BEE6BE
+}
+.hljs-deletion {
+  background: #D6D6D6
+}
 .hljs-emphasis {
   font-style: italic
 }
 .hljs-strong {
   font-weight: bold
+}
+.hljs-variable,
+.hljs-operator,
+.hljs-punctuation,
+.hljs-title.class_.inherited__,
+.hljs-title.class_,
+.hljs-params,
+.hljs-bullet,
+.hljs-formula,
+.hljs-tag {
+  /* purposely ignored */
+  
 }
 .highlight:hover .copy-btn,
 .code-container:hover .copy-btn {
@@ -2819,7 +2809,7 @@ header.header {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #f2f;
+  background: #142d50;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);

@@ -24,16 +24,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"vnicl.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="笔者使用环境  OS name: OS X Ei CapitanOS version: 10.11.5Java version: 1.8.0_91Apache Maven: 3.3.9  创建项目：mvn archetype:generate  如果是第一次运行 Maven 的话，它会从远程 Maven 仓库下载很多需要的程序到你的本地库本地库（local repository）目录：~&#x2F;.m2&#x2F;">
+    <meta name="description" content="## 笔者使用环境  OS name: OS X Ei Capitan OS version: 10.11.5 Java version: 1.8.0_91 Apache Maven: 3.3.9">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Maven使用入门">
 <meta property="og:url" content="https://vnicl.github.io/2016/07/05/Maven%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="攻城狮也文艺">
-<meta property="og:description" content="笔者使用环境  OS name: OS X Ei CapitanOS version: 10.11.5Java version: 1.8.0_91Apache Maven: 3.3.9  创建项目：mvn archetype:generate  如果是第一次运行 Maven 的话，它会从远程 Maven 仓库下载很多需要的程序到你的本地库本地库（local repository）目录：~&#x2F;.m2&#x2F;">
+<meta property="og:description" content="## 笔者使用环境  OS name: OS X Ei Capitan OS version: 10.11.5 Java version: 1.8.0_91 Apache Maven: 3.3.9">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://vnicl.github.io/2016/07/05/Maven%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/QQ20160714-0@2x.png">
 <meta property="article:published_time" content="2016-07-05T11:01:31.000Z">
-<meta property="article:modified_time" content="2017-03-27T05:51:56.000Z">
+<meta property="article:modified_time" content="2024-03-05T13:35:24.463Z">
 <meta property="article:author" content="Iceberg">
 <meta property="article:tag" content="原创">
 <meta property="article:tag" content="JAVA">
@@ -149,7 +149,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%94%E8%80%85%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">笔者使用环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%EF%BC%9Amvn-archetype-generate"><span class="nav-number">2.</span> <span class="nav-text">创建项目：mvn archetype:generate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%91%BD%E4%BB%A4%EF%BC%9Amvn-compile"><span class="nav-number">3.</span> <span class="nav-text">编译命令：mvn compile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E9%99%A4%E7%BC%96%E8%AF%91%EF%BC%9Amvn-clean"><span class="nav-number">4.</span> <span class="nav-text">清除编译：mvn clean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4%EF%BC%9Amvn-test"><span class="nav-number">5.</span> <span class="nav-text">测试命令：mvn test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%91%BD%E4%BB%A4%EF%BC%9Amvn-package"><span class="nav-number">6.</span> <span class="nav-text">打包命令：mvn package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4%EF%BC%9Amvn-install"><span class="nav-number">7.</span> <span class="nav-text">安装命令：mvn install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Eclipse%E4%B8%AD%E7%9A%84Maven"><span class="nav-number">8.</span> <span class="nav-text">Eclipse中的Maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntelliJ-IDEA%E4%B8%AD%E7%9A%84Maven"><span class="nav-number">9.</span> <span class="nav-text">IntelliJ IDEA中的Maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">10.</span> <span class="nav-text">生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%B8%85%E7%90%86%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9Aclean"><span class="nav-number">10.1.</span> <span class="nav-text">项目清理的生命周期：clean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9Adefault"><span class="nav-number">10.2.</span> <span class="nav-text">项目构建的生命周期：default</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%92%8C%E5%8F%91%E5%B8%83%E9%A1%B9%E7%9B%AE%E7%AB%99%E7%82%B9%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9Asite"><span class="nav-number">10.3.</span> <span class="nav-text">建立和发布项目站点生命周期：site</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven%E4%B8%AD%E7%9A%84-pom-xml"><span class="nav-number">11.</span> <span class="nav-text">Maven中的 pom.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven%E7%9A%84%E5%9D%90%E6%A0%87"><span class="nav-number">12.</span> <span class="nav-text">Maven的坐标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jar%E5%8C%85%E4%BE%9D%E8%B5%96"><span class="nav-number">13.</span> <span class="nav-text">jar包依赖</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E8%8C%83%E5%9B%B4%EF%BC%9Ascope"><span class="nav-number">13.1.</span> <span class="nav-text">依赖范围：scope &lt;classpath的有效阶段&gt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E4%BC%A0%E9%80%92"><span class="nav-number">13.2.</span> <span class="nav-text">依赖传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E9%99%A4%E4%BE%9D%E8%B5%96"><span class="nav-number">13.3.</span> <span class="nav-text">排除依赖</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%94%E8%80%85%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">## 笔者使用环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AEmvn-archetypegenerate"><span class="nav-number">2.</span> <span class="nav-text">## 创建项目：mvn
+archetype:generate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%91%BD%E4%BB%A4mvn-compile"><span class="nav-number">3.</span> <span class="nav-text">## 编译命令：mvn compile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%85%E9%99%A4%E7%BC%96%E8%AF%91mvn-clean"><span class="nav-number">4.</span> <span class="nav-text">## 清除编译：mvn clean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4mvn-test"><span class="nav-number">5.</span> <span class="nav-text">## 测试命令：mvn test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%91%BD%E4%BB%A4mvn-package"><span class="nav-number">6.</span> <span class="nav-text">## 打包命令：mvn package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4mvn-install"><span class="nav-number">7.</span> <span class="nav-text">## 安装命令：mvn install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eclipse%E4%B8%AD%E7%9A%84maven"><span class="nav-number">8.</span> <span class="nav-text">## Eclipse中的Maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#intellij-idea%E4%B8%AD%E7%9A%84maven"><span class="nav-number">9.</span> <span class="nav-text">## IntelliJ IDEA中的Maven</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">10.</span> <span class="nav-text">## 生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%9E%84%E5%BB%BA%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9Fdefault"><span class="nav-number">10.1.</span> <span class="nav-text">项目构建的生命周期：default</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%92%8C%E5%8F%91%E5%B8%83%E9%A1%B9%E7%9B%AE%E7%AB%99%E7%82%B9%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9Fsite"><span class="nav-number">10.2.</span> <span class="nav-text">建立和发布项目站点生命周期：site</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maven%E4%B8%AD%E7%9A%84-pom.xml"><span class="nav-number">11.</span> <span class="nav-text">## Maven中的 pom.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maven%E7%9A%84%E5%9D%90%E6%A0%87"><span class="nav-number">12.</span> <span class="nav-text">## Maven的坐标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jar%E5%8C%85%E4%BE%9D%E8%B5%96"><span class="nav-number">13.</span> <span class="nav-text">## jar包依赖</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E8%8C%83%E5%9B%B4scope"><span class="nav-number">13.1.</span> <span class="nav-text">依赖范围：scope </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E4%BC%A0%E9%80%92"><span class="nav-number">13.2.</span> <span class="nav-text">依赖传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E9%99%A4%E4%BE%9D%E8%B5%96"><span class="nav-number">13.3.</span> <span class="nav-text">排除依赖</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -274,7 +275,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2017-03-27 13:51:56" itemprop="dateModified" datetime="2017-03-27T13:51:56+08:00">2017-03-27</time>
+      <time title="修改时间：2024-03-05 21:35:24" itemprop="dateModified" datetime="2024-03-05T21:35:24+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -302,80 +303,89 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="笔者使用环境"><a href="#笔者使用环境" class="headerlink" title="笔者使用环境"></a>笔者使用环境</h2><hr>
+    <div class="post-body" itemprop="articleBody"><h2 id="笔者使用环境">## 笔者使用环境</h2>
 <blockquote>
-<p>OS name: OS X Ei Capitan<br>OS version: 10.11.5<br>Java version: 1.8.0_91<br>Apache Maven: 3.3.9</p>
+<p>OS name: OS X Ei Capitan<br />
+OS version: 10.11.5<br />
+Java version: 1.8.0_91<br />
+Apache Maven: 3.3.9</p>
 </blockquote>
-<h2 id="创建项目：mvn-archetype-generate"><a href="#创建项目：mvn-archetype-generate" class="headerlink" title="创建项目：mvn archetype:generate"></a>创建项目：mvn archetype:generate</h2><hr>
+<span id="more"></span>
+<h2 id="创建项目mvn-archetypegenerate">## 创建项目：mvn
+archetype:generate</h2>
 <blockquote>
-<p>如果是第一次运行 Maven 的话，它会从远程 Maven 仓库下载很多需要的程序到你的本地库<br>本地库（local repository）目录：<code>~/.m2/repository/</code><br>也可以不使用交互方式创建<br><code>mvn archetype:generate -DgroupId=com.test.helloworld -DartifactId=HelloWorld -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false</code></p>
+<p>如果是第一次运行 Maven 的话，它会从远程 Maven
+仓库下载很多需要的程序到你的本地库<br />
+本地库（local repository）目录：<code>~/.m2/repository/</code>
+也可以不使用交互方式创建<br />
+<code>mvn archetype:generate -DgroupId=com.test.helloworld -DartifactId=HelloWorld -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false</code></p>
 </blockquote>
-<ol>
-<li>Choose a number or apply filter<br>选择项目模版ID，直接回车选默认模版，再次回车选默认模版版本。</li>
-<li>Define value for property ‘groupId’: :<br>填写组织名称，一般使用域名方式，例如：com.test.helloworld</li>
-<li>Define value for property ‘artifactId’: :<br>填写项目名称，例如：HelloWorld</li>
-<li>Define value for property ‘version’:  1.0-SNAPSHOT: :<br>填写项目版本，回车默认或手动输入，默认为1.0-SNAPSHOT，例如：1.0</li>
-<li>Define value for property ‘package’:  com.test.helloworld: :<br>填写创建的包名，回车选默认或手动输入，默认使用组织名称，例如：com.test.helloworld</li>
-<li>Y: :<br>确认信息，直接回车</li>
+<ol type="1">
+<li>Choose a number or apply filter<br />
+选择项目模版ID，直接回车选默认模版，再次回车选默认模版版本。</li>
+<li>Define value for property 'groupId': :<br />
+填写组织名称，一般使用域名方式，例如：com.test.helloworld</li>
+<li>Define value for property 'artifactId': :<br />
+填写项目名称，例如：HelloWorld</li>
+<li>Define value for property 'version': 1.0-SNAPSHOT: :<br />
+填写项目版本，回车默认或手动输入，默认为1.0-SNAPSHOT，例如：1.0</li>
+<li>Define value for property 'package': com.test.helloworld: :<br />
+填写创建的包名，回车选默认或手动输入，默认使用组织名称，例如：com.test.helloworld</li>
+<li>Y: :<br />
+确认信息，直接回车</li>
 <li>如果终端信息输出<code>BUILD SUCCESS</code>则表明maven项目创建完成。</li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Using following parameters <span class="keyword">for</span> creating project from Old (1.x) Archetype: maven-archetype-quickstart:1.1</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Parameter: basedir, Value: /Users/iceberg/dev</span><br><span class="line">[INFO] Parameter: package, Value: com.test.helloworld</span><br><span class="line">[INFO] Parameter: groupId, Value: com.test.helloworld</span><br><span class="line">[INFO] Parameter: artifactId, Value: HelloWorld</span><br><span class="line">[INFO] Parameter: packageName, Value: com.test.helloworld</span><br><span class="line">[INFO] Parameter: version, Value: 1.0</span><br><span class="line">[INFO] project created from Old (1.x) Archetype <span class="keyword">in</span> <span class="built_in">dir</span>: /Users/iceberg/dev/HelloWorld</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 01:11 min</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:03:21+08:00</span><br><span class="line">[INFO] Final Memory: 15M/310M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
-<img data-src="/2016/07/05/Maven%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/QQ20160714-0@2x.png" class="" title="[项目目录结构]">
-
-<h2 id="编译命令：mvn-compile"><a href="#编译命令：mvn-compile" class="headerlink" title="编译命令：mvn compile"></a>编译命令：mvn compile</h2><hr>
-<p>  编译成功后，可以在项目目录下面的<code>target/classes</code>目录中找到编译后的<code>.class</code>文件。</p>
-<blockquote>
-<p>第一次执行时，会去 Maven 远程仓库下载大量的jar包。</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Iceberg-Mac:dev iceberg$ <span class="built_in">cd</span> HelloWorld/</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ mvn compile</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]                                                                         </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building HelloWorld 1.0</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] </span><br><span class="line">......</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 0.856 s</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:06:21+08:00</span><br><span class="line">[INFO] Final Memory: 15M/300M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ <span class="built_in">cd</span> target/classes/</span><br><span class="line">Iceberg-Mac:classes iceberg$ java com.test.helloworld.App</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-<h2 id="清除编译：mvn-clean"><a href="#清除编译：mvn-clean" class="headerlink" title="清除编译：mvn clean"></a>清除编译：mvn clean</h2><hr>
-<p>  执行完<code>mvn clean</code>后，<code>target</code>目录会被删除。</p>
-<blockquote>
-<p>第一次执行时，会去 Maven 远程仓库下载大量的jar包。</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Iceberg-Mac:classes iceberg$ <span class="built_in">cd</span> ../../</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ mvn clean</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]                                                                         </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building HelloWorld 1.0</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ HelloWorld ---</span><br><span class="line">[INFO] Deleting /Users/iceberg/dev/HelloWorld/target</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 0.227 s</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:14:10+08:00</span><br><span class="line">[INFO] Final Memory: 7M/245M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
-<h2 id="测试命令：mvn-test"><a href="#测试命令：mvn-test" class="headerlink" title="测试命令：mvn test"></a>测试命令：mvn test</h2><hr>
-<p>  该命令会执行<code>src/test/java/</code>下用<code>Junit</code>编写的测试代码</p>
-<blockquote>
-<p>执行顺序：编译－&gt;测试</p>
-</blockquote>
-<h2 id="打包命令：mvn-package"><a href="#打包命令：mvn-package" class="headerlink" title="打包命令：mvn package"></a>打包命令：mvn package</h2><hr>
-<p>  将当前的项目打包，并将目标jar包存放在<code>target</code>目录下面</p>
-<blockquote>
-<p>第一次执行时，会去 Maven 远程仓库下载大量的jar包。<br>该命令会自动跑测试代码，如果不需要测试，则运行命令<code>clean package -Dmaven.test.skip=true </code><br>执行顺序：编译－&gt;测试－&gt;打包</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Iceberg-Mac:HelloWorld iceberg$ mvn package</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]                                                                         </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building HelloWorld 1.0</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">....</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br><span class="line"> T E S T S</span><br><span class="line"> </span><br><span class="line">-------------------------------------------------------</span><br><span class="line">Running com.test.helloworld.AppTest</span><br><span class="line">Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec</span><br><span class="line"></span><br><span class="line">Results :</span><br><span class="line"></span><br><span class="line">Tests run: 1, Failures: 0, Errors: 0, Skipped: 0</span><br><span class="line"></span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ HelloWorld ---</span><br><span class="line">[INFO] Building jar: /Users/iceberg/dev/HelloWorld/target/HelloWorld-1.0.jar</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 1.493 s</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:22:16+08:00</span><br><span class="line">[INFO] Final Memory: 18M/303M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ <span class="built_in">cd</span> target/</span><br><span class="line">Iceberg-Mac:target iceberg$ java -classpath HelloWorld-1.0.jar com.test.helloworld.App</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-<h2 id="安装命令：mvn-install"><a href="#安装命令：mvn-install" class="headerlink" title="安装命令：mvn install"></a>安装命令：mvn install</h2><hr>
-<p>  该命令会将项目的jar包安装到本地 Maven 仓库中，以便其他项目使用。</p>
-<blockquote>
-<p>执行顺序：编译－&gt;测试－&gt;打包-&gt;安装</p>
-</blockquote>
-<h2 id="Eclipse中的Maven"><a href="#Eclipse中的Maven" class="headerlink" title="Eclipse中的Maven"></a>Eclipse中的Maven</h2><hr>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Using following parameters <span class="keyword">for</span> creating project from Old (1.x) Archetype: maven-archetype-quickstart:1.1</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Parameter: basedir, Value: /Users/iceberg/dev</span><br><span class="line">[INFO] Parameter: package, Value: com.test.helloworld</span><br><span class="line">[INFO] Parameter: groupId, Value: com.test.helloworld</span><br><span class="line">[INFO] Parameter: artifactId, Value: HelloWorld</span><br><span class="line">[INFO] Parameter: packageName, Value: com.test.helloworld</span><br><span class="line">[INFO] Parameter: version, Value: 1.0</span><br><span class="line">[INFO] project created from Old (1.x) Archetype <span class="keyword">in</span> <span class="built_in">dir</span>: /Users/iceberg/dev/HelloWorld</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 01:11 min</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:03:21+08:00</span><br><span class="line">[INFO] Final Memory: 15M/310M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+<img src="/2016/07/05/Maven%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/QQ20160714-0@2x.png" class="" title="[项目目录结构]">
+<h2 id="编译命令mvn-compile">## 编译命令：mvn compile</h2>
+<p>  编译成功后，可以在项目目录下面的<code>target/classes</code>目录中找到编译后的<code>.class</code>文件。
+&gt; 第一次执行时，会去 Maven 远程仓库下载大量的jar包。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Iceberg-Mac:dev iceberg$ <span class="built_in">cd</span> HelloWorld/</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ mvn compile</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]                                                                         </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building HelloWorld 1.0</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] </span><br><span class="line">......</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 0.856 s</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:06:21+08:00</span><br><span class="line">[INFO] Final Memory: 15M/300M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ <span class="built_in">cd</span> target/classes/</span><br><span class="line">Iceberg-Mac:classes iceberg$ java com.test.helloworld.App</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+<h2 id="清除编译mvn-clean">## 清除编译：mvn clean</h2>
+<p>  执行完<code>mvn clean</code>后，<code>target</code>目录会被删除。
+&gt; 第一次执行时，会去 Maven 远程仓库下载大量的jar包。</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Iceberg-Mac:classes iceberg$ <span class="built_in">cd</span> ../../</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ mvn clean</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]                                                                         </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building HelloWorld 1.0</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ HelloWorld ---</span><br><span class="line">[INFO] Deleting /Users/iceberg/dev/HelloWorld/target</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 0.227 s</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:14:10+08:00</span><br><span class="line">[INFO] Final Memory: 7M/245M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+<h2 id="测试命令mvn-test">## 测试命令：mvn test</h2>
+<p>  该命令会执行<code>src/test/java/</code>下用<code>Junit</code>编写的测试代码
+&gt; 执行顺序：编译－&gt;测试</p>
+<h2 id="打包命令mvn-package">## 打包命令：mvn package</h2>
+<p>  将当前的项目打包，并将目标jar包存放在<code>target</code>目录下面
+&gt; 第一次执行时，会去 Maven 远程仓库下载大量的jar包。 &gt;
+该命令会自动跑测试代码，如果不需要测试，则运行命令<code>clean package -Dmaven.test.skip=true</code>
+&gt; 执行顺序：编译－&gt;测试－&gt;打包</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Iceberg-Mac:HelloWorld iceberg$ mvn package</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]                                                                         </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building HelloWorld 1.0</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">....</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br><span class="line"> T E S T S</span><br><span class="line"> </span><br><span class="line">-------------------------------------------------------</span><br><span class="line">Running com.test.helloworld.AppTest</span><br><span class="line">Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec</span><br><span class="line"></span><br><span class="line">Results :</span><br><span class="line"></span><br><span class="line">Tests run: 1, Failures: 0, Errors: 0, Skipped: 0</span><br><span class="line"></span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ HelloWorld ---</span><br><span class="line">[INFO] Building jar: /Users/iceberg/dev/HelloWorld/target/HelloWorld-1.0.jar</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 1.493 s</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:22:16+08:00</span><br><span class="line">[INFO] Final Memory: 18M/303M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ <span class="built_in">cd</span> target/</span><br><span class="line">Iceberg-Mac:target iceberg$ java -classpath HelloWorld-1.0.jar com.test.helloworld.App</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+<h2 id="安装命令mvn-install">## 安装命令：mvn install</h2>
+<p>  该命令会将项目的jar包安装到本地 Maven 仓库中，以便其他项目使用。
+&gt; 执行顺序：编译－&gt;测试－&gt;打包-&gt;安装</p>
+<h2 id="eclipse中的maven">## Eclipse中的Maven</h2>
 <blockquote>
 <p>只针对已经创建好Maven项目之后的导入</p>
 </blockquote>
-<ol>
+<ol type="1">
 <li>在eclipse的Marketplace中找到<code>Maven Integration for Eclipse</code>并安装；</li>
-<li>在本地创建好 Maven 项目后，在eclipse中选择import，<code>Root Directory</code>中选择 Maven 项目目录，点击<code>Finish</code>完成；</li>
-<li>选中项目目录名，<code>Run-&gt;Run As-&gt;*</code>选择相应的 Maven 命令执行。</li>
+<li>在本地创建好 Maven
+项目后，在eclipse中选择import，<code>Root Directory</code>中选择 Maven
+项目目录，点击<code>Finish</code>完成；</li>
+<li>选中项目目录名，<code>Run-&gt;Run As-&gt;*</code>选择相应的 Maven
+命令执行。</li>
 </ol>
-<h2 id="IntelliJ-IDEA中的Maven"><a href="#IntelliJ-IDEA中的Maven" class="headerlink" title="IntelliJ IDEA中的Maven"></a>IntelliJ IDEA中的Maven</h2><hr>
+<h2 id="intellij-idea中的maven">## IntelliJ IDEA中的Maven</h2>
 <blockquote>
 <p>只针对已经创建好的Maven项目的导入</p>
 </blockquote>
-<ol>
+<ol type="1">
 <li>在Intellij欢迎界面点击<code>Import Project</code>；</li>
 <li>选择Maven项目中的<code>pom.xml</code>文件，然后一直<code>next</code>；</li>
-<li>也可以直接 <code>File -&gt; Open</code> 选择Maven项目中的<code>pom.xml</code>文件。</li>
+<li>也可以直接 <code>File -&gt; Open</code>
+选择Maven项目中的<code>pom.xml</code>文件。</li>
 </ol>
-<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><hr>
-<p>  clean、default、site是Maven的三个生命周期。<br>  Maven的生命周期相互独立。每个周期都包含一些有顺序的阶段，后面阶段的运行依赖于前面阶段的结果，所以用户和阶段2交互，则阶段1会自动执行。用户可以和这些生命周期的任何一个阶段交互。</p>
-<h3 id="项目清理的生命周期：clean"><a href="#项目清理的生命周期：clean" class="headerlink" title="项目清理的生命周期：clean"></a>项目清理的生命周期：clean</h3><ol>
-<li>pre-clean 清理前工作</li>
-<li>clean 清理工作</li>
-<li>post-clean 清理后工作</li>
-</ol>
-<h3 id="项目构建的生命周期：default"><a href="#项目构建的生命周期：default" class="headerlink" title="项目构建的生命周期：default"></a>项目构建的生命周期：default</h3><ol>
+<h2 id="生命周期">## 生命周期</h2>
+<p>  clean、default、site是Maven的三个生命周期。<br />
+  Maven的生命周期相互独立。每个周期都包含一些有顺序的阶段，后面阶段的运行依赖于前面阶段的结果，所以用户和阶段2交互，则阶段1会自动执行。用户可以和这些生命周期的任何一个阶段交互。
+### 项目清理的生命周期：clean 1. pre-clean 清理前工作 2. clean 清理工作
+3. post-clean 清理后工作</p>
+<h3 id="项目构建的生命周期default">项目构建的生命周期：default</h3>
+<ol type="1">
 <li>validate 验证项目</li>
 <li>initialize 初始化</li>
 <li>generate-sources 生成／载入源代码</li>
@@ -400,35 +410,44 @@
 <li>install 将项目打包生成的jar包安装到本地Maven仓库</li>
 <li>deplop 发布项目打包的内容，供其他开发人员和Maven项目使用</li>
 </ol>
-<h3 id="建立和发布项目站点生命周期：site"><a href="#建立和发布项目站点生命周期：site" class="headerlink" title="建立和发布项目站点生命周期：site"></a>建立和发布项目站点生命周期：site</h3><ol>
+<h3
+id="建立和发布项目站点生命周期site">建立和发布项目站点生命周期：site</h3>
+<ol type="1">
 <li>pre-site 生成项目站点之前的工作</li>
 <li>site 生成项目站点</li>
 <li>post-site 生成项目站点之后的工作</li>
 <li>site-deploy 发布项目站点</li>
 </ol>
-<h2 id="Maven中的-pom-xml"><a href="#Maven中的-pom-xml" class="headerlink" title="Maven中的 pom.xml"></a>Maven中的 pom.xml</h2><hr>
+<h2 id="maven中的-pom.xml">## Maven中的 pom.xml</h2>
 <p>  Maven 中的项目配置内容都在<code>pom.xml</code>文件中。</p>
-<h2 id="Maven的坐标"><a href="#Maven的坐标" class="headerlink" title="Maven的坐标"></a>Maven的坐标</h2><hr>
-<p>  <code>pom.xml</code>中声明的<code>groupId, artifactId, packaging, version</code>叫做 Maven 的坐标，坐标能唯一的确定一个项目。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.test.helloworld<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>HelloWorld<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="jar包依赖"><a href="#jar包依赖" class="headerlink" title="jar包依赖"></a>jar包依赖</h2><hr>
-<p>  依赖就是项目中需要引入的外部jar包，所有的依赖都声明在<code>pom.xml</code>中的<code>dependencies</code>节点中，例如测试模块依赖的<code>junit</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>可以看到，添加的<code>dependency</code>节点内容可以构成一个Maven项目的唯一坐标，这样就可以准确加载项目中需要的外部依赖<br>默认依赖类型为jar包</p>
-</blockquote>
-<h3 id="依赖范围：scope"><a href="#依赖范围：scope" class="headerlink" title="依赖范围：scope &lt;classpath的有效阶段&gt;"></a>依赖范围：scope &lt;classpath的有效阶段&gt;</h3><ol>
-<li>编译依赖范围：compile<br>默认依赖范围，在编译、测试、运行都有效</li>
-<li>测试依赖范围：test<br>只有在测试的时候有效</li>
-<li>已经存在的依赖范围：provided<br>类似于系统自带的依赖，JDK 或者容器会提供所需的jar文件。例如servlet-api</li>
+<h2 id="maven的坐标">## Maven的坐标</h2>
+<p>  <code>pom.xml</code>中声明的<code>groupId, artifactId, packaging, version</code>叫做
+Maven 的坐标，坐标能唯一的确定一个项目。 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.test.helloworld<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>HelloWorld<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="jar包依赖">## jar包依赖</h2>
+<p>  依赖就是项目中需要引入的外部jar包，所有的依赖都声明在<code>pom.xml</code>中的<code>dependencies</code>节点中，例如测试模块依赖的<code>junit</code>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure> &gt;
+可以看到，添加的<code>dependency</code>节点内容可以构成一个Maven项目的唯一坐标，这样就可以准确加载项目中需要的外部依赖
+&gt; 默认依赖类型为jar包</p>
+<h3 id="依赖范围scope">依赖范围：scope <classpath的有效阶段></h3>
+<ol type="1">
+<li>编译依赖范围：compile<br />
+默认依赖范围，在编译、测试、运行都有效</li>
+<li>测试依赖范围：test<br />
+只有在测试的时候有效</li>
+<li>已经存在的依赖范围：provided<br />
+类似于系统自带的依赖，JDK
+或者容器会提供所需的jar文件。例如servlet-api</li>
 <li>运行时依赖：runtime</li>
-<li>系统依赖范围：system<br>需要通过设置<code>systemPath</code>元素显式地指定依赖文件的路径</li>
+<li>系统依赖范围：system<br />
+需要通过设置<code>systemPath</code>元素显式地指定依赖文件的路径</li>
 <li>导入依赖范围：import</li>
 </ol>
-<h3 id="依赖传递"><a href="#依赖传递" class="headerlink" title="依赖传递"></a>依赖传递</h3><p>  当Maven项目依赖一个外部jar包是，这个jar包也是一个Maven项目，并且也有自己的依赖，那么我们不需要将这个外部jar包的依赖也一一在<code>pom.xml</code>中添加<code>dependency</code>节点。Maven会自动将外部jar包的依赖也传递到当前Maven项目中，这就是传递依赖。</p>
-<h3 id="排除依赖"><a href="#排除依赖" class="headerlink" title="排除依赖"></a>排除依赖</h3><p>  有时候我们在引入外部jar包的时候，不想让外部jar包的依赖传递到我们的Maven项目中，这时候我们可以在<code>dependency</code>节点中设置<code>exclusions</code>节点来拒绝依赖传递。<code>exclusions</code>可以包含一个或多个<code>exclusion</code>节点，<code>exclusion</code>节点就是想拒绝的依赖内容。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span>    </span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span>      </span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>          </span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="依赖传递">依赖传递</h3>
+<p>  当Maven项目依赖一个外部jar包是，这个jar包也是一个Maven项目，并且也有自己的依赖，那么我们不需要将这个外部jar包的依赖也一一在<code>pom.xml</code>中添加<code>dependency</code>节点。Maven会自动将外部jar包的依赖也传递到当前Maven项目中，这就是传递依赖。</p>
+<h3 id="排除依赖">排除依赖</h3>
+<p>  有时候我们在引入外部jar包的时候，不想让外部jar包的依赖传递到我们的Maven项目中，这时候我们可以在<code>dependency</code>节点中设置<code>exclusions</code>节点来拒绝依赖传递。<code>exclusions</code>可以包含一个或多个<code>exclusion</code>节点，<code>exclusion</code>节点就是想拒绝的依赖内容。
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span>    </span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span>      </span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>          </span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+
     </div>
 
     

@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2017-05-08 10:03:12" itemprop="dateModified" datetime="2017-05-08T10:03:12+08:00">2017-05-08</time>
+      <time title="修改时间：2024-03-05 21:33:14" itemprop="dateModified" datetime="2024-03-05T21:33:14+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -264,24 +264,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>  朴素贝叶斯算法是基于概率论的分类方法，在机器学习算法做分类判定的时候，有时我们并不需要算法给出一个明确的分类答案，因为分类器会产生错误结果，我们更偏向于获得分类器判定的一个最优的类别猜测结果，并用这个猜测的概率值来评估分类结果的可信度。</p>
-<h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><hr>
-<p>  贝叶斯决策理论是朴素贝叶斯的核心内容，贝叶斯决策理论是选择具有最高概率的决策，通俗点讲就是事物a属于$c_1$的概率如果大于事物a属于$c_2$的概率，那么我们就判定事物a为$c_1$,相反则属于$c_2$，即公式<br>$$<br>C&#x3D;p(a|c_1) &gt; p(a|c_2) \Rightarrow c_1<br>$$</p>
-<p>$$<br>C&#x3D;p(a|c_1) &lt; p(a|c_2) \Rightarrow c_2<br>$$</p>
-<p>$p(a|c_1)$为条件概率，是限定条件为$c_1$的情况下，$a$的概率。贝叶斯准则是有效计算条件概率的方法：<br>$$<br>p(c|x) &#x3D; \frac{p(x|c)p(c)}{p(x)}<br>$$<br>即在限定条件为$x$，$c$的概率为限定条件为$c$，$x$的概率和$c$的概率的积除以$x$的概率。</p>
-<p>  朴素贝叶斯算法经常被用于文档分类的判定。在算法实现中，我们将算法训练样本集转换成词向量格式。在一个文档样本中，根据所有样本集中词或句子的集合，来用1和0表示词或句子是否出现作为文档样本的一个特征，这样可以将样本集中的每个文档样本都被表示为向量的方式：<br>$$<br>vector&#x3D;[0, 1, 1, 0, 1, 0, \cdots, 0]<br>$$<br>该方式叫做<code>词集模型</code>；如果一个词或句子在样本中出现不止一次，为了捕获这种不能表达的某种样本特征信息，在构建样本向量时，使用0表示词或句子没有出现，而大于0的数值表示该词或句子在样本文档中出现的次数<br>$$<br>vector&#x3D;[0, 1, 0, 2, 5, \cdots, 1]<br>$$<br>这种构建样本文档向量的方式叫做<code>词袋模型</code>。</p>
-<p>  根据贝叶斯准则公式，推导出计算样本文档类别概率的公式：<br>$$<br>p(c_i|w) &#x3D; \frac{p(w|c_i)p(c_i)}{p(w)}<br>$$<br>$p(c_i)$表示类别概率，通过类别$c_i$中样本文档数除以总的样本数量计算。$p(w|c_i)$表示在限定类别为$c_i$的条件下，样本文档$w$的概率，由于我们已经将文档$w$转换为向量的格式，所以$p(w|c_i)$把$w$展开为一个个独立的特征可以写成$p(w_0,w_1,w_2,\cdots,w_n)$，接下来我们假设文档向量中的所有词都相互独立，该假设也称作<code>条件独立性假设</code>，朴素贝叶斯算法中<code>朴素</code>一词也来源于算法中简单朴素的这些假设。现在我们计算文档类别概率的公式可以修改为：<br>$$<br>\begin{align}<br>p(c_i|w)<br>&amp;&#x3D; \frac{p(w_0|c_i)p(w_1|c_i)p(w_2|c_i) \cdots p(w_n|c_i)p(c_i)}{p(w)} \<br>&amp;&#x3D; \frac{\prod_{i&#x3D;1,j&#x3D;1}^np(w_j|c_i)p(c_i)}{p(w)} \<br>\end{align}<br>$$<br>  前面我们已经知道了$p(c_i)$的计算方式，$p(w_n|c_i)$的计算方法类似，在限定类别为$c_i$的条件下，计算特征$w_n$的出现的次数除以所有特征出现的总次数。由于在朴素贝叶斯算法中分母$p(w)$的值都相同，所以我们只需要计算公式中分子的内容。</p>
-<h2 id="算法修正"><a href="#算法修正" class="headerlink" title="算法修正"></a>算法修正</h2><hr>
-<p>  根据上面推导后得来的最终概率公式可以得知，如果分子中任意一个概率为0时，则因为相乘的关系，整个分子值都为0。显然这是不正确的，所以我为了避免这种特殊情况的发生，在计算概率$p(w_n|c_i)$时，特征$w_n$的出现的次数从1开始统计，并将分母所有特征出现的总次数起始值设定为2。</p>
-<p>  由于概率的值都是很小的数，所以在计算乘积时最后的结果会下溢出或得到不正确的答案。合理规避这个问题的方式就是对最终的乘积取自然对数，同时采用自然对数的处理不会对结果产生任何损失。在代数中对数公式有<br>$$<br>ln(a*b) &#x3D; ln(a)+ln(b)<br>$$<br>所以朴素贝叶斯算法中的概率公式可以改写为<br>$$<br>\begin{align}<br>p(c_i|w)<br>&amp;&#x3D; \frac{ln(p(w_0|c_i))+ln(p(w_1|c_i))+ \cdots + ln(p(w_n|c_i))+ln(p(c_i))}{p(w)} \<br>&amp;&#x3D; \frac{\sum_{i&#x3D;1,j&#x3D;1}^nln(p(w_j|c_i))+ln(p(c_i))}{p(w)} \<br>\end{align}<br>$$</p>
-<h2 id="算法条件"><a href="#算法条件" class="headerlink" title="算法条件"></a>算法条件</h2><hr>
-<ol>
-<li>朴素贝叶斯算法适用于标称型数据或数值型数据；</li>
-<li>算法结果对输入数据比较敏感，所以可能需要花费更多的时间在对算法输入数据的处理中；</li>
-</ol>
-<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><hr>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">loadDataSet</span>():</span><br><span class="line">    postingList=[[<span class="string">&#x27;my&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;has&#x27;</span>, <span class="string">&#x27;flea&#x27;</span>, <span class="string">&#x27;problems&#x27;</span>, <span class="string">&#x27;help&#x27;</span>, <span class="string">&#x27;please&#x27;</span>],</span><br><span class="line">                 [<span class="string">&#x27;maybe&#x27;</span>, <span class="string">&#x27;not&#x27;</span>, <span class="string">&#x27;take&#x27;</span>, <span class="string">&#x27;him&#x27;</span>, <span class="string">&#x27;to&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;park&#x27;</span>, <span class="string">&#x27;stupid&#x27;</span>],</span><br><span class="line">                 [<span class="string">&#x27;my&#x27;</span>, <span class="string">&#x27;dalmation&#x27;</span>, <span class="string">&#x27;is&#x27;</span>, <span class="string">&#x27;so&#x27;</span>, <span class="string">&#x27;cute&#x27;</span>, <span class="string">&#x27;I&#x27;</span>, <span class="string">&#x27;love&#x27;</span>, <span class="string">&#x27;him&#x27;</span>],</span><br><span class="line">                 [<span class="string">&#x27;stop&#x27;</span>, <span class="string">&#x27;posting&#x27;</span>, <span class="string">&#x27;stupid&#x27;</span>, <span class="string">&#x27;worthless&#x27;</span>, <span class="string">&#x27;garbage&#x27;</span>],</span><br><span class="line">                 [<span class="string">&#x27;mr&#x27;</span>, <span class="string">&#x27;licks&#x27;</span>, <span class="string">&#x27;ate&#x27;</span>, <span class="string">&#x27;my&#x27;</span>, <span class="string">&#x27;steak&#x27;</span>, <span class="string">&#x27;how&#x27;</span>, <span class="string">&#x27;to&#x27;</span>, <span class="string">&#x27;stop&#x27;</span>, <span class="string">&#x27;him&#x27;</span>],</span><br><span class="line">                 [<span class="string">&#x27;quit&#x27;</span>, <span class="string">&#x27;buying&#x27;</span>, <span class="string">&#x27;worthless&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;food&#x27;</span>, <span class="string">&#x27;stupid&#x27;</span>]]</span><br><span class="line">    classVec = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>]    <span class="comment">#1 is abusive, 0 not</span></span><br><span class="line">    <span class="keyword">return</span> postingList,classVec</span><br><span class="line">                 </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">createVocabList</span>(<span class="params">dataSet</span>):</span><br><span class="line">    vocabSet = <span class="built_in">set</span>([])  <span class="comment">#create empty set</span></span><br><span class="line">    <span class="keyword">for</span> document <span class="keyword">in</span> dataSet:</span><br><span class="line">        vocabSet = vocabSet | <span class="built_in">set</span>(document) <span class="comment">#union of the two sets</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>(vocabSet)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">setOfWords2Vec</span>(<span class="params">vocabList, inputSet</span>):</span><br><span class="line">    returnVec = [<span class="number">0</span>]*<span class="built_in">len</span>(vocabList)</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet:</span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocabList:</span><br><span class="line">            returnVec[vocabList.index(word)] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>: <span class="built_in">print</span> <span class="string">&quot;the word: %s is not in my Vocabulary!&quot;</span> % word</span><br><span class="line">    <span class="keyword">return</span> returnVec</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">trainNB0</span>(<span class="params">trainMatrix,trainCategory</span>):</span><br><span class="line">    numTrainDocs = <span class="built_in">len</span>(trainMatrix)</span><br><span class="line">    numWords = <span class="built_in">len</span>(trainMatrix[<span class="number">0</span>])</span><br><span class="line">    pAbusive = <span class="built_in">sum</span>(trainCategory)/<span class="built_in">float</span>(numTrainDocs)</span><br><span class="line">    p0Num = ones(numWords); p1Num = ones(numWords)      <span class="comment">#change to ones() </span></span><br><span class="line">    p0Denom = <span class="number">2.0</span>; p1Denom = <span class="number">2.0</span>                        <span class="comment">#change to 2.0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numTrainDocs):</span><br><span class="line">        <span class="keyword">if</span> trainCategory[i] == <span class="number">1</span>:</span><br><span class="line">            p1Num += trainMatrix[i]</span><br><span class="line">            p1Denom += <span class="built_in">sum</span>(trainMatrix[i])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            p0Num += trainMatrix[i]</span><br><span class="line">            p0Denom += <span class="built_in">sum</span>(trainMatrix[i])</span><br><span class="line">    p1Vect = log(p1Num/p1Denom)          <span class="comment">#change to log()</span></span><br><span class="line">    p0Vect = log(p0Num/p0Denom)          <span class="comment">#change to log()</span></span><br><span class="line">    <span class="keyword">return</span> p0Vect,p1Vect,pAbusive</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">classifyNB</span>(<span class="params">vec2Classify, p0Vec, p1Vec, pClass1</span>):</span><br><span class="line">    p1 = <span class="built_in">sum</span>(vec2Classify * p1Vec) + log(pClass1)    <span class="comment">#element-wise mult</span></span><br><span class="line">    p0 = <span class="built_in">sum</span>(vec2Classify * p0Vec) + log(<span class="number">1.0</span> - pClass1)</span><br><span class="line">    <span class="keyword">if</span> p1 &gt; p0:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>: </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bagOfWords2VecMN</span>(<span class="params">vocabList, inputSet</span>):</span><br><span class="line">    returnVec = [<span class="number">0</span>]*<span class="built_in">len</span>(vocabList)</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet:</span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocabList:</span><br><span class="line">            returnVec[vocabList.index(word)] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> returnVec</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">testingNB</span>():</span><br><span class="line">    listOPosts,listClasses = loadDataSet()</span><br><span class="line">    myVocabList = createVocabList(listOPosts)</span><br><span class="line">    trainMat=[]</span><br><span class="line">    <span class="keyword">for</span> postinDoc <span class="keyword">in</span> listOPosts:</span><br><span class="line">        trainMat.append(setOfWords2Vec(myVocabList, postinDoc))</span><br><span class="line">    p0V,p1V,pAb = trainNB0(array(trainMat),array(listClasses))</span><br><span class="line">    testEntry = [<span class="string">&#x27;love&#x27;</span>, <span class="string">&#x27;my&#x27;</span>, <span class="string">&#x27;dalmation&#x27;</span>]</span><br><span class="line">    thisDoc = array(setOfWords2Vec(myVocabList, testEntry))</span><br><span class="line">    <span class="built_in">print</span> testEntry,<span class="string">&#x27;classified as: &#x27;</span>,classifyNB(thisDoc,p0V,p1V,pAb)</span><br><span class="line">    testEntry = [<span class="string">&#x27;stupid&#x27;</span>, <span class="string">&#x27;garbage&#x27;</span>]</span><br><span class="line">    thisDoc = array(setOfWords2Vec(myVocabList, testEntry))</span><br><span class="line">    <span class="built_in">print</span> testEntry,<span class="string">&#x27;classified as: &#x27;</span>,classifyNB(thisDoc,p0V,p1V,pAb)</span><br></pre></td></tr></table></figure>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/05/03/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -343,7 +333,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2017-05-08 00:29:42" itemprop="dateModified" datetime="2017-05-08T00:29:42+08:00">2017-05-08</time>
+      <time title="修改时间：2024-03-05 21:33:56" itemprop="dateModified" datetime="2024-03-05T21:33:56+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -372,72 +362,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><hr>
+          <h2 id="算法原理">算法原理</h2>
+<hr />
 <p>  在机器学习中，有多种构造决策树的方法，本文只讨论ID3的决策树。</p>
 <p>  决策树顾名思义就是使用样本集数据构造一颗树，一棵树会有很多枝干节点和叶子节点。决策树算法会把最终结果放在叶子节点，所以要知道算法结果，我们必须从根节点开始一节一节通过树枝干节点找到结果所在的叶子节点。</p>
-<p>  一个树的数据模型应该是结构非常清晰并且数据形式非常容易理解的。构造决策树算法中枝干部分会由数据的特征值来创建。在算法计算中，我们通过未知分类数据的某一个特征的特征值从由决策树构建的树模型中找到对应的枝干，然后在用下一个特征的特征值找到该枝干的子枝干部分，这样一级一级找下去，当所有的特征都用完了的时候，我们就找到了叶子节点的位置，最后得出结论。</p>
-<p>  说的更形象一点，决策树类似于我们做开发时候的条件语句嵌套：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">如果 a=<span class="number">1</span>:</span><br><span class="line">    如果 b=<span class="number">1</span>:</span><br><span class="line">        ...</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ...</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    如果 c=<span class="number">1</span>:</span><br><span class="line">        ...</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
-
-<p>这样一只嵌套下去，然后得到一个最终的结果。</p>
-<p>  决策树算法可以将算法训练结果即树模型存储起来避免重复构建决策树。</p>
-<h2 id="算法条件"><a href="#算法条件" class="headerlink" title="算法条件"></a>算法条件</h2><hr>
-<ol>
-<li>ID3算法最适合处理标称型的数据，无法直接处理数值型数据，如果要处理数值型数据，我们需要通过量化的方法将数值型数据转化为标称型数据；</li>
-<li>特征划分如果过多，ID3算法会面临其他问题；</li>
-</ol>
-<h2 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h2><hr>
-<p>  前面算法原理中讲到决策树的树模型，在算法构建决策树模型的时候，我们第一应该考虑的问题是到底应该由数据集的哪个特征来先创建决策树模型的枝干会更好一点？所以在决策树算法中需要考虑怎么对数据做划分会更好。</p>
-<p>  划分数据的原则是将本来无序的数据变得更加有序，我们使用决策树算法来处理的数据一般都是一些杂乱无章的数据，无序数据的特征互不相干且数据不易理解，对该类型的数据划分我们这里选择使用<code>信息论</code>来量化<code>度量信息</code>。在数据划分前后信息发生的变化叫做<code>信息增益</code>，通过计算每个特征值划分数据集获得的信息增益并取信息增益最高的特征就是最好的数据划分特征。</p>
-<p>  计算信息增益的度量方式是<code>香农熵</code>或简称<code>熵</code>，熵被定义为信息的期望值。信息的定义公式：<br>$$<br>l(x_i)&#x3D;-log_2p(x_i)<br>$$<br>在决策树算法中，$x_i$为类别，$p(x_i)$为在样本数据集中选择该分类的概率，即$x_i$类别的样本数量除以样本集大小。为了计算熵，我们需要计算所有类别所有可能值包含的信息期望值，计算熵的公式：<br>$$<br>H&#x3D;-\sum_{i&#x3D;1}^np(x_i)log_2p(x_i)<br>$$<br>数据的熵值越大说明混合的数据越多，也就是说数据集的熵越大，则表示该数据集越无序。</p>
-<h2 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h2><hr>
-<ol>
-<li>计算当前样本数据集的熵；</li>
-<li>遍历当前样本集的特征，然后按照每个特征的特征值将数据集拆分成若干子集；</li>
-<li>计算每个子集的熵，使用子集的熵乘以该子集的概率（子集尺寸除以当前数据集的尺寸）然后做相加操作即为按照该特征划分数据的信息增益；</li>
-<li>选取一个信息增益最大的特征作为划分数据特征；</li>
-<li>按照第4步获取特征的特征值对当前样本集做数据划分；</li>
-<li>使用第5步获取的样本子集重新从第1步开始操作，直到新划分的子集没有特征可划分或样本集中只有单一分类即最终的叶子节点。</li>
-</ol>
-<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><hr>
-<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>  实验使用《机器学习实战》一书中的<code>海洋生物数据</code>作为数据集。</p>
-<table>
-<thead>
-<tr>
-<th align="center">不浮出水面十分可以生存</th>
-<th align="center">是否有脚蹼</th>
-<th align="center">属于鱼类</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">是</td>
-<td align="center">是</td>
-<td align="center">是</td>
-</tr>
-<tr>
-<td align="center">是</td>
-<td align="center">是</td>
-<td align="center">是</td>
-</tr>
-<tr>
-<td align="center">是</td>
-<td align="center">否</td>
-<td align="center">否</td>
-</tr>
-<tr>
-<td align="center">否</td>
-<td align="center">是</td>
-<td align="center">否</td>
-</tr>
-<tr>
-<td align="center">否</td>
-<td align="center">是</td>
-<td align="center">否</td>
-</tr>
-</tbody></table>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> log</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"><span class="comment"># 创建算法训练样本集和特征名称列表</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">createDataSet</span>():</span><br><span class="line">    dataSet = [[<span class="number">1</span>, <span class="number">1</span>, <span class="string">&#x27;yes&#x27;</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="string">&#x27;yes&#x27;</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="string">&#x27;no&#x27;</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="string">&#x27;no&#x27;</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="string">&#x27;no&#x27;</span>]]</span><br><span class="line">    labels = [<span class="string">&#x27;no surfacing&#x27;</span>, <span class="string">&#x27;flippers&#x27;</span>]</span><br><span class="line">    <span class="keyword">return</span> dataSet, labels</span><br><span class="line"><span class="comment"># 计算数据集的熵</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calcShannonEnt</span>(<span class="params">dataSet</span>):</span><br><span class="line">    <span class="comment"># 数据集中样本数量</span></span><br><span class="line">    numEntries = <span class="built_in">len</span>(dataSet)</span><br><span class="line">    <span class="comment"># 数据集中每种类别的数量</span></span><br><span class="line">    labelCounts = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> featVec <span class="keyword">in</span> dataSet:</span><br><span class="line">        currentLabel = featVec[-<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">if</span> currentLabel <span class="keyword">not</span> <span class="keyword">in</span> labelCounts.keys():</span><br><span class="line">            labelCounts[currentLabel] = <span class="number">0</span></span><br><span class="line">        labelCounts[currentLabel] += <span class="number">1</span></span><br><span class="line">    shannonEnt = <span class="number">0.0</span></span><br><span class="line">    <span class="comment"># 根据香农熵公式计算数据集的熵</span></span><br><span class="line">    <span class="keyword">for</span> key <span class="keyword">in</span> labelCounts:</span><br><span class="line">        prob = <span class="built_in">float</span>(labelCounts[key]) / numEntries</span><br><span class="line">        shannonEnt -= prob * log(prob, <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> shannonEnt</span><br><span class="line"><span class="comment"># 划分数据并返回输入数据集中特征axis的值为value的数据子集</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">splitDataSet</span>(<span class="params">dataSet, axis, value</span>):</span><br><span class="line">    retDataSet = []</span><br><span class="line">    <span class="keyword">for</span> featVec <span class="keyword">in</span> dataSet:</span><br><span class="line">        <span class="keyword">if</span> featVec[axis] == value:</span><br><span class="line">            reducedFeatVec = featVec[:axis]</span><br><span class="line">            reducedFeatVec.extend(featVec[axis+<span class="number">1</span>:])</span><br><span class="line">            retDataSet.append(reducedFeatVec)</span><br><span class="line">    <span class="keyword">return</span> retDataSet</span><br><span class="line"><span class="comment"># 从当前数据集中选择最好的划分数据特征</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">chooseBestFeatureToSplit</span>(<span class="params">dataSet</span>):</span><br><span class="line">    <span class="comment"># 特征数量</span></span><br><span class="line">    numFeatures = <span class="built_in">len</span>(dataSet[<span class="number">0</span>]) - <span class="number">1</span></span><br><span class="line">    <span class="comment"># 当前数据集的熵</span></span><br><span class="line">    baseEntropy = calcShannonEnt(dataSet)</span><br><span class="line">    bestInfoGain = <span class="number">0.0</span></span><br><span class="line">    bestFeature = -<span class="number">1</span></span><br><span class="line">    <span class="comment"># 遍历所有特征，分别计算按该特征划分数据后的熵，取熵值最小的特征作为数据划分特征，即熵越小，数据集越有序，信息增益越大</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numFeatures):</span><br><span class="line">        <span class="comment"># 特征值列表</span></span><br><span class="line">        featList =[example[i] <span class="keyword">for</span> example <span class="keyword">in</span> dataSet]</span><br><span class="line">        <span class="comment"># 特征值排重</span></span><br><span class="line">        uniqueVals = <span class="built_in">set</span>(featList)</span><br><span class="line">        newEntropy = <span class="number">0.0</span></span><br><span class="line">        <span class="comment"># 遍历所有特征值，并做预划分，返回计算该特征划分后在总数据集中的熵</span></span><br><span class="line">        <span class="keyword">for</span> value <span class="keyword">in</span> uniqueVals:</span><br><span class="line">            subDataSet = splitDataSet(dataSet, i, value)</span><br><span class="line">            <span class="comment"># 计算特征取value的概率，即取该特征值在数据集中的次数除以数据集的实例总数</span></span><br><span class="line">            prob = <span class="built_in">len</span>(subDataSet) / <span class="built_in">float</span>(<span class="built_in">len</span>(dataSet))</span><br><span class="line">            newEntropy += prob * calcShannonEnt(subDataSet)</span><br><span class="line">        infoGain = baseEntropy - newEntropy</span><br><span class="line">        <span class="keyword">if</span> (infoGain &gt; bestInfoGain):</span><br><span class="line">            bestInfoGain = infoGain</span><br><span class="line">            bestFeature = i</span><br><span class="line">    <span class="keyword">return</span> bestFeature</span><br><span class="line"><span class="comment"># 生成叶子节点，如果已经没有特征做数据划分时，取该数据集中出现次数最多的类别作为待分类类别的结果</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">majorityCnt</span>(<span class="params">classList</span>):</span><br><span class="line">    classCount = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> vote <span class="keyword">in</span> classList:</span><br><span class="line">        <span class="keyword">if</span> vote <span class="keyword">not</span> <span class="keyword">in</span> classCount.keys():</span><br><span class="line">            classCount[vote] = <span class="number">0</span></span><br><span class="line">        classCount[vote] += <span class="number">1</span></span><br><span class="line">    sortedClassCount = <span class="built_in">sorted</span>(classCount.iteritems(), key=operator.attrgetter(<span class="number">1</span>), reverse=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 创建决策树模型</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">createTree</span>(<span class="params">dataSet, labels</span>):</span><br><span class="line">    classList = [example[-<span class="number">1</span>] <span class="keyword">for</span> example <span class="keyword">in</span> dataSet]</span><br><span class="line">    <span class="comment"># 如果数据集中样本类别唯一，则不用做数据划分，直接返回类别作为叶子节点</span></span><br><span class="line">    <span class="keyword">if</span> classList.count(classList[<span class="number">0</span>]) == <span class="built_in">len</span>(classList):</span><br><span class="line">        <span class="keyword">return</span> classList[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 如果当前数据集中的样本没有可做数据划分的特征，则计算样本集中出现频率最高的类别作为叶子节点</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(dataSet[<span class="number">0</span>]) == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> majorityCnt(classList)</span><br><span class="line">    bestFeat = chooseBestFeatureToSplit(dataSet)</span><br><span class="line">    bestFeatLabel = labels[bestFeat]</span><br><span class="line">    myTree = &#123;bestFeatLabel:&#123;&#125;&#125;</span><br><span class="line">    <span class="keyword">del</span>(labels[bestFeat])</span><br><span class="line">    featValues = [example[bestFeat] <span class="keyword">for</span> example <span class="keyword">in</span> dataSet]</span><br><span class="line">    uniqueVals = <span class="built_in">set</span>(featValues)</span><br><span class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> uniqueVals:</span><br><span class="line">        subLabels = labels[:]</span><br><span class="line">        myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet, bestFeat, value), subLabels)</span><br><span class="line">    <span class="keyword">return</span> myTree</span><br><span class="line"><span class="comment"># 决策树模型储存</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">storeTree</span>(<span class="params">inputTree, filename</span>):</span><br><span class="line">    <span class="keyword">import</span> pickle</span><br><span class="line">    fw = <span class="built_in">open</span>(filename, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">    pickle.dump(inputTree, fw)</span><br><span class="line">    fw.close()</span><br><span class="line"><span class="comment"># 决策树模型导入</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">grabTree</span>(<span class="params">filename</span>):</span><br><span class="line">    <span class="keyword">import</span> pickle</span><br><span class="line">    fr = <span class="built_in">open</span>(filename)</span><br><span class="line">    <span class="keyword">return</span> pickle.load(fr)</span><br><span class="line"><span class="comment"># 使用决策树做分类判定</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">classify</span>(<span class="params">inputTree, labels, testVec</span>):</span><br><span class="line">    firstStr = inputTree.keys()[<span class="number">0</span>]</span><br><span class="line">    <span class="built_in">print</span> firstStr, inputTree, labels</span><br><span class="line">    secondDict = inputTree[firstStr]</span><br><span class="line">    featIndex = labels.index(firstStr)</span><br><span class="line">    <span class="keyword">for</span> key <span class="keyword">in</span> secondDict.keys():</span><br><span class="line">        <span class="keyword">if</span> testVec[featIndex] == key:</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">type</span>(secondDict[key]).__name__ == <span class="string">&#x27;dict&#x27;</span>:</span><br><span class="line">                classLabel = classify(secondDict[key], labels, testVec)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                classLabel = secondDict[key]</span><br><span class="line">    <span class="keyword">return</span> classLabel</span><br></pre></td></tr></table></figure>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/05/02/%E5%86%B3%E7%AD%96%E6%A0%91%EF%BC%88ID3%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -499,7 +435,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2017-05-07 23:25:04" itemprop="dateModified" datetime="2017-05-07T23:25:04+08:00">2017-05-07</time>
+      <time title="修改时间：2024-03-05 21:34:08" itemprop="dateModified" datetime="2024-03-05T21:34:08+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -528,63 +464,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><hr>
+          <h2 id="算法原理">算法原理</h2>
+<hr />
 <p>  k-近邻算法（kNN）采用测量样本集中不同特征值之间的距离方法进行样本分类。</p>
 <p>  使用k-近邻算法做分类判断，我们必须有一个<code>算法训练样本集</code>，样本集是一些已知数据分类的样本集合。当我们要使用k-近邻算法求一个数据的分类时，首先我们将算法训练样本集和未知分类的一条数据输入到k-近邻算法，然后算法通过估算未知分类数据和所有算法训练样本集中数据的特征相似度（一般使用欧氏距离），最后算法找出相似度最高的前k个样本数据，并在k个样本数据中将出现次数最多的样本数据分类做为未知分类数据的分类结果。</p>
-<h2 id="使用前提"><a href="#使用前提" class="headerlink" title="使用前提"></a>使用前提</h2><hr>
-<ol>
-<li>使用k-近邻算法必须提供有分类明确的训练样本集数据；</li>
-<li>k-近邻算法适用于数值型数据和标称型特征的数据；</li>
-<li>需要计算未知分类数据到所有训练样本集的特征相似度，所以使用k-近邻算法必须考虑算法性能和样本集数据的存储问题；</li>
-<li>k-近邻算法中k的取值对算法分类的结果起决定性作用，所以可能需要重复测试使用不同的k值评估算法的可信度。</li>
-</ol>
-<h2 id="数据归一化"><a href="#数据归一化" class="headerlink" title="数据归一化"></a>数据归一化</h2><hr>
-<p>  可以从欧氏距离的计算公式$d&#x3D;\sqrt{\sum_{i&#x3D;1}^n(A_i - B_i)^2}$可以推断，数值大的特征值对样本相似度的计算结果影响会很大，所以在所有特征同等权重的情况下，为了得到准确的结果，我们需要对数据做归一化处理，使得特征值的取值范围限定在0～1或者-1～1之间。<br>$$<br>newValue &#x3D; \frac{oldValue-min} {max-min}<br>$$<br>  上面的归一化数据公式可以将任意取值范围的特征值转化为0～1区间内的值。</p>
-<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><hr>
-<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>  k-近邻算法中会使用到线性代数的知识，所以我们使用<code>NumPy</code>函数库来代替传统使用循环的方式遍历矩阵计算。</p>
-<p>  构造一个算法训练样本集文件<code>data.txt</code>，文件内容为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0.8	400	0.5	1</span><br><span class="line">12	134000	0.9	3</span><br><span class="line">0	20000	1.1	2</span><br><span class="line">67	32000	0.1	2</span><br></pre></td></tr></table></figure>
-
-<p>  样本集文件数据按照<code>\t</code>为分隔符，一行文本数据为一个样本内容，样本内容包括3个特征值和最后一个分类结果字段。</p>
-<p>  通过构造k-近邻算法计算未知分类数据<code>[0.1 200 1.0]</code>的分类结果。</p>
-<p>  开始构建k-近邻算法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"><span class="comment"># 创建样本集数据矩阵和对应分类列表</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开样本集文件</span></span><br><span class="line">fr = <span class="built_in">open</span>(<span class="string">&quot;data.txt&quot;</span>)</span><br><span class="line"><span class="comment"># 读取样本集文件内容</span></span><br><span class="line">arrayOlines = fr.readlines()</span><br><span class="line"><span class="comment"># 获取样本集数量</span></span><br><span class="line">numberOfLines = <span class="built_in">len</span>(arrayOlines)</span><br><span class="line"><span class="comment"># 构造样本矩阵</span></span><br><span class="line">dataMat = zeros((numberOfLines, <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
-
-<p>$$<br>\mathtt{dataMat&#x3D;}<br>\begin{bmatrix}<br>0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 样本对应的分类列表</span></span><br><span class="line">classLabelVector = []</span><br><span class="line">index = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> arrayOlines:</span><br><span class="line">    line = line.strip()</span><br><span class="line">    listFromLine = line.split(<span class="string">&#x27;\t&#x27;</span>)</span><br><span class="line">    <span class="comment"># 将样本内容填充到样本矩阵</span></span><br><span class="line">    returnMat[index:] = listFromLine[<span class="number">0</span>:<span class="number">3</span>]</span><br><span class="line">    <span class="comment"># 用最后一个样本分类字段构造样本分类列表</span></span><br><span class="line">    classLabelVector.append( <span class="built_in">int</span>(listFromLine[-<span class="number">1</span>]) )</span><br><span class="line">    index += <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>$$<br>\mathtt{dataMat&#x3D;}<br>\begin{bmatrix}<br>0.8 &amp; 400 &amp; 0.5 \<br>12 &amp; 134000 &amp; 0.9 \<br>0 &amp; 20000 &amp; 1.1 \<br>67 &amp; 32000 &amp; 0.1 \<br>\end{bmatrix}<br>$$</p>
-<p>$$<br>\mathtt{classLabelVector&#x3D;}<br>\begin{bmatrix}<br>1 \<br>3 \<br>2 \<br>2 \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 特征归一化</span></span><br><span class="line"><span class="comment"># 创建归一化操作需要的数据规格，包括样本集数据和待计算样本</span></span><br><span class="line">normData = zeros((dataMat.shape[<span class="number">0</span>] + <span class="number">1</span>, dataMat.shape[<span class="number">1</span>]))</span><br><span class="line">index = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> matPart <span class="keyword">in</span> dataMat:</span><br><span class="line">    normData[index:] = matPart</span><br><span class="line">    index += <span class="number">1</span></span><br><span class="line">normData[index:] = array([<span class="number">0.1</span>, <span class="number">200</span>, <span class="number">1.0</span>])</span><br></pre></td></tr></table></figure>
-
-<p>$$<br>\mathtt{normData&#x3D;}<br>\begin{bmatrix}<br>0.8 &amp; 400 &amp; 0.5 \<br>12 &amp; 134000 &amp; 0.9 \<br>0 &amp; 20000 &amp; 1.1 \<br>67 &amp; 32000 &amp; 0.1 \<br>0.1 &amp; 200 &amp; 1 \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取每个特征的最小值</span></span><br><span class="line">minVals = normData.<span class="built_in">min</span>(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-<p>$$<br>\mathtt{minVals&#x3D;}<br>\begin{bmatrix}<br>0 &amp; 200 &amp; 0.1 \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取每个特征的最大值</span></span><br><span class="line">maxVals = dataSet.<span class="built_in">max</span>(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-
-<p>$$<br>\mathtt{maxVals&#x3D;}<br>\begin{bmatrix}<br>67 &amp; 134000 &amp; 1.1 \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">m = normData.shape[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 由前面提供的归一化数据公式进行数据归一化</span></span><br><span class="line">normMat = (normData - tile(minVals, (m, <span class="number">1</span>))) / tile((maxVals - minVals), (m, <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
-
-<h2 id="begin-align-mathtt-normMat-frac-oldValue-min-max-min-frac-begin-bmatrix-0-8-400-0-5-12-134000-0-9-0-20000-1-1-67-32000-0-1-0-1-200-1-end-bmatrix"><a href="#begin-align-mathtt-normMat-frac-oldValue-min-max-min-frac-begin-bmatrix-0-8-400-0-5-12-134000-0-9-0-20000-1-1-67-32000-0-1-0-1-200-1-end-bmatrix" class="headerlink" title="$$\begin{align}\mathtt{normMat} &#x3D; \frac{oldValue-min}{max-min}&amp; &#x3D; \frac{\begin{bmatrix}0.8 &amp; 400 &amp; 0.5 \12 &amp; 134000 &amp; 0.9 \0 &amp; 20000 &amp; 1.1 \67 &amp; 32000 &amp; 0.1 \0.1 &amp; 200 &amp; 1 \\end{bmatrix}"></a>$$<br>\begin{align}<br>\mathtt{normMat} &#x3D; \frac{oldValue-min}{max-min}<br>&amp; &#x3D; \frac{<br>\begin{bmatrix}<br>0.8 &amp; 400 &amp; 0.5 \<br>12 &amp; 134000 &amp; 0.9 \<br>0 &amp; 20000 &amp; 1.1 \<br>67 &amp; 32000 &amp; 0.1 \<br>0.1 &amp; 200 &amp; 1 \<br>\end{bmatrix}</h2><h2 id="begin-bmatrix-0-200-0-1-0-200-0-1-0-200-0-1-0-200-0-1-0-200-0-1-end-bmatrix-begin-bmatrix-67-134000-1-1-67-134000-1-1-67-134000-1-1-67-134000-1-1-67-134000-1-1-end-bmatrix"><a href="#begin-bmatrix-0-200-0-1-0-200-0-1-0-200-0-1-0-200-0-1-0-200-0-1-end-bmatrix-begin-bmatrix-67-134000-1-1-67-134000-1-1-67-134000-1-1-67-134000-1-1-67-134000-1-1-end-bmatrix" class="headerlink" title="\begin{bmatrix}0 &amp; 200 &amp; 0.1 \0 &amp; 200 &amp; 0.1 \0 &amp; 200 &amp; 0.1 \0 &amp; 200 &amp; 0.1 \0 &amp; 200 &amp; 0.1 \\end{bmatrix}}{\begin{bmatrix}67 &amp; 134000 &amp; 1.1 \67 &amp; 134000 &amp; 1.1 \67 &amp; 134000 &amp; 1.1 \67 &amp; 134000 &amp; 1.1 \67 &amp; 134000 &amp; 1.1 \\end{bmatrix}"></a>\begin{bmatrix}<br>0 &amp; 200 &amp; 0.1 \<br>0 &amp; 200 &amp; 0.1 \<br>0 &amp; 200 &amp; 0.1 \<br>0 &amp; 200 &amp; 0.1 \<br>0 &amp; 200 &amp; 0.1 \<br>\end{bmatrix}<br>}{<br>\begin{bmatrix}<br>67 &amp; 134000 &amp; 1.1 \<br>67 &amp; 134000 &amp; 1.1 \<br>67 &amp; 134000 &amp; 1.1 \<br>67 &amp; 134000 &amp; 1.1 \<br>67 &amp; 134000 &amp; 1.1 \<br>\end{bmatrix}</h2><p>\begin{bmatrix}<br>0 &amp; 200 &amp; 0.1 \<br>0 &amp; 200 &amp; 0.1 \<br>0 &amp; 200 &amp; 0.1 \<br>0 &amp; 200 &amp; 0.1 \<br>0 &amp; 200 &amp; 0.1 \<br>\end{bmatrix}<br>}<br>\<br>&amp; &#x3D;<br>\begin{bmatrix}<br>\frac{0.8-0}{67-0} &amp; \frac{400-200}{134000-200} &amp; \frac{0.5-0.1}{1.1-0.1} \<br>\frac{12-0}{67-0} &amp; \frac{134000-200}{134000-200} &amp; \frac{0.9-0.1}{1.1-0.1} \<br>\frac{0-0}{67-0} &amp; \frac{20000-200}{134000-200} &amp; \frac{1.1-0.1}{1.1-0.1} \<br>\frac{67-0}{67-0} &amp; \frac{32000-200}{134000-200} &amp; \frac{0.1-0.1}{1.1-0.1} \<br>\frac{0.1-0}{67-0} &amp; \frac{200-200}{134000-200} &amp; \frac{1-0.1}{1.1-0.1} \<br>\end{bmatrix}<br>\<br>&amp; &#x3D;<br>\begin{bmatrix}<br>0.0119403 &amp; 0.00149477 &amp; 0.4 \<br>0.17910448 &amp; 1. &amp; 0.8 \<br>0 &amp; 0.14798206 &amp; 1. \<br>1 &amp; 0.23766816 &amp; 0. \<br>0.00149254 &amp; 0. &amp; 0.9 \<br>\end{bmatrix}<br>\end{align}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 待计算分类的样本</span></span><br><span class="line">item = normMat[<span class="built_in">len</span>(normMat) - <span class="number">1</span>,:]</span><br></pre></td></tr></table></figure>
-
-<p>$$<br>\mathtt{item&#x3D;}<br>\begin{bmatrix}<br>0.00149254 &amp; 0. &amp; 0.9 \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 算法训练样本集</span></span><br><span class="line">dataSet = normMat[<span class="number">0</span>:<span class="built_in">len</span>(normMat) - <span class="number">1</span>,:]</span><br></pre></td></tr></table></figure>
-
-<p>$$<br>\mathtt{dataSet&#x3D;}<br>\begin{bmatrix}<br>0.0119403 &amp; 0.00149477 &amp; 0.4 \<br>0.17910448 &amp; 1. &amp; 0.8 \<br>0 &amp; 0.14798206 &amp; 1. \<br>1 &amp; 0.23766816 &amp; 0. \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算样本集的欧氏距离，详细流程阅读《机器学习中的距离计算》</span></span><br><span class="line">diffMat = tile(item, (dataSet.shape[<span class="number">0</span>], <span class="number">1</span>)) - dataSet</span><br><span class="line">sqDiffMat = diffMat ** <span class="number">2</span></span><br><span class="line">sqDistances = sqDiffMat.<span class="built_in">sum</span>(axis=<span class="number">1</span>)</span><br><span class="line">distances = sqDistances ** <span class="number">0.5</span></span><br></pre></td></tr></table></figure>
-
-<p>$$<br>\mathtt{distances&#x3D;}<br>\begin{bmatrix}<br>0.50011138 \<br>1.02056161 \<br>0.17860828 \<br>1.36510194 \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对计算完的距离列表排序，输出记录距离原始位置的列表，因为要找到对应的分类</span></span><br><span class="line">sortedDistIndicies = distances.argsort()</span><br></pre></td></tr></table></figure>
-
-<h1 id="mathtt-sortedDistIndicies-begin-bmatrix-0-50011138-0-1-02056161-1-0-17860828-2-1-36510194-3-end-bmatrix-sort-begin-bmatrix-0-17860828-2-0-50011138-0-1-02056161-1-1-36510194-3-end-bmatrix"><a href="#mathtt-sortedDistIndicies-begin-bmatrix-0-50011138-0-1-02056161-1-0-17860828-2-1-36510194-3-end-bmatrix-sort-begin-bmatrix-0-17860828-2-0-50011138-0-1-02056161-1-1-36510194-3-end-bmatrix" class="headerlink" title="$$\mathtt{sortedDistIndicies&#x3D;}\begin{bmatrix}0.50011138_0 \1.02056161_1 \0.17860828_2 \1.36510194_3 \\end{bmatrix}&#x3D;^{sort}\begin{bmatrix}0.17860828_2 \0.50011138_0 \1.02056161_1 \1.36510194_3 \\end{bmatrix}"></a>$$<br>\mathtt{sortedDistIndicies&#x3D;}<br>\begin{bmatrix}<br>0.50011138_0 \<br>1.02056161_1 \<br>0.17860828_2 \<br>1.36510194_3 \<br>\end{bmatrix}<br>&#x3D;^{sort}<br>\begin{bmatrix}<br>0.17860828_2 \<br>0.50011138_0 \<br>1.02056161_1 \<br>1.36510194_3 \<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>2 \<br>0 \<br>1 \<br>3 \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 统计样本集中前k个样本集分类出现的次数</span></span><br><span class="line">classCount = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">    voteIlabel = classLabelVector[sortedDistIndicies[i]]</span><br><span class="line">    classCount[voteIlabel] = classCount.get(voteIlabel, <span class="number">0</span>) + <span class="number">1</span></span><br><span class="line"><span class="comment"># 按照分类出现次数由高到低排序</span></span><br><span class="line">sortedClassCount = <span class="built_in">sorted</span>(classCount.iteritems(), key=operator.itemgetter(<span class="number">1</span>),reverse=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>本案例只是作为熟悉使用k-近邻算法，因为样本集个数和质量问题并没有得出最终的算法结果，如果要得出正确的结果，需要添加更多的样本集数量重新验证本算法。</p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/04/30/k-%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -646,7 +537,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2018-10-10 17:36:54" itemprop="dateModified" datetime="2018-10-10T17:36:54+08:00">2018-10-10</time>
+      <time title="修改时间：2024-03-05 21:34:18" itemprop="dateModified" datetime="2024-03-05T21:34:18+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -664,7 +555,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>623</span>
+      <span>624</span>
     </span>
 </div>
 
@@ -675,24 +566,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>  在机器学习和数据挖掘中，我们通常用计算样本间的“距离”（Distance）来估算不同样本之间的相似性度量（Similarity Measurement），样本间的距离计算算法的选用会直接关系到算法结果的正确与否，所以选择一个合适当前样本集的相似性度量方法格外重要。</p>
-<h2 id="欧氏距离-欧几里得度量（euclidean-metric）"><a href="#欧氏距离-欧几里得度量（euclidean-metric）" class="headerlink" title="欧氏距离 - 欧几里得度量（euclidean metric）"></a>欧氏距离 - 欧几里得度量（euclidean metric）</h2><hr>
-<p>  欧式距离是一个通常采用的距离定义，指在m维空间中两个点之间的真实距离，或者向量的自然长度（即该点到原点的距离）。在二维和三维空间中的欧氏距离就是两点之间的实际距离。<br>  计算二维空间上点(3,5)和点(2,1)两点间的欧氏距离<br>$$<br>d&#x3D;\sqrt{(x1-x2)^2 + (y1 - y2)^2}\Rightarrow\sqrt{(3 - 2)^2 + (5 - 1)^2}<br>$$<br>  计算三维空间上点(1,3,5)和点(0,2,1)两点间的欧氏距离<br>$$<br>d&#x3D;\sqrt{(x1-x2)^2+(y1-y-2)^2+(z1-z_2)^2}\Rightarrow\sqrt{(1-0)^2+(3-2)^2+(5-1)^2}<br>$$<br>  计算N维空间上点A(a1,a2,a3,…,an)和点B(b1,b2,b3,…,bn)两点间的欧氏距离<br>$$<br>d&#x3D;\sqrt{\sum_{i&#x3D;1}^n(A_i - B_i)^2}<br>$$<br>  NumPy生产实例：计算三维空间中点A(5,6,7)到其他三个相同维点的欧氏距离.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"><span class="comment"># 创建三维空间中的三个目标点</span></span><br><span class="line">matrix = array([[<span class="number">1</span>,<span class="number">5</span>,<span class="number">2</span>], [<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>], [<span class="number">0</span>,<span class="number">4</span>,<span class="number">1</span>]])</span><br></pre></td></tr></table></figure>
-<p>$$<br>\mathtt{matrix&#x3D;}<br>\begin{bmatrix}<br>1 &amp; 5 &amp; 2 \<br>2 &amp; 1 &amp; 3 \<br>0 &amp; 4 &amp; 1 \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取目标点数量</span></span><br><span class="line">matrixSize = matrix.shape[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 复制点A数量，返回一个和matrix相同规格的矩阵</span></span><br><span class="line">tempMatrix = tile([<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>], (matrixSize, <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
-<p>$$<br>\mathtt{tempMatrix&#x3D;}<br>\begin{bmatrix}<br>5 &amp; 6 &amp; 7 \<br>5 &amp; 6 &amp; 7 \<br>5 &amp; 6 &amp; 7 \<br>\end{bmatrix}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据欧氏距离公式计算做减法</span></span><br><span class="line">diffMatrix = tempMatrix - matrix</span><br></pre></td></tr></table></figure>
-<h2 id="begin-align-mathtt-diffMatrix-begin-bmatrix-5-6-7-5-6-7-5-6-7-end-bmatrix"><a href="#begin-align-mathtt-diffMatrix-begin-bmatrix-5-6-7-5-6-7-5-6-7-end-bmatrix" class="headerlink" title="$$\begin{align}\mathtt{diffMatrix}&amp; &#x3D;\begin{bmatrix}5 &amp; 6 &amp; 7 \5 &amp; 6 &amp; 7 \5 &amp; 6 &amp; 7 \\end{bmatrix}"></a>$$<br>\begin{align}<br>\mathtt{diffMatrix}<br>&amp; &#x3D;<br>\begin{bmatrix}<br>5 &amp; 6 &amp; 7 \<br>5 &amp; 6 &amp; 7 \<br>5 &amp; 6 &amp; 7 \<br>\end{bmatrix}</h2><p>\begin{bmatrix}<br>1 &amp; 5 &amp; 2 \<br>2 &amp; 1 &amp; 3 \<br>0 &amp; 4 &amp; 1 \<br>\end{bmatrix} \<br>&amp; &#x3D;<br>\begin{bmatrix}<br>5-1 &amp; 6-5 &amp; 7-2 \<br>5-2 &amp; 6-1 &amp; 7-3 \<br>5-0 &amp; 6-4 &amp; 7-1 \<br>\end{bmatrix} \<br>&amp; &#x3D;<br>\begin{bmatrix}<br>4 &amp; 1 &amp; 5 \<br>3 &amp; 5 &amp; 4 \<br>5 &amp; 2 &amp; 6 \<br>\end{bmatrix}<br>\end{align}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqDiffMatrix = diffMatrix ** <span class="number">2</span></span><br></pre></td></tr></table></figure>
-<p>$$<br>\begin{align}<br>\mathtt{sqDiffMatrix}<br>&amp; &#x3D;<br>\begin{bmatrix}<br>4 &amp; 1 &amp; 5 \<br>3 &amp; 5 &amp; 4 \<br>5 &amp; 2 &amp; 6 \<br>\end{bmatrix}^2 \<br>&amp; &#x3D;<br>\begin{bmatrix}<br>4^2 &amp; 1^2 &amp; 5^2 \<br>3^2 &amp; 5^2 &amp; 4^2 \<br>5^2 &amp; 2^2 &amp; 6^2 \<br>\end{bmatrix} \<br>&amp; &#x3D;<br>\begin{bmatrix}<br>16 &amp; 1 &amp; 25 \<br>9 &amp; 25 &amp; 16 \<br>25 &amp; 4 &amp; 36 \<br>\end{bmatrix}<br>\end{align}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqDistances = sqDiffMatrix.<span class="built_in">sum</span>(axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-
-<p>$$<br>\begin{align}<br>\mathtt{sqDistances}<br>&amp; &#x3D;<br>\begin{bmatrix}<br>16 + 1 + 25 \<br>9 + 25 + 16 \<br>25 + 4 + 36 \<br>\end{bmatrix} \<br>&amp; &#x3D;<br>\begin{bmatrix}<br>42 \<br>50 \<br>65 \<br>\end{bmatrix}<br>\end{align}<br>$$</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">distances = sqDistances ** <span class="number">0.5</span></span><br></pre></td></tr></table></figure>
-<p>$$<br>\begin{align}<br>\mathtt{distances}<br>&amp; &#x3D;<br>\sqrt{\begin{bmatrix}<br>42 \<br>50 \<br>65 \<br>\end{bmatrix}} \<br>&amp; &#x3D;<br>\begin{bmatrix}<br>\sqrt42 \<br>\sqrt50 \<br>\sqrt65 \<br>\end{bmatrix} \<br>&amp; &#x3D;<br>\begin{bmatrix}<br>6.4807407 \<br>7.07106781 \<br>8.06225775 \<br>\end{bmatrix}<br>\end{align}<br>$$</p>
-
+          <p>  在机器学习和数据挖掘中，我们通常用计算样本间的“距离”（Distance）来估算不同样本之间的相似性度量（Similarity
+Measurement），样本间的距离计算算法的选用会直接关系到算法结果的正确与否，所以选择一个合适当前样本集的相似性度量方法格外重要。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/04/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -754,7 +637,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2017-04-28 11:18:10" itemprop="dateModified" datetime="2017-04-28T11:18:10+08:00">2017-04-28</time>
+      <time title="修改时间：2024-03-05 21:34:31" itemprop="dateModified" datetime="2024-03-05T21:34:31+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -783,72 +666,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="setting-xml"><a href="#setting-xml" class="headerlink" title="setting.xml"></a>setting.xml</h2><hr>
-<p>  <code>setting.xml</code>文件是Maven运行所需要的配置文件，作用于所有的Maven项目。<code>setting.xml</code>文件在Maven安装目录下面<code>$&#123;maven.home&#125;/conf/settings.xml</code>,作为Maven的全局配置，作用于所有用户。另外你可以单独指定自己的配置而不影响其他用户，在用户目录下面<code>$&#123;user.home&#125;/.m2/settings.xml</code>配置文件作为Maven的用户配置，该配置优先生效于Maven的全局配置，即Maven的用户配置内容会覆盖全局配置。<br>  <code>setting.xml</code>的文件结构如下：</p>
-<figure class="highlight xml"><figcaption><span>setting.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">settings</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">localRepository</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">interactiveMode</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">usePluginRegistry</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">offline</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pluginGroups</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">pluginGroup</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">pluginGroups</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">proxies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">proxie</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">proxies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servers</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mirror</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">profile</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">activeProfiles</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activeProfile</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">activeProfiles</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>实际使用中可以动态指定Maven的全局配置和用户本地配置<br>使用<code>mvn -s [file name]</code>指定用户本地配置<br>使用<code>mvn -gs [file name]</code>指定全局配置</p>
-</blockquote>
-<h2 id="localRepository"><a href="#localRepository" class="headerlink" title="localRepository"></a>localRepository</h2><hr>
-<p>  Maven配置的本地仓库路径，默认值为<code>$&#123;user.home&#125;/.m2/repository</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">localRepository</span>&gt;</span>$&#123;user.home&#125;/.m2/repository<span class="tag">&lt;/<span class="name">localRepository</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="interactiveMode"><a href="#interactiveMode" class="headerlink" title="interactiveMode"></a>interactiveMode</h2><hr>
-<p>  Maven执行过程中是否接受用户输入，默认值为<code>true</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">interactiveMode</span>&gt;</span>true<span class="tag">&lt;/<span class="name">interactiveMode</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="usePluginRegistry"><a href="#usePluginRegistry" class="headerlink" title="usePluginRegistry"></a>usePluginRegistry</h2><hr>
-<p>  Maven是否需要使用<code>plugin-registry.xml</code>文件来管理插件版本。如果需要让Maven使用文件<code>$&#123;user.home&#125;/.m2/plugin-registry.xml</code>来管理插件版本，则设为<code>true</code>。默认为false,并且和<code>setting.xml</code>文件一样可以设置全局配置和用户本地配置。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">usePluginRegistry</span>&gt;</span>false<span class="tag">&lt;/<span class="name">usePluginRegistry</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="offline"><a href="#offline" class="headerlink" title="offline"></a>offline</h2><hr>
-<p>  表示Maven是否支持在离线模式下运行。当由于网络设置原因或者安全因素，构建服务器不能连接远程仓库的时候，如果构建系统需要在离线模式下运行，则为<code>true</code>，默认为<code>false</code>。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">offline</span>&gt;</span>false<span class="tag">&lt;/<span class="name">offline</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="pluginGroups"><a href="#pluginGroups" class="headerlink" title="pluginGroups"></a>pluginGroups</h2><hr>
-<p>  当插件的组织Id（groupId）没有显式提供时，供搜寻插件组织Id（groupId）的列表。该元素包含一个pluginGroup元素列表，每个子元素包含了一个组织Id（groupId）。当我们使用某个插件，并且没有在命令行为其提供组织Id（groupId）的时候，Maven就会使用该列表。默认情况下该列表包含了org.apache.maven.plugins和org.codehaus.mojo</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">pluginGroups</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pluginGroup</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;<span class="name">pluginGroup</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pluginGroup</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;<span class="name">pluginGroup</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">pluginGroups</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<p>  因为有该配置内容，所以我们运行大部分Maven命令的时候一般都省略了组织Id（groupId）。如<code>mvn org.apache.maven.plugins:dependency:tree</code>可以简写成<code>mvn dependency:true</code>。</p>
-<h2 id="proxies"><a href="#proxies" class="headerlink" title="proxies"></a>proxies</h2><hr>
-<p>  <code>proxies</code>节点可以给远程仓库的访问设置代理。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">proxies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">proxy</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--代理的唯一定义符，用来区分不同的代理元素。--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>myproxy<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--该代理是否是激活使用。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">active</span>&gt;</span>true<span class="tag">&lt;/<span class="name">active</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--代理的协议。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">protocol</span>&gt;</span>http<span class="tag">&lt;/<span class="name">protocol</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--代理的主机名。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">host</span>&gt;</span>proxy.somewhere.com<span class="tag">&lt;/<span class="name">host</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--代理的端口。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span>&gt;</span>8080<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--代理的用户名和密码，用户名和密码表示代理服务器认证的登录名和密码。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">username</span>&gt;</span>proxyuser<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>somepassword<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--不该被代理的主机名列表。该列表的分隔符由代理服务器指定。—&gt;</span></span><br><span class="line"><span class="comment">        &lt;nonProxyHosts&gt;*.google.com|ibiblio.org&lt;/nonProxyHosts&gt;</span></span><br><span class="line"><span class="comment">    &lt;/proxy&gt;</span></span><br><span class="line"><span class="comment">&lt;/proxies&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="servers"><a href="#servers" class="headerlink" title="servers"></a>servers</h2><hr>
-<p>  当使用其他远程仓库的时候，通常我们会在POM文件中定义远程仓库的信息，但是一些设置如安全证书、用户名和密码不应该在<code>pom.xml</code>中一起分发，这种类型的信息应该在<code>setting.xml</code>下的<code>sercers</code>节点下配置，起到保护作用。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 服务器元素包含配置服务器时需要的信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 这是server的id（注意不是用户登陆的id），该id distributionManagement中repository元素的id相匹配,Maven在连接一个库或者镜像的时候，通过id匹配要连接的服务器 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>server001<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--鉴权用户名。鉴权用户名表示服务器认证所需要的登录名。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">username</span>&gt;</span>my_login<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--鉴权密码 。鉴权鉴权密码表示服务器认证所需要的密码。--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>my_password<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--鉴权时使用的私钥位置。和前两个元素类似，私钥位置和私钥密码指定了一个私钥的路径（默认是$&#123;user.home&#125;/.ssh/id_dsa）。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">privateKey</span>&gt;</span>$&#123;usr.home&#125;/.ssh/id_dsa<span class="tag">&lt;/<span class="name">privateKey</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--鉴权时使用的私钥密码。--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">passphrase</span>&gt;</span>some_passphrase<span class="tag">&lt;/<span class="name">passphrase</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--文件被创建时的权限。如果在部署的时候会创建一个仓库文件或者目录，这时候就可以使用权限（permission）。这两个元素合法的值是一个三位数字，其对应了unix文件系统的权限，如664，或者775。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filePermissions</span>&gt;</span>664<span class="tag">&lt;/<span class="name">filePermissions</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--目录被创建时的权限。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">directoryPermissions</span>&gt;</span>775<span class="tag">&lt;/<span class="name">directoryPermissions</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="mirrors"><a href="#mirrors" class="headerlink" title="mirrors"></a>mirrors</h2><hr>
-<p>  Maven会默认使用Apache Maven官方的远程<code>central</code>仓库<code>http://repo.maven.apache.org/maven2/</code>,但有时候考虑到互联网访问的安全性和访问速度等问题，所以会建立一些对远程仓库的镜像仓库，当设置了远程镜像仓库的时候，Maven会引用镜像仓库，而不直接使用远程仓库。<br>  <code>mirrors</code>节点可以配置远程仓库的镜像：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--给定仓库的下载镜像。 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--该镜像的唯一标识符。id用来区分不同的mirror元素。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>planetmirror.com<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--镜像名称 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>PlanetMirror Australia<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--该镜像的URL。构建系统会优先考虑使用该URL，而非使用默认的服务器URL。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://downloads.planetmirror.com/pub/maven2<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--被镜像的服务器的id。例如，如果我们要设置了一个Maven中央仓库（http://repo.maven.apache.org/maven2/）的镜像，就需要将该元素设置成central。这必须和中央仓库的id central完全一致。--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>对于<code>mirrorOf</code>参数还有更多写法：<br><code>*</code>表示任意远程库；<br><code>external:*</code>表示任何不在Localhost和文件系统中的远程库；<code>r1,r2</code>表示r1库或者r2库；<br><code>*,!r1</code>表示除了r1库之外的任何远程库。</p>
-</blockquote>
-<h2 id="profiles"><a href="#profiles" class="headerlink" title="profiles"></a>profiles</h2><hr>
-<p>  <code>profiles</code>节点配置可以根据环境参数来调整构建配置的列表。由于<code>setting.xml</code>配置作用于整个Maven构建系统，即适用于所有Maven项目，而非单独的项目对象，所以<code>settings.xml</code>中的<code>profile</code>元素是<code>pom.xml</code>中<code>profile</code>元素的裁剪版本。它仅包含了<code>id</code>，<code>activation</code>， <code>repositories</code>， <code>pluginRepositories</code>和 <code>properties</code>元素。<br>  如果一个<code>settings.xml</code>中的<code>profile</code>被激活，它的值会覆盖任何其它定义在POM中或者<code>profile.xml</code>中的带有相同id的<code>profile</code>。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activation</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">repository</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">pluginRepository</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">properties</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="id"><a href="#id" class="headerlink" title="id"></a>id</h3><p>  id表示当前<code>profile</code>的唯一标识符。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">id</span>&gt;</span>dev-test<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="activation"><a href="#activation" class="headerlink" title="activation"></a>activation</h3><p>  设定<code>profile</code>的触发逻辑,作为启动当前<code>profile</code>的钥匙。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activation</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--profile默认是否激活的标识--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">activeByDefault</span>&gt;</span>false<span class="tag">&lt;/<span class="name">activeByDefault</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--当匹配的jdk被检测到，profile被激活。例如，1.4激活JDK1.4，1.4.0_2，而!1.4激活所有版本不是以1.4开头的JDK。--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jdk</span>&gt;</span>1.5<span class="tag">&lt;/<span class="name">jdk</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--当匹配的操作系统属性被检测到，profile被激活。os元素可以定义一些操作系统相关的属性。--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">os</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--激活profile的操作系统的名字 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Windows XP<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--激活profile的操作系统所属家族(如 &#x27;windows&#x27;)  --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">family</span>&gt;</span>Windows<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--激活profile的操作系统体系结构  --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arch</span>&gt;</span>x86<span class="tag">&lt;/<span class="name">arch</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--激活profile的操作系统版本--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.2600<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">os</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--如果Maven检测到某一个属性（其值可以在POM中通过$&#123;name&#125;引用），其拥有对应的name = 值，Profile就会被激活。如果值字段是空的，那么存在属性名称字段就会激活profile，否则按区分大小写方式匹配属性值字段--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--激活profile的属性的名称--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>mavenVersion<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--激活profile的属性的值 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>2.0.3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--提供一个文件名，通过检测该文件的存在或不存在来激活profile。missing检查文件是否存在，如果不存在则激活profile。另一方面，exists则会检查文件是否存在，如果存在则激活profile。--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">file</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--如果指定的文件存在，则激活profile。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exists</span>&gt;</span>$&#123;basedir&#125;/file2.properties<span class="tag">&lt;/<span class="name">exists</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--如果指定的文件不存在，则激活profile。--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">missing</span>&gt;</span>$&#123;basedir&#125;/file1.properties<span class="tag">&lt;/<span class="name">missing</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">file</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activation</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="properties"><a href="#properties" class="headerlink" title="properties"></a>properties</h3><p>  对应<code>profile</code>的扩展属性列表，用来存放一些值，这些值可以在POM中的任何地方使用标记<code>$&#123;X&#125;</code>来使用。<br>  在设置的属性值中，可以通过以下5种方式获取一些变量：</p>
-<ol>
-<li><code>env.X</code>: 在一个变量前加上<code>env.</code>的前缀，会返回一个Shell环境变量。例如,<code>env.PATH</code>指代了<code>$path</code>环境变量（在Windows上是<code>%PATH%</code>）。</li>
-<li><code>project.x</code>：指代了POM中对应的元素值。例如: <code>&lt;project&gt;&lt;version&gt;1.0&lt;/version&gt;&lt;/project&gt;</code>通过<code>$&#123;project.version&#125;</code>获得<code>version</code>的值。</li>
-<li><code>settings.x</code>: 指代了<code>settings.xml</code>中对应元素的值。例如：<code>&lt;settings&gt;&lt;offline&gt;false&lt;/offline&gt;&lt;/settings&gt;</code>通过 <code>$&#123;settings.offline&#125;</code>获得<code>offline</code>的值。</li>
-<li><code>Java System Properties</code>: 所有可通过<code>java.lang.System.getProperties()</code>访问的属性都能在POM中使用该形式访问，例如 <code>$&#123;java.home&#125;</code>。</li>
-<li><code>x</code>: 在<code>&lt;properties/&gt;</code>元素中，或者外部文件中设置，以<code>$&#123;x&#125;</code>的形式使用。</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">user.install</span>&gt;</span>$&#123;java.home&#125;/our-project<span class="tag">&lt;/<span class="name">user.install</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="repositories"><a href="#repositories" class="headerlink" title="repositories"></a>repositories</h3><p>  <code>repositories</code>节点是Maven配置仓库的节点，它是Maven用来填充构建系统本地仓库所使用的一个远程仓库列表。仓库是Maven构件（<code>artifact</code>）的存储位置，相当于一个构件的集合。<br>  Maven中构件被表示为带有指定位置信息的依赖（<code>dependency</code>）和插件（<code>plugins</code>）。依赖是Maven中常用的构件，通常被用来为实际项目中加载一些第三方的类库和包。Maven中的依赖库通过<code>&lt;repositories&gt;</code>节点设置。<br>  Maven的仓库分为本地仓库和远程仓库，本地仓库在Maven安装的时候指定的一个路径地址，通常位于用户目录下面<code>$&#123;user.home&#125;/.m2/repository</code>，本地仓库的构件通常都是由Maven从远程仓库下载到本地仓库的；而远程仓库都是由第三方创建供开发者使用的，如Apache Maven官方的<code>Maven central库</code>。<br>  项目构建和build的时候，Maven会先从本地仓库搜索需要使用到的构件，如果不存在则配置好的远程仓库列表中逐一查找。在远程仓库中找到构件并下载到本地仓库后供Maven使用，否则会抛出编译异常。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--包含需要连接到远程仓库的信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--远程仓库唯一标识--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>codehausSnapshots<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--远程仓库名称 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>Codehaus Snapshots<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--如何处理远程仓库里发布版本的下载--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--true或者false表示该仓库是否为下载某种类型构件（发布版，快照版）开启。  --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>false<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--该元素指定更新发生的频率。Maven会比较本地POM和远程POM的时间戳。这里的选项是：always（一直），daily（默认，每日），interval：X（这里X是以分钟为单位的时间间隔），或者never（从不）。 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">updatePolicy</span>&gt;</span>always<span class="tag">&lt;/<span class="name">updatePolicy</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--当Maven验证构件校验文件失败时该怎么做-ignore（忽略），fail（失败），或者warn（警告）。--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">checksumPolicy</span>&gt;</span>warn<span class="tag">&lt;/<span class="name">checksumPolicy</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--如何处理远程仓库里快照版本的下载。有了releases和snapshots这两组配置，POM就可以在每个单独的仓库中，为每种类型的构件采取不同的策略。例如，可能有人会决定只为开发目的开启对快照版本下载的支持。参见repositories/repository/releases元素--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">enabled</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">updatePolicy</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">checksumPolicy</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--远程仓库URL，按protocol://hostname/path形式 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://snapshots.maven.codehaus.org/maven2<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--用于定位和排序构件的仓库布局类型-可以是default（默认）或者legacy（遗留）。Maven 2为其仓库提供了一个默认的布局；然而，Maven 1.x有一种不同的布局。我们可以使用该元素指定布局是default（默认）还是legacy（遗留）。 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">layout</span>&gt;</span>default<span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="pluginRepositories"><a href="#pluginRepositories" class="headerlink" title="pluginRepositories"></a>pluginRepositories</h3><h2 id="Maven中的插件做为一种特殊类型的构件，所以插件仓库独立于其他依赖仓库。插件仓库通过节点单独设置，由于依赖和插件都属于Maven中的构件，所以两者的配置基本相同。-activeProfiles"><a href="#Maven中的插件做为一种特殊类型的构件，所以插件仓库独立于其他依赖仓库。插件仓库通过节点单独设置，由于依赖和插件都属于Maven中的构件，所以两者的配置基本相同。-activeProfiles" class="headerlink" title="  Maven中的插件做为一种特殊类型的构件，所以插件仓库独立于其他依赖仓库。插件仓库通过&lt;pluginRepositories&gt;节点单独设置，由于依赖和插件都属于Maven中的构件，所以两者的配置基本相同。## activeProfiles"></a>  Maven中的插件做为一种特殊类型的构件，所以插件仓库独立于其他依赖仓库。插件仓库通过<code>&lt;pluginRepositories&gt;</code>节点单独设置，由于依赖和插件都属于Maven中的构件，所以两者的配置基本相同。<br>## activeProfiles</h2><p>  手动激活<code>profiles</code>的列表。该元素包含了一组<code>activeProfile</code>元素，每个<code>activeProfile</code>都含有一个<code>profile id</code>。任何在<code>activeProfile</code>中定义的<code>profile id</code>，不论环境设置如何，其对应的<code>profile</code>都会被激活。如果没有匹配的<code>profile</code>，则什么都不会发生。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activeProfiles</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">activeProfile</span>&gt;</span>env-test<span class="tag">&lt;/<span class="name">activeProfile</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">activeProfiles</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          <h2 id="setting.xml">## setting.xml</h2>
+<p>  <code>setting.xml</code>文件是Maven运行所需要的配置文件，作用于所有的Maven项目。<code>setting.xml</code>文件在Maven安装目录下面<code>$&#123;maven.home&#125;/conf/settings.xml</code>,作为Maven的全局配置，作用于所有用户。另外你可以单独指定自己的配置而不影响其他用户，在用户目录下面<code>$&#123;user.home&#125;/.m2/settings.xml</code>配置文件作为Maven的用户配置，该配置优先生效于Maven的全局配置，即Maven的用户配置内容会覆盖全局配置。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/03/27/Maven%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6setting-xml/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -910,7 +737,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2017-03-27 14:30:12" itemprop="dateModified" datetime="2017-03-27T14:30:12+08:00">2017-03-27</time>
+      <time title="修改时间：2024-03-05 21:35:01" itemprop="dateModified" datetime="2024-03-05T21:35:01+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -939,91 +766,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <img data-src="/2017/03/26/Maven%E6%8F%92%E4%BB%B6%E6%A6%82%E8%BF%B0/maven-logo-black-on-white.png" class="">
-<h2 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h2><hr>
-<p>  Maven是一个项目管理工具，它包含了一个项目对象模型 (Project Object Model)、一组标准集合、一个项目生命周期(Project Lifecycle)、一个依赖管理系统(Dependency Management System)和用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。<br>  Maven项目对象模型(POM)，可以通过一小段描述信息来管理项目的构建，报告和文档的软件项目管理工具。<br>  从Maven的实现和运行方式来讲，Maven是一个插件框架，在Maven内部所有的操作逻辑和项目管理目标都来自插件。<br>  Maven定义了三个生命周期（clean、default、site），这些生命周期相互独立，并且每个周期内部都包含了一些有序阶段。Maven会将很多插件目标（goal）绑定到每个生命周期中，这使得我们在对Maven发出相关项目指令的时候，Maven会有序的执行相关周期内部的每个小阶段并且触发绑定到每个周期内部阶段上面的插件目标，最后完成相关项目管理指令。例如编译和创建一个JAR文件这样的工作。<br>  Maven的目的是用来简化项目构建过程，生成一种标准化方式的构建、清晰的方式定义项目的组成、简单的方式发布项目和简单的方式在多个项目中共享JARs。此外，Maven能够很方便的帮你管理项目报告，生成站点，管理JAR文件，等等。</p>
-<h2 id="Maven中的插件"><a href="#Maven中的插件" class="headerlink" title="Maven中的插件"></a>Maven中的插件</h2><hr>
-<p>  Maven中主要的角色就是插件，所有的项目管理目标都是由插件执行和完成的。Maven插件由核心插件和拓展插件组成，Maven项目本身提供和开发并随着Maven分发包一起发布的插件是Maven的核心插件。核心插件提供了Maven的基础功能，如Maven项目创建、编译、打包和发布等项目管理目标都是由核心插件完成。拓展插件是对Maven核心插件功能的补充和拓展，完成一些小众需求而实现的插件，如将Maven项目打包成可执行JAR包的插件。<br>  从完成的项目管理目标功能来区分，Maven插件也可以分为Build插件和Reporting插件，Build插件是在项目build阶段执行的插件，在实际项目中配置于POM文件的<code>&lt;build&gt;</code>节点内；Reporting插件是在项目的site阶段执行的插件，在实际项目中配置于POM文件的<code>&lt;reporting&gt;</code>节点内。Maven项目的官方文档中就是按照该方式去区分插件类别。<br>  Maven项目本身就提供了大量的Maven插件，覆盖了日常项目管理的很多常用操作，可以在Maven官方插件文档列表中查找项目需要使用的插件。</p>
-<blockquote>
-<p>由官方维护的Maven插件列表，地址：<span class="exturl" data-url="aHR0cDovL21hdmVuLmFwYWNoZS5vcmcvcGx1Z2lucy9pbmRleC5odG1s">http://maven.apache.org/plugins/index.html<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<h2 id="插件定位／坐标"><a href="#插件定位／坐标" class="headerlink" title="插件定位／坐标"></a>插件定位／坐标</h2><hr>
-<p>  因为Maven插件的多种多样，所以在实际的项目管理过程中，为了快速定位和使用一个插件，Maven为每个插件都定义了一个坐标，使得定位和使用一个插件变得那么复杂和麻烦。插件坐标需要每个插件开发者自定义并且保证其唯一性。<br>  一个Maven插件至少应该包含以下信息来定义插件的坐标：</p>
-<table>
-<thead>
-<tr>
-<th align="left">Item</th>
-<th align="left">Description</th>
-<th align="left">Example</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">groupId</td>
-<td align="left">插件的包路径，类似于Java中的包概念</td>
-<td align="left">org.apache.maven.plugins</td>
-</tr>
-<tr>
-<td align="left">artifactId</td>
-<td align="left">使用插件的插件名称</td>
-<td align="left">maven-archetype-plugin</td>
-</tr>
-<tr>
-<td align="left">version</td>
-<td align="left">插件的版本信息</td>
-<td align="left">2.4</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p><code>maven-archetype-plugin</code>插件即为Maven的核心插件内容，创建Maven项目的命令<code>mvn archetype:generate</code>就是执行该插件中的<code>generate</code>目标。</p>
-</blockquote>
-<h2 id="插件的使用"><a href="#插件的使用" class="headerlink" title="插件的使用"></a>插件的使用</h2><hr>
-<p>  Maven插件的使用也很方便，但是前提你要知道该插件的坐标、Goal（目标）列表和配置参数，你可以在该插件的文档中找到相关插件的内容和配置参数。</p>
-<h3 id="命令行方式"><a href="#命令行方式" class="headerlink" title="命令行方式"></a>命令行方式</h3><p>  Maven插件可以直接在命令行进行使用。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn [groupId:][artifactId][:version]:[goal] [-D[Parameter]] …</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th align="left">Item</th>
-<th align="left">Description</th>
-<th align="left">Required</th>
-<th align="left">Example</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">groupId</td>
-<td align="left">插件包路径</td>
-<td align="left">false</td>
-<td align="left">org.apache.maven.plugins</td>
-</tr>
-<tr>
-<td align="left">artifactId</td>
-<td align="left">插件名称</td>
-<td align="left">true</td>
-<td align="left">maven-dependency-plugin</td>
-</tr>
-<tr>
-<td align="left">version</td>
-<td align="left">插件版本信息</td>
-<td align="left">false</td>
-<td align="left">3.0.0</td>
-</tr>
-<tr>
-<td align="left">goal</td>
-<td align="left">插件内命令（项目管理目标）</td>
-<td align="left">true</td>
-<td align="left">tree</td>
-</tr>
-<tr>
-<td align="left">Parameter</td>
-<td align="left">命令参数,加<code>-D</code>前缀</td>
-<td align="left">false</td>
-<td align="left">-DoutputFile</td>
-</tr>
-</tbody></table>
-<figure class="highlight sh"><figcaption><span>Example</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mvn org.apache.maven.plugins:maven-dependency-plugin:3.0.0:tree -DoutputFile=tree.txt</span><br><span class="line"><span class="comment">#可以简写为</span></span><br><span class="line">mvn dependency:<span class="literal">true</span> -DoutputFile=tree.txt</span><br></pre></td></tr></table></figure>
-
-<h3 id="POM方式"><a href="#POM方式" class="headerlink" title="POM方式"></a>POM方式</h3><p>  Maven插件可以绑定到Maven的某一个生命周期阶段运行，使用POM方式配置插件信息和绑定周期。</p>
-<figure class="highlight xml"><figcaption><span>pom.xml(part)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 插件包路径 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 插件名称 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-dependency-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 插件版本信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 具体任务块 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 单个任务 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 自定义唯一ID --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>tree<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 项目管理目标列表 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 具体目标 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>tree<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 绑定到的周期阶段，即什么时候执行 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 插件运行参数配置 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 参数配置 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">outputFile</span>&gt;</span>tree.txt<span class="tag">&lt;/<span class="name">outputFile</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          <img src="/2017/03/26/Maven%E6%8F%92%E4%BB%B6%E6%A6%82%E8%BF%B0/maven-logo-black-on-white.png" class="">
+<h2 id="maven">## Maven</h2>
+<p>  Maven是一个项目管理工具，它包含了一个项目对象模型 (Project Object
+Model)、一组标准集合、一个项目生命周期(Project
+Lifecycle)、一个依赖管理系统(Dependency Management
+System)和用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。
+  Maven项目对象模型(POM)，可以通过一小段描述信息来管理项目的构建，报告和文档的软件项目管理工具。
+  从Maven的实现和运行方式来讲，Maven是一个插件框架，在Maven内部所有的操作逻辑和项目管理目标都来自插件。
+  Maven定义了三个生命周期（clean、default、site），这些生命周期相互独立，并且每个周期内部都包含了一些有序阶段。Maven会将很多插件目标（goal）绑定到每个生命周期中，这使得我们在对Maven发出相关项目指令的时候，Maven会有序的执行相关周期内部的每个小阶段并且触发绑定到每个周期内部阶段上面的插件目标，最后完成相关项目管理指令。例如编译和创建一个JAR文件这样的工作。
+  Maven的目的是用来简化项目构建过程，生成一种标准化方式的构建、清晰的方式定义项目的组成、简单的方式发布项目和简单的方式在多个项目中共享JARs。此外，Maven能够很方便的帮你管理项目报告，生成站点，管理JAR文件，等等。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/03/26/Maven%E6%8F%92%E4%BB%B6%E6%A6%82%E8%BF%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1085,7 +845,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2016-07-15 15:57:20" itemprop="dateModified" datetime="2016-07-15T15:57:20+08:00">2016-07-15</time>
+      <time title="修改时间：2024-03-05 21:35:13" itemprop="dateModified" datetime="2024-03-05T21:35:13+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1103,7 +863,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>128</span>
+      <span>129</span>
     </span>
 </div>
 
@@ -1117,10 +877,15 @@
           <blockquote>
 <p>org.apache.commons.cli version：1.3</p>
 </blockquote>
-<figure class="highlight xml"><figcaption><span>pom.xml > Maven</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-cli<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-cli<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><code>org.apache.commons.cli</code>项目是<code>Apache Commons</code>项目中的一个子项目，实现了处理和解析命令行参数的功能。</p>
-<figure class="highlight java"><figcaption><span>例子</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.test.helloworld;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.CommandLine;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.CommandLineParser;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.DefaultParser;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.Option;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.Options;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.ParseException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Hello world!</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">App</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">( String[] args )</span> <span class="keyword">throws</span> ParseException</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="type">CommandLineParser</span> <span class="variable">clp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultParser</span>();</span><br><span class="line">    	<span class="type">CommandLine</span> <span class="variable">cl</span> <span class="operator">=</span> clp.parse(options, args);</span><br><span class="line">    	System.out.println(cl.getOptionValue(<span class="string">&quot;input&quot;</span>));</span><br><span class="line">    	System.out.println(cl.getOptionValue(<span class="string">&quot;output&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;serial&quot;)</span></span><br><span class="line">	<span class="keyword">static</span> <span class="type">Options</span> <span class="variable">options</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Options</span>() </span><br><span class="line">	&#123;</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">Option</span> <span class="variable">input</span> <span class="operator">=</span> Option.builder(<span class="string">&quot;i&quot;</span>)</span><br><span class="line">					.hasArg()</span><br><span class="line">					.desc(<span class="string">&quot; the input&quot;</span>)</span><br><span class="line">					.longOpt(<span class="string">&quot;input&quot;</span>)</span><br><span class="line">					.build();</span><br><span class="line">			<span class="type">Option</span> <span class="variable">output</span> <span class="operator">=</span> Option.builder(<span class="string">&quot;o&quot;</span>)</span><br><span class="line">					.hasArg()</span><br><span class="line">					.desc(<span class="string">&quot; the output &quot;</span>)</span><br><span class="line">					.longOpt(<span class="string">&quot;output&quot;</span>)</span><br><span class="line">					.build();</span><br><span class="line">			addOption(input);</span><br><span class="line">			addOption(output);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><figcaption><span>pom.xml > Maven</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-cli<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-cli<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/07/14/org-apache-commons-cli/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1182,7 +947,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2017-03-27 13:51:56" itemprop="dateModified" datetime="2017-03-27T13:51:56+08:00">2017-03-27</time>
+      <time title="修改时间：2024-03-05 21:35:24" itemprop="dateModified" datetime="2024-03-05T21:35:24+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1211,133 +976,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="笔者使用环境"><a href="#笔者使用环境" class="headerlink" title="笔者使用环境"></a>笔者使用环境</h2><hr>
+          <h2 id="笔者使用环境">## 笔者使用环境</h2>
 <blockquote>
-<p>OS name: OS X Ei Capitan<br>OS version: 10.11.5<br>Java version: 1.8.0_91<br>Apache Maven: 3.3.9</p>
+<p>OS name: OS X Ei Capitan<br />
+OS version: 10.11.5<br />
+Java version: 1.8.0_91<br />
+Apache Maven: 3.3.9</p>
 </blockquote>
-<h2 id="创建项目：mvn-archetype-generate"><a href="#创建项目：mvn-archetype-generate" class="headerlink" title="创建项目：mvn archetype:generate"></a>创建项目：mvn archetype:generate</h2><hr>
-<blockquote>
-<p>如果是第一次运行 Maven 的话，它会从远程 Maven 仓库下载很多需要的程序到你的本地库<br>本地库（local repository）目录：<code>~/.m2/repository/</code><br>也可以不使用交互方式创建<br><code>mvn archetype:generate -DgroupId=com.test.helloworld -DartifactId=HelloWorld -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false</code></p>
-</blockquote>
-<ol>
-<li>Choose a number or apply filter<br>选择项目模版ID，直接回车选默认模版，再次回车选默认模版版本。</li>
-<li>Define value for property ‘groupId’: :<br>填写组织名称，一般使用域名方式，例如：com.test.helloworld</li>
-<li>Define value for property ‘artifactId’: :<br>填写项目名称，例如：HelloWorld</li>
-<li>Define value for property ‘version’:  1.0-SNAPSHOT: :<br>填写项目版本，回车默认或手动输入，默认为1.0-SNAPSHOT，例如：1.0</li>
-<li>Define value for property ‘package’:  com.test.helloworld: :<br>填写创建的包名，回车选默认或手动输入，默认使用组织名称，例如：com.test.helloworld</li>
-<li>Y: :<br>确认信息，直接回车</li>
-<li>如果终端信息输出<code>BUILD SUCCESS</code>则表明maven项目创建完成。</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Using following parameters <span class="keyword">for</span> creating project from Old (1.x) Archetype: maven-archetype-quickstart:1.1</span><br><span class="line">[INFO] ----------------------------------------------------------------------------</span><br><span class="line">[INFO] Parameter: basedir, Value: /Users/iceberg/dev</span><br><span class="line">[INFO] Parameter: package, Value: com.test.helloworld</span><br><span class="line">[INFO] Parameter: groupId, Value: com.test.helloworld</span><br><span class="line">[INFO] Parameter: artifactId, Value: HelloWorld</span><br><span class="line">[INFO] Parameter: packageName, Value: com.test.helloworld</span><br><span class="line">[INFO] Parameter: version, Value: 1.0</span><br><span class="line">[INFO] project created from Old (1.x) Archetype <span class="keyword">in</span> <span class="built_in">dir</span>: /Users/iceberg/dev/HelloWorld</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 01:11 min</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:03:21+08:00</span><br><span class="line">[INFO] Final Memory: 15M/310M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
-<img data-src="/2016/07/05/Maven%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/QQ20160714-0@2x.png" class="" title="[项目目录结构]">
-
-<h2 id="编译命令：mvn-compile"><a href="#编译命令：mvn-compile" class="headerlink" title="编译命令：mvn compile"></a>编译命令：mvn compile</h2><hr>
-<p>  编译成功后，可以在项目目录下面的<code>target/classes</code>目录中找到编译后的<code>.class</code>文件。</p>
-<blockquote>
-<p>第一次执行时，会去 Maven 远程仓库下载大量的jar包。</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Iceberg-Mac:dev iceberg$ <span class="built_in">cd</span> HelloWorld/</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ mvn compile</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]                                                                         </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building HelloWorld 1.0</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] </span><br><span class="line">......</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 0.856 s</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:06:21+08:00</span><br><span class="line">[INFO] Final Memory: 15M/300M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ <span class="built_in">cd</span> target/classes/</span><br><span class="line">Iceberg-Mac:classes iceberg$ java com.test.helloworld.App</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-<h2 id="清除编译：mvn-clean"><a href="#清除编译：mvn-clean" class="headerlink" title="清除编译：mvn clean"></a>清除编译：mvn clean</h2><hr>
-<p>  执行完<code>mvn clean</code>后，<code>target</code>目录会被删除。</p>
-<blockquote>
-<p>第一次执行时，会去 Maven 远程仓库下载大量的jar包。</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Iceberg-Mac:classes iceberg$ <span class="built_in">cd</span> ../../</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ mvn clean</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]                                                                         </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building HelloWorld 1.0</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ HelloWorld ---</span><br><span class="line">[INFO] Deleting /Users/iceberg/dev/HelloWorld/target</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 0.227 s</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:14:10+08:00</span><br><span class="line">[INFO] Final Memory: 7M/245M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
-<h2 id="测试命令：mvn-test"><a href="#测试命令：mvn-test" class="headerlink" title="测试命令：mvn test"></a>测试命令：mvn test</h2><hr>
-<p>  该命令会执行<code>src/test/java/</code>下用<code>Junit</code>编写的测试代码</p>
-<blockquote>
-<p>执行顺序：编译－&gt;测试</p>
-</blockquote>
-<h2 id="打包命令：mvn-package"><a href="#打包命令：mvn-package" class="headerlink" title="打包命令：mvn package"></a>打包命令：mvn package</h2><hr>
-<p>  将当前的项目打包，并将目标jar包存放在<code>target</code>目录下面</p>
-<blockquote>
-<p>第一次执行时，会去 Maven 远程仓库下载大量的jar包。<br>该命令会自动跑测试代码，如果不需要测试，则运行命令<code>clean package -Dmaven.test.skip=true </code><br>执行顺序：编译－&gt;测试－&gt;打包</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">Iceberg-Mac:HelloWorld iceberg$ mvn package</span><br><span class="line">[INFO] Scanning <span class="keyword">for</span> projects...</span><br><span class="line">[INFO]                                                                         </span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Building HelloWorld 1.0</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">....</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------</span><br><span class="line"> T E S T S</span><br><span class="line"> </span><br><span class="line">-------------------------------------------------------</span><br><span class="line">Running com.test.helloworld.AppTest</span><br><span class="line">Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec</span><br><span class="line"></span><br><span class="line">Results :</span><br><span class="line"></span><br><span class="line">Tests run: 1, Failures: 0, Errors: 0, Skipped: 0</span><br><span class="line"></span><br><span class="line">[INFO] </span><br><span class="line">[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ HelloWorld ---</span><br><span class="line">[INFO] Building jar: /Users/iceberg/dev/HelloWorld/target/HelloWorld-1.0.jar</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD SUCCESS</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] Total time: 1.493 s</span><br><span class="line">[INFO] Finished at: 2016-07-14T12:22:16+08:00</span><br><span class="line">[INFO] Final Memory: 18M/303M</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">Iceberg-Mac:HelloWorld iceberg$ <span class="built_in">cd</span> target/</span><br><span class="line">Iceberg-Mac:target iceberg$ java -classpath HelloWorld-1.0.jar com.test.helloworld.App</span><br><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-<h2 id="安装命令：mvn-install"><a href="#安装命令：mvn-install" class="headerlink" title="安装命令：mvn install"></a>安装命令：mvn install</h2><hr>
-<p>  该命令会将项目的jar包安装到本地 Maven 仓库中，以便其他项目使用。</p>
-<blockquote>
-<p>执行顺序：编译－&gt;测试－&gt;打包-&gt;安装</p>
-</blockquote>
-<h2 id="Eclipse中的Maven"><a href="#Eclipse中的Maven" class="headerlink" title="Eclipse中的Maven"></a>Eclipse中的Maven</h2><hr>
-<blockquote>
-<p>只针对已经创建好Maven项目之后的导入</p>
-</blockquote>
-<ol>
-<li>在eclipse的Marketplace中找到<code>Maven Integration for Eclipse</code>并安装；</li>
-<li>在本地创建好 Maven 项目后，在eclipse中选择import，<code>Root Directory</code>中选择 Maven 项目目录，点击<code>Finish</code>完成；</li>
-<li>选中项目目录名，<code>Run-&gt;Run As-&gt;*</code>选择相应的 Maven 命令执行。</li>
-</ol>
-<h2 id="IntelliJ-IDEA中的Maven"><a href="#IntelliJ-IDEA中的Maven" class="headerlink" title="IntelliJ IDEA中的Maven"></a>IntelliJ IDEA中的Maven</h2><hr>
-<blockquote>
-<p>只针对已经创建好的Maven项目的导入</p>
-</blockquote>
-<ol>
-<li>在Intellij欢迎界面点击<code>Import Project</code>；</li>
-<li>选择Maven项目中的<code>pom.xml</code>文件，然后一直<code>next</code>；</li>
-<li>也可以直接 <code>File -&gt; Open</code> 选择Maven项目中的<code>pom.xml</code>文件。</li>
-</ol>
-<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><hr>
-<p>  clean、default、site是Maven的三个生命周期。<br>  Maven的生命周期相互独立。每个周期都包含一些有顺序的阶段，后面阶段的运行依赖于前面阶段的结果，所以用户和阶段2交互，则阶段1会自动执行。用户可以和这些生命周期的任何一个阶段交互。</p>
-<h3 id="项目清理的生命周期：clean"><a href="#项目清理的生命周期：clean" class="headerlink" title="项目清理的生命周期：clean"></a>项目清理的生命周期：clean</h3><ol>
-<li>pre-clean 清理前工作</li>
-<li>clean 清理工作</li>
-<li>post-clean 清理后工作</li>
-</ol>
-<h3 id="项目构建的生命周期：default"><a href="#项目构建的生命周期：default" class="headerlink" title="项目构建的生命周期：default"></a>项目构建的生命周期：default</h3><ol>
-<li>validate 验证项目</li>
-<li>initialize 初始化</li>
-<li>generate-sources 生成／载入源代码</li>
-<li>process-sources 处理源代码</li>
-<li>generate-resources 生成／载入资源</li>
-<li>process-resources 处理资源文件，设置classpath等</li>
-<li>compile 编译项目</li>
-<li>process-classes 处理class文件</li>
-<li>generate-test-sources 生成／载入测试源文件</li>
-<li>process-test-sources 处理测试源文件</li>
-<li>generate-test-resources 生成／载入测试资源</li>
-<li>process-test-resources 处理测试资源文件</li>
-<li>test-compile 编译项目的测试代码</li>
-<li>process-test-classes 处理经过编译的项目测试class文件</li>
-<li>test 进行项目的单元测试</li>
-<li>prepare-package 打包准备</li>
-<li>package 项目打包</li>
-<li>pre-integration-test 整合之前工作</li>
-<li>integration-test 整合测试</li>
-<li>post-integration-test 整合之后工作</li>
-<li>verify 验证</li>
-<li>install 将项目打包生成的jar包安装到本地Maven仓库</li>
-<li>deplop 发布项目打包的内容，供其他开发人员和Maven项目使用</li>
-</ol>
-<h3 id="建立和发布项目站点生命周期：site"><a href="#建立和发布项目站点生命周期：site" class="headerlink" title="建立和发布项目站点生命周期：site"></a>建立和发布项目站点生命周期：site</h3><ol>
-<li>pre-site 生成项目站点之前的工作</li>
-<li>site 生成项目站点</li>
-<li>post-site 生成项目站点之后的工作</li>
-<li>site-deploy 发布项目站点</li>
-</ol>
-<h2 id="Maven中的-pom-xml"><a href="#Maven中的-pom-xml" class="headerlink" title="Maven中的 pom.xml"></a>Maven中的 pom.xml</h2><hr>
-<p>  Maven 中的项目配置内容都在<code>pom.xml</code>文件中。</p>
-<h2 id="Maven的坐标"><a href="#Maven的坐标" class="headerlink" title="Maven的坐标"></a>Maven的坐标</h2><hr>
-<p>  <code>pom.xml</code>中声明的<code>groupId, artifactId, packaging, version</code>叫做 Maven 的坐标，坐标能唯一的确定一个项目。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.test.helloworld<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>HelloWorld<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="jar包依赖"><a href="#jar包依赖" class="headerlink" title="jar包依赖"></a>jar包依赖</h2><hr>
-<p>  依赖就是项目中需要引入的外部jar包，所有的依赖都声明在<code>pom.xml</code>中的<code>dependencies</code>节点中，例如测试模块依赖的<code>junit</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>可以看到，添加的<code>dependency</code>节点内容可以构成一个Maven项目的唯一坐标，这样就可以准确加载项目中需要的外部依赖<br>默认依赖类型为jar包</p>
-</blockquote>
-<h3 id="依赖范围：scope"><a href="#依赖范围：scope" class="headerlink" title="依赖范围：scope &lt;classpath的有效阶段&gt;"></a>依赖范围：scope &lt;classpath的有效阶段&gt;</h3><ol>
-<li>编译依赖范围：compile<br>默认依赖范围，在编译、测试、运行都有效</li>
-<li>测试依赖范围：test<br>只有在测试的时候有效</li>
-<li>已经存在的依赖范围：provided<br>类似于系统自带的依赖，JDK 或者容器会提供所需的jar文件。例如servlet-api</li>
-<li>运行时依赖：runtime</li>
-<li>系统依赖范围：system<br>需要通过设置<code>systemPath</code>元素显式地指定依赖文件的路径</li>
-<li>导入依赖范围：import</li>
-</ol>
-<h3 id="依赖传递"><a href="#依赖传递" class="headerlink" title="依赖传递"></a>依赖传递</h3><p>  当Maven项目依赖一个外部jar包是，这个jar包也是一个Maven项目，并且也有自己的依赖，那么我们不需要将这个外部jar包的依赖也一一在<code>pom.xml</code>中添加<code>dependency</code>节点。Maven会自动将外部jar包的依赖也传递到当前Maven项目中，这就是传递依赖。</p>
-<h3 id="排除依赖"><a href="#排除依赖" class="headerlink" title="排除依赖"></a>排除依赖</h3><p>  有时候我们在引入外部jar包的时候，不想让外部jar包的依赖传递到我们的Maven项目中，这时候我们可以在<code>dependency</code>节点中设置<code>exclusions</code>节点来拒绝依赖传递。<code>exclusions</code>可以包含一个或多个<code>exclusion</code>节点，<code>exclusion</code>节点就是想拒绝的依赖内容。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span>    </span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span>      </span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span>          </span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span>  </span><br><span class="line">     <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/07/05/Maven%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1396,6 +1049,13 @@
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-05 21:35:41" itemprop="dateModified" datetime="2024-03-05T21:35:41+08:00">2024-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">分类于</span>
@@ -1422,19 +1082,22 @@
     
     <div class="post-body" itemprop="articleBody">
           <blockquote>
-<p><strong>文章中提到的所有内容和名词包括释义都只是<code>博主个人观点</code>。且博主为互联网软件工程师出身，有些观点可能会有<code>偏向性</code>或<code>片面性</code>，请<code>有选择的进行阅读</code>。</strong><br>另文章为作者原创，如需转载敬请注明出处，谢谢！<br>本文撰写与<code>2016年6月</code>，所以不保证未来几年内，文中的有些观点还站得住脚。</p>
+<p><strong>文章中提到的所有内容和名词包括释义都只是<code>博主个人观点</code>。且博主为互联网软件工程师出身，有些观点可能会有<code>偏向性</code>或<code>片面性</code>，请<code>有选择的进行阅读</code>。</strong><br />
+另文章为作者原创，如需转载敬请注明出处，谢谢！
+本文撰写与<code>2016年6月</code>，所以不保证未来几年内，文中的有些观点还站得住脚。</p>
 </blockquote>
-<h2 id="零、大数据的魅力"><a href="#零、大数据的魅力" class="headerlink" title="零、大数据的魅力"></a>零、大数据的魅力</h2><img data-src="/2016/06/23/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/QQ20160621-0@2x.png" class="" title="[一个大数据研究方向的例子]">  
-
-<p>&emsp;&emsp;你可能会觉得这个例子比较简单，因为一个每天会上网看新闻的人都应该知道这些娱乐八卦新闻，但是从技术的角度来看，机器并不认识这些娱乐明星，也不会了解他们之间这种繁杂的关系，所以要理清这些娱乐明星的关系，就必须通过一些数据的计算和整理，分析的数据量越多，就越能证明这个关系的准确性。<br>&emsp;&emsp;机器处理和分析也不会单一的只是例子中给出的人物关系，而是成千上万的娱乐明星、政坛大鳄和历史人物等等等等，如果要考虑人工去一一整理，这无疑是一项巨大且不可能完成的任务，并且维护起来也是很困难的，这样就引入了大数据这个概念。</p>
-<h2 id="一、认识大数据"><a href="#一、认识大数据" class="headerlink" title="一、认识大数据"></a>一、认识大数据</h2><p>&emsp;&emsp;大数据是什么？多大的数据才能称为大数据？<br>&emsp;&emsp;就好比上面的例子，怎么才能让机器理清这些人物关系呢？如果是一个历史人物的人物关系，那么一些竟可能多的历史资料则作为研究的样本，即数据，然后将这些数据丢给机器去辨认、学习和整理得出的结果就是人物关系的图谱，而为了使该人物关系图谱更加的准确和可信，我们需要更多的历史资料让机器学习来得到一个能准确描述事实本身的结果数据。这应该可以让我们可以简单了解到大数据。<br>&emsp;&emsp;其实个人理解，大数据应该属于一个学术范畴或是一个研究过程，而不是简单的指明为量很大的数据，或者说多大量级的数据只是作为一个大数据的载体或是内容形式罢了。大数据应该从根本上来释义的话，应该是对数据的计算、研究、分析和整理然后得到有效应用的过程。<br>&emsp;&emsp;为什么叫大数据呢？其实大数据从字面上来理解的话其实就是一堆很多的数据，但是事实上，数据的量级并不能直接去定义和解释大数据一词，如果你有上TB或者PB级别的数据，但只是以Log形式简单提供项目运行勘错的能力，那么只能说你有一堆数据，而不见得你有大数据处理的能力；如果你只有GB甚至只是MB级别的数据量，但是你合理分析并将数据分析结果应用到实际项目的发展方向、优化空间和用户研究等，那么可以说你已经具备大数据的能力。<br>&emsp;&emsp;直接用量型单位大来表述大数据，其直接原因还是对处理数据的量级最直接的表现，因为要保证研究、分析和实验结果的准确性和更贴近事物本身，需要尽可能多的数据样本做支撑，所以习惯意义上我们直呼其为大数据。<br>&emsp;&emsp;其实大数据不是只局限于对数据、数据处理和数据分析运用本身，大数据是一个很宽泛的概念，其中包括了上面所提到的范畴外，还包含了对大的数据请求、响应和安全储存等方方面面。<br>&emsp;&emsp;作为日常用户本身，我们生活中方方面面都会接触到大数据，不同的是我们只是关注于大数据给我们生活带来的便利，而不会去关注大数据的处理和反馈过程。举些简单的例子：你每天上网购物、银行流水、购物推荐、上网看电影听音乐等等等等，你应该感觉到这些日常生活中的服务都变得越来越人性化和智能化，这些都完全得益于大数据，得益于那些每天熬夜加班的数据研究工作者和数据工程师们，我们应该真心感谢这些人，因为是他们让我们的生活变得如此的丰富和多姿。</p>
-<h2 id="二、大数据起源"><a href="#二、大数据起源" class="headerlink" title="二、大数据起源"></a>二、大数据起源</h2><p>&emsp;&emsp;数据是大数据的根本所在，所以数据直接决定了大数据的发展或者说大数据的发展和研究成果完全依赖于数据。<br>&emsp;&emsp;我们生活在一个科技迅猛发展的时代，而数据就像我们日常生活中的生活垃圾，是无时无刻不在产生的。如果你身边放着任何一个正常运行的电子设备，那么你就在不停的生产数据，所以在大数据中，我们每个人充当了一个生产者的角色。<br>&emsp;&emsp;其实在科技没有很发达甚至互联网不存在的古代，我们也已经充当了数据生产者的角色，举个例子，如果有一家卖馒头的店铺，当有一天买花卷的人很多，花卷的销量很好的时候，很自然的老板会在第二天多蒸一些花卷出来卖，这就是一个简单的大数据例子，当有客人每买一次馒头的同时也生产了一次数据，而馒头店老板通过分析和整理这些数据，他会在第二天多蒸一些花卷来避免花卷热销导致花卷断货而流失的一批喜欢吃花卷客户。把这个例子在进一步假设，如果一个月下来馒头店老板发现有时候还会出现花卷在第一天卖不出去导致第二天就馊了的情况，这无疑是馒头店老板的一笔损失，但是经过对一个月花卷销量的分析和整理，发现每个礼拜天的时候花卷的销量不是很好，反而礼拜五的时候买花卷的人会很多，所以老板就可以在礼拜五适当的比平时多蒸一点花卷出来，而礼拜天的时候控制减少花卷的数量，这样一来就会很好的控制花卷变馊的数量，从而降低老板的损失。我们在购物行为中日积月累生产了一些数据，而馒头店老板做为了这些数据的直接消费者。馒头店的老板刚开始用一天的数据做分析，结果花卷是可以满足市场的需求了，但是销售成本也因为馊了的馒头而上升了。后来通过对一个月的数据做分析后，馒头店老板很好的控制了成本。通过例子很容易理解数据对大数据分析结果可信度和接近事物本身的直接影响。<br>&emsp;&emsp;博主主要讨论的只是偏向于互联网方向的大数据，对传统数据不做讨论。<br>&emsp;&emsp;从互联网最初开始的阶段，因为作为数据生产者的人很少，并且生产数据的频次也很低，所以在整个互联网界很难找到一个数据消费者，或者说没有人去主动消费这些数据。随着科技的发展，互联网内容并承井喷式发展，直接参与数据生产的生产者越来越多，数据生产的频率也在直线上升。而一个有意思的现象是，现在的数据直接消费者在互联网发展初期并没有重视对数据的挖掘，而日趋增长的数据量级持续困扰着他们，包括他们要为承井喷式的数据生产者提供不间断稳定的服务、这些<code>数据垃圾</code>存储问题等等，其中数据存储问题算是一个比较小的问题，因为存储消耗的只是成本而已，但是因为数据生产者队伍的不断扩大和生产频率的增加无疑是致命的，比较直接的例子就是<code>12306</code>的订票问题，由于<code>12306</code>的特殊性，导致所有业内互联网公司的并发性访问问题都得到妥善解决的时候，它还是一个国民性大数据难题（虽然已经通过各种限制手段也算是解决了问题）。<br>&emsp;&emsp;人都是永远不会满足的，也正是因为这个人性的特殊性，所以才使得社会不停的进步，我们所处的世界也会日新月异。当工程师们解决了多并发请求响应的时候，他们的目光转向了那堆消耗成本的<code>数据垃圾</code>上，又不能直接丢了，却要做好成本控制，所以最好的做法就是将垃圾回收，变废为宝嘛。就是这样的，大数据就开始发展起来了。</p>
-<h2 id="三、拥抱大数据"><a href="#三、拥抱大数据" class="headerlink" title="三、拥抱大数据"></a>三、拥抱大数据</h2><p>&emsp;&emsp;值得一提的是，国内的大数据还是起步状态，BAT也不例外。所以现在入门大数据做个算法工程师啥的，绝对是牛逼哄哄，现在市场上对大数据工程师是供不应求，只要参与过大数据相关工作的工程师都是抢手货。<br>&emsp;&emsp;由于国内各大公司的大数据部门也都在摸索阶段，所以业界除了共用一些处理工具（如<code>Hadoop</code>、<code>word2vec</code>…）外，还没有统一的知识体系，研究成果也都各有所长，其实还因为国内技术的闭源环境，使得大数据甚至所有技术都各成一家、各成一派。有人曾经说过，如果把BAT三家互联网公司的数据整合起来，通过对数据的分析可以准确给任何一个数据生产者画像，包括年龄、性别、兴趣、社交关系、社会属性以及购物取向，或者研究的更深点，可以准确预知一个数据生产者将要做的事儿，当然在社会事业上也能大显身手，最直接的就是通过出行意向去调剂交通压力。不过这都是人们意淫而已，因为BAT在忙着掐架，顾不上这件可有可无的<code>大事</code>。<br>&emsp;&emsp;说了这么多，最后简单说一下博主目前了解的几个大数据研究方向和简单案例吧：</p>
-<h3 id="指标统计"><a href="#指标统计" class="headerlink" title="指标统计"></a>指标统计</h3><p>&emsp;&emsp;最基础的大数据方向，就是统计页面或站点的<code>PV/UV</code>等基础指标，不过相当一部分的公司会选择直接使用其他现成的统计，免费还不费力。不过当你要统计一个复杂或者是自己想知道的数据就无能为力了。<br>&emsp;&emsp;如果你尝试从一些仅有的数据中去充分分析而不是简单的只关注<code>PV/UV</code>的时候，你会慢慢的发现你会变得越来越了解你的客户。<br>&emsp;&emsp;成功从第一步开始，不要让你的数据成就了别人的辉煌。</p>
-<h3 id="用户画像"><a href="#用户画像" class="headerlink" title="用户画像"></a>用户画像</h3><p>&emsp;&emsp;用户画像顾名思义就是给你的用户画像，就是尽可能真实的从以业务范畴来详细、真实的描述用户的维度，其中可能包括性别、年龄范围、地区、工作性质、贫富状态和兴趣爱好标签等属性维度，比如本文上面说道的BAT数据的例子。<br>&emsp;&emsp;给一个用户准确的画像在相应的业务场景中使用可以给用户更精准的推荐业务、内容或者是个性化服务。常见的场景包括消息内容推送、商品内容推送等，圈出特定群体的用户去精准推送更垂直的业务。<br>&emsp;&emsp;为了保证画像的准确性，所以需要量级更大的数据作为支撑。</p>
-<h3 id="知识图谱"><a href="#知识图谱" class="headerlink" title="知识图谱"></a>知识图谱</h3><p>&emsp;&emsp;文章开头的百度的例子其实就是一个知识图谱的运用。<br>&emsp;&emsp;知识图谱是准确描述事实环境中每个实体的画像结构。常见的业务场景就是搜索类工具中使用，其次在做大数据其他方向的运用中可以当作一个工具内容来使用，例如用户画像。</p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>&emsp;&emsp;进店数据是百度内部的一个项目，据说可以分析计算到用户走在马路上后，走进路边某家店铺的指数。这就是去预估用户消费的一个大数据应用。<br>&emsp;&emsp;通过提前做好的用户画像数据，指定分析某一个时刻或者是指定某个商场地点的所有用户信息，供商家参考用户消费需求和推出更精准的业务。例如如果分析某商场内老年人的比例达到了80%以上，那么商家肯定不会傻到搞一个比基尼促销活动。  </p>
-
+<h2 id="零大数据的魅力">零、大数据的魅力</h2>
+<img src="/2016/06/23/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/QQ20160621-0@2x.png" class="" title="[一个大数据研究方向的例子]">
+<p>  你可能会觉得这个例子比较简单，因为一个每天会上网看新闻的人都应该知道这些娱乐八卦新闻，但是从技术的角度来看，机器并不认识这些娱乐明星，也不会了解他们之间这种繁杂的关系，所以要理清这些娱乐明星的关系，就必须通过一些数据的计算和整理，分析的数据量越多，就越能证明这个关系的准确性。<br />
+  机器处理和分析也不会单一的只是例子中给出的人物关系，而是成千上万的娱乐明星、政坛大鳄和历史人物等等等等，如果要考虑人工去一一整理，这无疑是一项巨大且不可能完成的任务，并且维护起来也是很困难的，这样就引入了大数据这个概念。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/23/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1488,9 +1151,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2016-06-17 11:29:45 / 修改时间：16:50:50" itemprop="dateCreated datePublished" datetime="2016-06-17T11:29:45+08:00">2016-06-17</time>
+      <time title="创建时间：2016-06-17 11:29:45" itemprop="dateCreated datePublished" datetime="2016-06-17T11:29:45+08:00">2016-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-05 21:36:47" itemprop="dateModified" datetime="2024-03-05T21:36:47+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1512,7 +1181,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>877</span>
+      <span>878</span>
     </span>
 </div>
 
@@ -1523,67 +1192,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="一、数组排序方法："><a href="#一、数组排序方法：" class="headerlink" title="一、数组排序方法："></a>一、数组排序方法：</h4><ol>
-<li>选择排序<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> temp;</span><br><span class="line"><span class="type">int</span>[] arr = &#123;<span class="number">4</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">6</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;arr.length-<span class="number">1</span>; i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=i+<span class="number">1</span>; j&lt;array.length; j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i] &lt; arr[j])&#123;</span><br><span class="line">            temp = arr[i];</span><br><span class="line">           arr[i] = arr[j];</span><br><span class="line">           arr[j] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>插入排序：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] arr = &#123;<span class="number">4</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">6</span>&#125;;</span><br><span class="line"><span class="type">int</span> temp;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;arr.length;i++)&#123;</span><br><span class="line">    temp = arr[i]; </span><br><span class="line">    <span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i-<span class="number">1</span>; 　　　　</span><br><span class="line">    <span class="keyword">while</span>(j &gt; -<span class="number">1</span> &amp;&amp; temp &gt; arr[j])&#123;</span><br><span class="line">        arr[j+<span class="number">1</span>] = arr[j];</span><br><span class="line">        j—;</span><br><span class="line">    &#125;</span><br><span class="line">    arr[j+<span class="number">1</span>] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+          <h4 id="一数组排序方法">一、数组排序方法：</h4>
+<ol type="1">
+<li>选择排序 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> temp;</span><br><span class="line"><span class="type">int</span>[] arr = &#123;<span class="number">4</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">6</span>&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;arr.length-<span class="number">1</span>; i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=i+<span class="number">1</span>; j&lt;array.length; j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[i] &lt; arr[j])&#123;</span><br><span class="line">            temp = arr[i];</span><br><span class="line">           arr[i] = arr[j];</span><br><span class="line">           arr[j] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h4 id="二、Collection接口-java-util-：所有子类都可以使用"><a href="#二、Collection接口-java-util-：所有子类都可以使用" class="headerlink" title="二、Collection接口(java.util)：所有子类都可以使用"></a>二、Collection接口(java.util)：所有子类都可以使用</h4><ol>
-<li>int size() 返回集合中元素数量</li>
-<li>boolean isEmpty() 判断集合中是否包含元素</li>
-<li>boolean contains(Object obj) 判断给定对象是否在集合中</li>
-<li>boolean containsAll(Collection c) 判断是非包含c中所有元素</li>
-<li>boolean add(Object obj) 添加obj到集合对象</li>
-<li>boolean addAll(Collection c) 添加c中所有元素到集合中</li>
-<li>boolean remove(Object obj) 从集合中删除obj元素</li>
-<li>boolean removeAll(Collection c) 从集合中删除c中的所有元素</li>
-<li>void clear() 删除集合中的所有元素</li>
-</ol>
-<h4 id="三、Set接口-Collection子接口-：禁止重复元素，如果两个Set对象包含相同元素，则相等"><a href="#三、Set接口-Collection子接口-：禁止重复元素，如果两个Set对象包含相同元素，则相等" class="headerlink" title="三、Set接口(Collection子接口)：禁止重复元素，如果两个Set对象包含相同元素，则相等"></a>三、Set接口(Collection子接口)：禁止重复元素，如果两个Set对象包含相同元素，则相等</h4><h4 id="四、SortedSet接口-Set子接口-：元素升序排列"><a href="#四、SortedSet接口-Set子接口-：元素升序排列" class="headerlink" title="四、SortedSet接口(Set子接口)：元素升序排列"></a>四、SortedSet接口(Set子接口)：元素升序排列</h4><h4 id="五、List接口-Collection子接口-：有顺序的、可以重复的、有数字键值"><a href="#五、List接口-Collection子接口-：有顺序的、可以重复的、有数字键值" class="headerlink" title="五、List接口(Collection子接口)：有顺序的、可以重复的、有数字键值"></a>五、List接口(Collection子接口)：有顺序的、可以重复的、有数字键值</h4><h4 id="六、Map接口-java-util-：从一个关键字到值的映射，不能有重复的关键字"><a href="#六、Map接口-java-util-：从一个关键字到值的映射，不能有重复的关键字" class="headerlink" title="六、Map接口(java.util)：从一个关键字到值的映射，不能有重复的关键字"></a>六、Map接口(java.util)：从一个关键字到值的映射，不能有重复的关键字</h4><ol>
-<li>int size() 返回元素个数</li>
-<li>boolean isEmpty() 返回map中是否还包含元素</li>
-<li>boolean containsKey(Object key) 判断给定的key是否是Map中的键值</li>
-<li>boolean containsValue(Object val) 判断给定的val是否是Map中的一个值</li>
-<li>Object get(Object key) 返回Map中key的关联值</li>
-<li>Collection values() 返回包含所有值的Collection对象</li>
-<li>Set keySet() 返回包含Map中所有键值的Set对象</li>
-<li>Set entrySet() 返回包含Map中所有项的Set对象</li>
-<li>Object put(Object key, Object val) 添加键值对到Map中</li>
-<li>void putAll(Map m) 将m中所有的键值对添加到Map中</li>
-<li>Object remove(Object key) 删除Map中的key</li>
-<li>void clear() 删除所有键值对</li>
-</ol>
-<h4 id="七、SortedMap接口-Map子接口-：关键字升序排列"><a href="#七、SortedMap接口-Map子接口-：关键字升序排列" class="headerlink" title="七、SortedMap接口(Map子接口)：关键字升序排列"></a>七、SortedMap接口(Map子接口)：关键字升序排列</h4><h4 id="八、Arrays-操作数组静态方法-："><a href="#八、Arrays-操作数组静态方法-：" class="headerlink" title="八、Arrays(操作数组静态方法)："></a>八、Arrays(操作数组静态方法)：</h4><ol>
-<li>equals(type[] a, type[] b) 比较两个数组</li>
-<li>fill(type[] a, type val) 给数组填充</li>
-<li>sort(type[] a) 排序</li>
-<li>binarySearch() 对数组元素二分法查找</li>
-<li>asList(Object[] a) 数组转换为ArrayList</li>
-</ol>
-<h4 id="九、Vector-ArrayList-实现Collection-：实现接口Collection中方法"><a href="#九、Vector-ArrayList-实现Collection-：实现接口Collection中方法" class="headerlink" title="九、Vector&#x2F;ArrayList(实现Collection)：实现接口Collection中方法"></a>九、Vector&#x2F;ArrayList(实现Collection)：实现接口Collection中方法</h4><ol>
-<li>new Vector&#x2F;ArrayList() 初始容量为10</li>
-<li>new Vector&#x2F;ArrayList(int cap) 初始容量为cap</li>
-<li>new Vector&#x2F;ArrayList(Collection col) 使用集合对象初始化</li>
-<li>Object get(int pos) 返回pos位置的元素(取出后需要塑形)</li>
-<li>void set(int pos, Object obj) 设置pos位置的值</li>
-<li>Object remove(int pos) 删除指定位置的元素，并返回</li>
-<li>int indexOf(Object obj) 返回obj在集合中第一次出现的位置，不存在返回－1</li>
-<li>Enumeration elements() 返回包含Vector中所有元素的Enumeration类对象</li>
-<li>Iterator iterator() 返回所有元素的Iterator类对象</li>
-</ol>
-<h4 id="十、HashTable-HashMap-实现Map接口-：实现Map接口中方法，HashTable不允许有空键"><a href="#十、HashTable-HashMap-实现Map接口-：实现Map接口中方法，HashTable不允许有空键" class="headerlink" title="十、HashTable&#x2F;HashMap(实现Map接口)：实现Map接口中方法，HashTable不允许有空键"></a>十、HashTable&#x2F;HashMap(实现Map接口)：实现Map接口中方法，HashTable不允许有空键</h4><ol>
-<li>Enumeration elements() 返回包含值的Enumeration对象</li>
-<li>Enumeration keys() 返回包含键的Enumeration对象；</li>
-</ol>
-<h4 id="十一、Enumeration类-遍历集合-：不能用于ArrayList"><a href="#十一、Enumeration类-遍历集合-：不能用于ArrayList" class="headerlink" title="十一、Enumeration类(遍历集合)：不能用于ArrayList"></a>十一、Enumeration类(遍历集合)：不能用于ArrayList</h4><ol>
-<li>hasMoreElements() 判断是否还有剩下的元素</li>
-<li>nextElement() 取得下一个元素</li>
-</ol>
-<h4 id="十二、Iterator类-遍历集合-："><a href="#十二、Iterator类-遍历集合-：" class="headerlink" title="十二、Iterator类(遍历集合)："></a>十二、Iterator类(遍历集合)：</h4><ol>
-<li>hasNext() 判断是否还有元素</li>
-<li>next() 取得下一个元素</li>
-<li>remove() 去除元素</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/17/Java-%E5%AF%B9%E8%B1%A1%E7%BE%A4%E4%BD%93%E7%BB%84%E7%BB%87/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

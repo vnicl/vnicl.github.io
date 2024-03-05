@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2016-06-23 18:56:24" itemprop="dateModified" datetime="2016-06-23T18:56:24+08:00">2016-06-23</time>
+      <time title="修改时间：2024-03-05 21:36:14" itemprop="dateModified" datetime="2024-03-05T21:36:14+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -256,7 +256,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>862</span>
+      <span>863</span>
     </span>
 </div>
 
@@ -267,79 +267,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="一、I-O-java-io-：操作必须抛出IOException异常"><a href="#一、I-O-java-io-：操作必须抛出IOException异常" class="headerlink" title="一、I&#x2F;O(java.io)：操作必须抛出IOException异常"></a>一、I&#x2F;O(java.io)：操作必须抛出IOException异常</h4><ol>
+          <h4
+id="一iojava.io操作必须抛出ioexception异常">一、I/O(java.io)：操作必须抛出IOException异常</h4>
+<ol type="1">
 <li>close() 关闭流；</li>
 </ol>
-<h4 id="二、in-out-err-标准输入-输出-错误流-java-lang-System-方法："><a href="#二、in-out-err-标准输入-输出-错误流-java-lang-System-方法：" class="headerlink" title="二、in&#x2F;out&#x2F;err(标准输入&#x2F;输出&#x2F;错误流)(java.lang.System)方法："></a>二、in&#x2F;out&#x2F;err(标准输入&#x2F;输出&#x2F;错误流)(java.lang.System)方法：</h4><ol>
-<li>System.in是InputStream(字节流)类型</li>
-<li>System.out&#x2F;System.err是printStream类型</li>
-<li>System.out.print() 输出字符</li>
-<li>System.out.println() 输入字符并换行；</li>
-</ol>
-<h4 id="三、字符流Reader-Writer："><a href="#三、字符流Reader-Writer：" class="headerlink" title="三、字符流Reader&#x2F;Writer："></a>三、字符流Reader&#x2F;Writer：</h4><ol>
-<li>write() 写内容到流</li>
-<li>read() 读流内容</li>
-<li>read(byte b) 读取b大小的数据、返回－1则文件末位</li>
-<li>InputStreamReader：读取字节流并转换成字符流</li>
-<li>FileReader：打开一个指定文件名的输入流</li>
-<li>FileWriter：FileWriter(filename) 新建指定文件名的输出流</li>
-<li>FileWriter(filename, Boolean append) 指定文件名的输出流实现续写</li>
-<li>BufferedReader：对输入流缓存、readLine() 读取一行数据，如果没数据返回null</li>
-<li>BufferedWriter：对输出流缓存、newLine() 输出换行符</li>
-</ol>
-<h4 id="四、字节流InputStream-OutputStream："><a href="#四、字节流InputStream-OutputStream：" class="headerlink" title="四、字节流InputStream&#x2F;OutputStream："></a>四、字节流InputStream&#x2F;OutputStream：</h4><ol>
-<li>FileOutputStream：打开指定文件名的输出流</li>
-<li>FileInputStream：创建指定文件名的输入流</li>
-<li>DataOutputStream：提供写基本数据类型的方法</li>
-<li>DataInputStream：提供读基本数据类型的方法、文件末位会抛出EOFException异常</li>
-<li>BufferedOutputStream：缓存输出流</li>
-<li>BufferedInputStream：缓存输入流</li>
-</ol>
-<h4 id="五、处理压缩-java-util-zip-方法："><a href="#五、处理压缩-java-util-zip-方法：" class="headerlink" title="五、处理压缩(java.util.zip)方法："></a>五、处理压缩(java.util.zip)方法：</h4><ol>
-<li>GZIPOutputStream：指定输出流的压缩</li>
-<li>ZipOutputStream：指定输出流的压缩</li>
-<li>putNextEntry(ZipEntry)</li>
-<li>GZIPInputStream：指定输入流解压</li>
-<li>ZipInputStream：指定输入流解压</li>
-<li>getNextEntry() 获取压缩文件内下一个文件，返回ZipEntry对象，没有返回null</li>
-<li>ZipEntry：ZipEntry(filename) 压缩文件内每一个文件对象</li>
-<li>getName() 返回压缩文件最初名称</li>
-<li>isDirectory() 检测是否是文件夹</li>
-</ol>
-<h4 id="六、接口Serializable：实现对象序列化接口"><a href="#六、接口Serializable：实现对象序列化接口" class="headerlink" title="六、接口Serializable：实现对象序列化接口"></a>六、接口Serializable：实现对象序列化接口</h4><ol>
-<li>ObjectInputStream：对象的输入流</li>
-<li>writeObject() 写对象</li>
-<li>ObjectOutputStream：对象的输出流</li>
-<li>readObject() 读入对象</li>
-<li>RandomAccessFile(filename, model) 创建带model权限的一个随机文件读写</li>
-<li>seek(Int n) 移到n的地方</li>
-<li>writeType() 写Type类型的数据</li>
-<li>readType() 读Type类型的数据</li>
-</ol>
-<h4 id="七、File-文件读写-java-io-方法："><a href="#七、File-文件读写-java-io-方法：" class="headerlink" title="七、File(文件读写)(java.io)方法："></a>七、File(文件读写)(java.io)方法：</h4><ol>
-<li>public File(String name) 指定与File对象关联的文件或目录</li>
-<li>public File(String pathToName, String name) 使用pathToName来定位name指定的文件或目录</li>
-<li>public File(File directory, String name) 使用现有的File对象来定位name所指定的文件或目录</li>
-<li>public File(URI rui) 使用给定的资源定位符来定位文件</li>
-<li>public static final String pathSeparator 获取适用于本季的分隔符</li>
-<li>boolean canRead() 文件是否可读</li>
-<li>boolean canWrite() 文件是否可写</li>
-<li>boolean exists() 是否是文件或目录</li>
-<li>boolean createNewFile() 如果文件不存在则创建这个文件，返回真，否则返回假</li>
-<li>boolean isFile() 是否是一个文件</li>
-<li>boolean isDirectory() 是否是一个目录</li>
-<li>boolean isAbsolute() 是否是一个文件或绝对路径目录</li>
-<li>boolean delete() 删除文件或目录</li>
-<li>String getAbsolutePath() 返回一个包含文件或目录绝对路径的字符串</li>
-<li>String getName() 返回一个包含文件名或目录名的字符串</li>
-<li>String getPath() 返回一个半酣文件或目录路径的字符串</li>
-<li>String getParent() 返回父路径</li>
-<li>long length() 返回文件的字节长度，目录返回0</li>
-<li>long lastModified() 返回文件或目录最近一个修改时间</li>
-<li>String[] list() 返回一个目录中内容的字符串数组，不是目录返回null</li>
-</ol>
-<h4 id="附件：所有I-O类参考"><a href="#附件：所有I-O类参考" class="headerlink" title="附件：所有I&#x2F;O类参考"></a>附件：所有I&#x2F;O类参考</h4><img data-src="/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/QQ20151228-2@2x.png" class="" title="[所有I&#x2F;O类 附件1]">  
-<img data-src="/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/QQ20151228-3@2x.png" class="" title="[所有I&#x2F;O类 附件2]">
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -393,9 +333,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2016-06-17 11:26:48 / 修改时间：16:50:32" itemprop="dateCreated datePublished" datetime="2016-06-17T11:26:48+08:00">2016-06-17</time>
+      <time title="创建时间：2016-06-17 11:26:48" itemprop="dateCreated datePublished" datetime="2016-06-17T11:26:48+08:00">2016-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-05 21:36:34" itemprop="dateModified" datetime="2024-03-05T21:36:34+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -417,7 +363,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>551</span>
+      <span>552</span>
     </span>
 </div>
 
@@ -428,35 +374,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="一、Thread-多线程基类-java-lang-：在run方法中重写新线程执行语句；"><a href="#一、Thread-多线程基类-java-lang-：在run方法中重写新线程执行语句；" class="headerlink" title="一、Thread(多线程基类)(java.lang)：在run方法中重写新线程执行语句；"></a>一、Thread(多线程基类)(java.lang)：在run方法中重写新线程执行语句；</h4><ol>
+          <h4
+id="一thread多线程基类java.lang在run方法中重写新线程执行语句">一、Thread(多线程基类)(java.lang)：在run方法中重写新线程执行语句；</h4>
+<ol type="1">
 <li>public Thread() 构造一个新线程对象</li>
-<li>public Thread(Runnable target) 构造一个新线程对象，以Runnable对象为参数</li>
+<li>public Thread(Runnable target)
+构造一个新线程对象，以Runnable对象为参数</li>
 <li>public Thread(String name) 构造一个新线程对象，指定线程名</li>
 <li>public static Thread currentThread() 返回当前运行的线程对象</li>
 <li>public static void yield() 是当前线程暂停，允许别的线程开始运行</li>
-<li>public static void sleep(long milis) 使当前线程暂停运行指定豪秒数，不是去锁旗标</li>
+<li>public static void sleep(long milis)
+使当前线程暂停运行指定豪秒数，不是去锁旗标</li>
 <li>public void start() 启动线程，运行该线程的run方法</li>
-<li>public void run() Thread的子类应重写此方法，内容为要执行的程序任务</li>
+<li>public void run()
+Thread的子类应重写此方法，内容为要执行的程序任务</li>
 <li>public final void stop() 停止线程运行，释放锁旗标</li>
-<li>public void interrupt() 中断线程</li>
-<li>public final void join() 如果此前启动了线程a，将等待线程a死亡才继续执行当前线程</li>
-<li>public final void join(long milis) 如果此前启动了线程a，将等待指定豪秒数或线程a死亡才继续执行当前线程</li>
-<li>public final void setPriority(int newPriority) 设置线程优先级，优先级0～10之间</li>
-<li>public final void setDaemon(Boolean on) 设置该线程是否为后台线程，start之前使用</li>
-<li>public final void checkAccess() 判断当前线程是否有权力修改调用此方法的线程</li>
-<li>public final void setName(String name) 修改线程的名称</li>
-<li>public final boolean isAlive() 测试线程是否处于活跃状态</li>
 </ol>
-<h4 id="二、Runnable-多线程共享-java-lang-线程间共享数据，多个线程处理同一资源"><a href="#二、Runnable-多线程共享-java-lang-线程间共享数据，多个线程处理同一资源" class="headerlink" title="二、Runnable(多线程共享)(java.lang) 线程间共享数据，多个线程处理同一资源"></a>二、Runnable(多线程共享)(java.lang) 线程间共享数据，多个线程处理同一资源</h4><h4 id="三、锁旗标：每个对象都有一个锁旗标"><a href="#三、锁旗标：每个对象都有一个锁旗标" class="headerlink" title="三、锁旗标：每个对象都有一个锁旗标"></a>三、锁旗标：每个对象都有一个锁旗标</h4><ol>
-<li>synchronized(Object){code text}</li>
-<li>public synchronized function(){}</li>
-</ol>
-<h4 id="四、后台线程：调用setDaemon-方法后线程就变成后台线程，前台线程结束则后台线程结束"><a href="#四、后台线程：调用setDaemon-方法后线程就变成后台线程，前台线程结束则后台线程结束" class="headerlink" title="四、后台线程：调用setDaemon()方法后线程就变成后台线程，前台线程结束则后台线程结束"></a>四、后台线程：调用setDaemon()方法后线程就变成后台线程，前台线程结束则后台线程结束</h4><h4 id="五、线程通信："><a href="#五、线程通信：" class="headerlink" title="五、线程通信："></a>五、线程通信：</h4><ol>
-<li>public final void wait() 暂停执行线程进入等待池并释放锁旗标，直到其它线程释放锁旗标唤醒</li>
-<li>public void notify() 唤醒正在等待该对象锁旗标的第一个线程</li>
-<li>public void notifyAll() 唤醒所有等待该对象锁旗标的线高优先级的线程先执行</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/17/Java-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -510,9 +451,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2016-06-17 11:25:32 / 修改时间：16:50:16" itemprop="dateCreated datePublished" datetime="2016-06-17T11:25:32+08:00">2016-06-17</time>
+      <time title="创建时间：2016-06-17 11:25:32" itemprop="dateCreated datePublished" datetime="2016-06-17T11:25:32+08:00">2016-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-05 21:36:24" itemprop="dateModified" datetime="2024-03-05T21:36:24+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -545,87 +492,23 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="一、Application-运行于客户端Java虚拟机；Applet运行于支持Java的Web浏览器中或appletviewer来运行；Servlet运行在服务端，响应客户端请求；"><a href="#一、Application-运行于客户端Java虚拟机；Applet运行于支持Java的Web浏览器中或appletviewer来运行；Servlet运行在服务端，响应客户端请求；" class="headerlink" title="一、Application 运行于客户端Java虚拟机；Applet运行于支持Java的Web浏览器中或appletviewer来运行；Servlet运行在服务端，响应客户端请求；"></a>一、Application 运行于客户端Java虚拟机；Applet运行于支持Java的Web浏览器中或appletviewer来运行；Servlet运行在服务端，响应客户端请求；</h4><h4 id="二、static-静态变量-类方法-可直接调用-、final-常量-终结类-终结方法、abstract-抽象类-抽象方法、extends-类继承、-interface-implements-申明接口-接口实现、transient-临时常量、volatile-共享变量-线程-、native-不同语言集成方法、synchronized-多并发线程对共享数据的访问方法；"><a href="#二、static-静态变量-类方法-可直接调用-、final-常量-终结类-终结方法、abstract-抽象类-抽象方法、extends-类继承、-interface-implements-申明接口-接口实现、transient-临时常量、volatile-共享变量-线程-、native-不同语言集成方法、synchronized-多并发线程对共享数据的访问方法；" class="headerlink" title="二、static 静态变量&#x2F;类方法(可直接调用)、final 常量&#x2F;终结类&#x2F;终结方法、abstract 抽象类&#x2F;抽象方法、extends 类继承、 interface&#x2F;implements 申明接口&#x2F;接口实现、transient 临时常量、volatile 共享变量(线程)、native 不同语言集成方法、synchronized 多并发线程对共享数据的访问方法；"></a>二、static 静态变量&#x2F;类方法(可直接调用)、final 常量&#x2F;终结类&#x2F;终结方法、abstract 抽象类&#x2F;抽象方法、extends 类继承、 interface&#x2F;implements 申明接口&#x2F;接口实现、transient 临时常量、volatile 共享变量(线程)、native 不同语言集成方法、synchronized 多并发线程对共享数据的访问方法；</h4><h4 id="三、boolean-instanceof-类型比较、调用父类属性-构造方法-super-super-；"><a href="#三、boolean-instanceof-类型比较、调用父类属性-构造方法-super-super-；" class="headerlink" title="三、boolean instanceof() 类型比较、调用父类属性&#x2F;构造方法 super&#x2F;super()；"></a>三、boolean instanceof() 类型比较、调用父类属性&#x2F;构造方法 super&#x2F;super()；</h4><h4 id="四、构造方法和类名相同，没有返回类型，可重载；"><a href="#四、构造方法和类名相同，没有返回类型，可重载；" class="headerlink" title="四、构造方法和类名相同，没有返回类型，可重载；"></a>四、构造方法和类名相同，没有返回类型，可重载；</h4><h4 id="五、“-”判断两个对象是否同一；"><a href="#五、“-”判断两个对象是否同一；" class="headerlink" title="五、“&#x3D;&#x3D;”判断两个对象是否同一；"></a>五、“&#x3D;&#x3D;”判断两个对象是否同一；</h4><h4 id="六、Object-所有对象基类-java-lang-方法："><a href="#六、Object-所有对象基类-java-lang-方法：" class="headerlink" title="六、Object(所有对象基类)(java.lang)方法："></a>六、Object(所有对象基类)(java.lang)方法：</h4><ol>
-<li>public final Class getClass() 获取当前对象信息，返回Class类</li>
-<li>public String toString() 返回当前对象本身的有关信息</li>
-<li>public boolean equals(Object obj) 比较两个对象是否是同一对象</li>
-<li>protected Object clone() 生成当前对象的一个备份，返回复制对象</li>
-<li>public int hashCode() 返回该对象的哈希代码值</li>
-<li>protected void finalize() throws Throwable 定义回收当前对象所需完成的资源释放工作</li>
-</ol>
-<h4 id="七、Class-类操作类-java-lang-方法："><a href="#七、Class-类操作类-java-lang-方法：" class="headerlink" title="七、Class(类操作类)(java.lang)方法："></a>七、Class(类操作类)(java.lang)方法：</h4><ol>
-<li>String getName() 返回类名称</li>
-<li>Class getSuperclass() 返回类的父类</li>
-</ol>
-<h4 id="八、Type-数据类型-java-lang-方法：valueOf-转换为接收类型、typeValue-转回几本类型、parseTYPE-转换为TYPE类型，-TYPE-data-转换为TYPE；"><a href="#八、Type-数据类型-java-lang-方法：valueOf-转换为接收类型、typeValue-转回几本类型、parseTYPE-转换为TYPE类型，-TYPE-data-转换为TYPE；" class="headerlink" title="八、Type(数据类型)(java.lang) 方法：valueOf() 转换为接收类型、typeValue() 转回几本类型、parseTYPE() 转换为TYPE类型，(TYPE)data 转换为TYPE；"></a>八、Type(数据类型)(java.lang) 方法：valueOf() 转换为接收类型、typeValue() 转回几本类型、parseTYPE() 转换为TYPE类型，(TYPE)data 转换为TYPE；</h4><h4 id="九、String-常量字符串-java-lang-方法："><a href="#九、String-常量字符串-java-lang-方法：" class="headerlink" title="九、String(常量字符串)(java.lang)方法："></a>九、String(常量字符串)(java.lang)方法：</h4><ol>
-<li>int length() 返回字符串中字符个数</li>
-<li>char charAt(int index) 返回序号index处的字符</li>
-<li>int indexOf(String s) 查找子字符串s，匹配繁华第一个字符的序号，否则返回－1</li>
-<li>String substring(int begin, int end) 返回从begin开始到end的子字符串</li>
-<li>String concat(String s) 返回链接s后的字符串</li>
-<li>String replace(char oldChar, char newChar) 替换字符串中的字符</li>
-<li>int compareTo(String s) 比较字符串，小于s返回负数，大于s返回正数，否则返回0</li>
-<li>boolean equals(String s) 比较两个字符串是否相等</li>
-<li>String trim() 去掉字符串两边的空格</li>
-<li>String toLowerCase() 将字符串中的字符转换为小写</li>
-<li>String toUpperCase() 将字符串中的字符转换为大写</li>
-<li>String endsWith(String str) 检测字符串是否以str结尾</li>
-</ol>
-<h4 id="十、StringBuffer-变量字符串-java-lang-方法："><a href="#十、StringBuffer-变量字符串-java-lang-方法：" class="headerlink" title="十、StringBuffer(变量字符串)(java.lang)方法："></a>十、StringBuffer(变量字符串)(java.lang)方法：</h4><ol>
-<li>new StringBuffer() 生成容量为16的空字符串对象</li>
-<li>new StringBuffer(int size) 生成容量为size的空字符串对象</li>
-<li>new StringBuffer(String str) 生成str的一个备份，容量为str的长度＋16</li>
-<li>int length() 返回字符串对象的长度</li>
-<li>int capacity() 返回字符串对象的容量</li>
-<li>void ensureCapacity(int size) 设置字符串对象的容量</li>
-<li>void setLength(int len) 设置字符串对象的长度</li>
-<li>char charAt(int index) 返回index处的字符</li>
-<li>void setCharAt(int index, char c) 将index处的字符设置为c</li>
-<li>void getChars(int start, int end, char[] charArray, int newStart) 将start开始到end位置的字符复制到charArray中，从newStart开始</li>
-<li>StringBuffer reverse() 返回逆转后的字符串</li>
-<li>StringBuffer insert(int index, Object obj) 将obj插入到index的位置</li>
-<li>StringBuffer append(Object obj) 将obj链接到字符串的末尾</li>
-</ol>
-<h4 id="十一、Character-字符处理-java-lang-方法："><a href="#十一、Character-字符处理-java-lang-方法：" class="headerlink" title="十一、Character(字符处理)(java.lang)方法："></a>十一、Character(字符处理)(java.lang)方法：</h4><p><em>字符处理类，用来确定是否是空字符、是否是字母、是否是数字。。。</em></p>
-<h4 id="十二、StringTokenizer-字符串分割-java-util-方法："><a href="#十二、StringTokenizer-字符串分割-java-util-方法：" class="headerlink" title="十二、StringTokenizer(字符串分割)(java.util)方法："></a>十二、StringTokenizer(字符串分割)(java.util)方法：</h4><ol>
-<li>StringTokenizer(String aString) 用空格分隔aString</li>
-<li>StringTokenizer(String aString, String delimiters) 用delimiters[,:;|_()]分隔aString</li>
-<li>StringTokenizer(String aString, String delimiters, boolean returnDelimiters) 是否返回分隔符</li>
-<li>countTokens() 单词个数</li>
-<li>nextToken() 逐出单词</li>
-<li>hasMoreTokens() 是否还有单词；</li>
-</ol>
-<h4 id="十三、Math-数学类-java-lang-方法："><a href="#十三、Math-数学类-java-lang-方法：" class="headerlink" title="十三、Math(数学类)(java.lang)方法："></a>十三、Math(数学类)(java.lang)方法：</h4><ol>
-<li>final static sin&#x2F;cos&#x2F;tan&#x2F;roound(四舍五入)&#x2F;ceil(向上)&#x2F;floor(向下)&#x2F;sqrt(开根)&#x2F;pow&#x2F;exp&#x2F;log&#x2F;max(最大)&#x2F;min(最小)&#x2F;random(随机)()；</li>
-</ol>
-<h4 id="十四、System-系统-java-lang-方法："><a href="#十四、System-系统-java-lang-方法：" class="headerlink" title="十四、System(系统)(java.lang)方法："></a>十四、System(系统)(java.lang)方法：</h4><ol>
-<li>arraycopy() 复制一个数组</li>
-<li>exit() 结束程序</li>
-<li>currentTimeMillis() 获取日期时间</li>
-<li>gc() 释放资源；</li>
-</ol>
-<h4 id="十五、Runtime-运行时类-java-lang-方法："><a href="#十五、Runtime-运行时类-java-lang-方法：" class="headerlink" title="十五、Runtime(运行时类)(java.lang)方法："></a>十五、Runtime(运行时类)(java.lang)方法：</h4><ol>
-<li>totalMemory() 内存总量</li>
-<li>freeMemory() 内存剩余空间；</li>
-</ol>
-<h4 id="十六、Date-日期类-java-util-方法："><a href="#十六、Date-日期类-java-util-方法：" class="headerlink" title="十六、Date(日期类)(java.util)方法："></a>十六、Date(日期类)(java.util)方法：</h4><ol>
-<li>Date() 返回当前时间</li>
-<li>Date(long date) 创建date的日期的对象</li>
-<li>long getTime() 时间(毫秒)</li>
-<li>after(Date d) 是否在d之后</li>
-<li>before(Date d) 是否在d之前；</li>
-</ol>
-<h4 id="十七、GregorianCalendar-日期类-java-util-方法："><a href="#十七、GregorianCalendar-日期类-java-util-方法：" class="headerlink" title="十七、GregorianCalendar(日期类)(java.util)方法："></a>十七、GregorianCalendar(日期类)(java.util)方法：</h4><ol>
-<li>Date getTime() 获取日期对象</li>
-<li>isLeapYear(int year) 是否闰年</li>
-<li>get(int field) 获取对象信息</li>
-<li>set(int field, int value) 设定值；</li>
-</ol>
-<h4 id="十八、SimpleDateFormat-日期格式-java-text-方法："><a href="#十八、SimpleDateFormat-日期格式-java-text-方法：" class="headerlink" title="十八、SimpleDateFormat(日期格式)(java.text)方法："></a>十八、SimpleDateFormat(日期格式)(java.text)方法：</h4><ol>
-<li>SimpleDateFormat(formatString) 指定格式构造</li>
-<li>format(aDate) 将构造格式应用；</li>
-</ol>
-
+          <h4
+id="一application-运行于客户端java虚拟机applet运行于支持java的web浏览器中或appletviewer来运行servlet运行在服务端响应客户端请求">一、Application
+运行于客户端Java虚拟机；Applet运行于支持Java的Web浏览器中或appletviewer来运行；Servlet运行在服务端，响应客户端请求；</h4>
+<h4
+id="二static-静态变量类方法可直接调用final-常量终结类终结方法abstract-抽象类抽象方法extends-类继承-interfaceimplements-申明接口接口实现transient-临时常量volatile-共享变量线程native-不同语言集成方法synchronized-多并发线程对共享数据的访问方法">二、static
+静态变量/类方法(可直接调用)、final 常量/终结类/终结方法、abstract
+抽象类/抽象方法、extends 类继承、 interface/implements
+申明接口/接口实现、transient 临时常量、volatile 共享变量(线程)、native
+不同语言集成方法、synchronized 多并发线程对共享数据的访问方法；</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/17/Java-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -679,9 +562,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2016-06-17 11:25:06 / 修改时间：16:15:38" itemprop="dateCreated datePublished" datetime="2016-06-17T11:25:06+08:00">2016-06-17</time>
+      <time title="创建时间：2016-06-17 11:25:06" itemprop="dateCreated datePublished" datetime="2016-06-17T11:25:06+08:00">2016-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-05 21:36:05" itemprop="dateModified" datetime="2024-03-05T21:36:05+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -714,26 +603,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h4><p>　　抽象就是忽略问题中与当前目标无关的那些方面，以便更充分的注意与当前目标有关的方面。</p>
+          <h4 id="抽象">抽象</h4>
+<p>　　抽象就是忽略问题中与当前目标无关的那些方面，以便更充分的注意与当前目标有关的方面。</p>
 <p>　　过程抽象将整个系统的功能划分为若干部分，强调功能完成的过程和步骤，而隐藏其具体的实现。任何一个明确定义的功能操作都可被使用者作为单个的实体看待，尽管这个操作实际上可能由一系列更低级的操作来完成。基于过程抽象的两个标准程序设计技术是过程分解及递归技术。</p>
 <p>　　数据抽象是将系统中需要处理的数据和这些数据上的操作结合在一起，抽象成不同的抽象数据类型，每个抽象数据类型既包含了数据，也包含了针对这些数据的操作。相对于过程抽象，数据抽象是更为合理的抽象方法。</p>
 <p>　　面向对象的软件开发方法的主要特点之一就是采用了数据抽象的方法来构建程序的类以及对象。</p>
-<h4 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h4><p>　　面向对象的封装特性与抽象特性密切相关。封装是一种信息隐蔽技术，就是利用抽象数据类型将数据和基于数据的操作封装在一起。用户只能看到对象的封装界面信息，对象的内部细节对用户是隐蔽的。封装的目的在于将对象的使用者和设计者分开，使用者不必知道行为实现的细节，只需使用设计者提供的消息来访问对象。</p>
-<p>　封装的定义是：</p>
-<p>　（1）清楚的边界，所有对象的内部信息被限定在这个边界内；</p>
-<p>　（2）接口，既对象向外界提供的方法，外界可以通过这些方法和对象进行交互；</p>
-<p>　（3）受保护的内部实现，既软件对象功能的实现细节，实现细节不能从类外访问。</p>
-<p>　　通过封装规定了程序如何使用对象的数据，控制用户对类的修改和数据访问权限。多数情况下往往会紧致直接访问对象的数据，只能通过接口访问对象。</p>
-<p>　　在面相对象的程序设计中，抽象数据类型是用“类”来实现的，类封装了数据及对数据的操作，是程序中的最小模块。由于封装特性紧致了外界直接操作类中的数据，模块和模块之间只能通过严格控制的接口进行交互，这使得模块之间的耦合度大大降低，从而保证了模块具有很好的独立性，使得程序维护和修改较为容易。</p>
-<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>　　继承是指新的类可以获得已有类（称为父类或基类）的属性和行为，称新类为已有类的派生类（或子类）。继承是类联结的层次模型，为类的重用提供了方便，它提供了明确表述不同类之间的共性的方法。新类从现有类中派生的过程，称为继承。在继承过程中派生类继承了基类的特性，包括方法和实例变量，派生类也可以修改继承的方法或新增新的方法使之更适合特殊的需要。这也体现了自然社会中一般与特殊的关系。继承性很有助于解决软件的可重用性问题。使用继承使程序结构清晰，降低了编码和维护的工作量。</p>
-<p>　　在面向对象的继承特性中，还有一个关于单继承和多继承的概念。单继承是指任何一个派生类都只有一个单一的直接父类；而多继承是指一个类可以有一个以上的直接父类。采用单继承的类层次结构为树状结构；采用多继承的类层次为网状结构，设计和实现都比较复杂。</p>
-<p>　　Java语言仅支持单继承。</p>
-<h4 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h4><p>　　多态是面相对象程序设计的又一个特殊特性。在面向过程的程序设计中，只要工作是编写一个个的过程或函数，这些过程和函数不能重名。</p>
-<p>　　在面向对象程序设计中，可以利用“重名”来提高程序的抽象度和简洁性。</p>
-<p>　　多态是指一个程序中同名的不同方法共存的情况。主要通过子类对父类方法的覆盖来实现多态。这样一来，不同类的对象可以响应同名的消息（方法）来完成特定的功能，但其具体的实现方法却可以不同。</p>
-<p>　　多态性使语言具有灵活、抽象、行为共享、代码共享的优势，很好的解决了应用程序函数同名的问题。</p>
-<h4 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h4><p>　　方法的重载（overloading）是指在一个类中可以有名字相同的多个方法，但这些方法的参数必须不同，或者参数的个数不同，或者参数的类型不同。返回值可以相同也可以不同。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/17/Java-%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -787,9 +669,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2016-06-17 11:24:53 / 修改时间：16:25:50" itemprop="dateCreated datePublished" datetime="2016-06-17T11:24:53+08:00">2016-06-17</time>
+      <time title="创建时间：2016-06-17 11:24:53" itemprop="dateCreated datePublished" datetime="2016-06-17T11:24:53+08:00">2016-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-05 21:35:52" itemprop="dateModified" datetime="2024-03-05T21:35:52+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -811,7 +699,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>800</span>
+      <span>801</span>
     </span>
 </div>
 
@@ -822,22 +710,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h4><p>　　Application是一个运行在客户端Java虚拟机上的Java程序。它可在客户端机器中读写，可使用自己的主窗口、标题栏和菜单，程序可大可小。</p>
+          <h4 id="application">Application</h4>
+<p>　　Application是一个运行在客户端Java虚拟机上的Java程序。它可在客户端机器中读写，可使用自己的主窗口、标题栏和菜单，程序可大可小。</p>
 <p>　　Application可以运行在最简单的环境中，能够以命令行参数的方式接收来自外部的数据。应用程序从命令行开始运行，其主类必须有一个主方法<code>main()</code>，作为程序运行的入口。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloWord</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String arg[])</span>&#123;</span><br><span class="line">        <span class="comment">//do work code</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Applet"><a href="#Applet" class="headerlink" title="Applet"></a>Applet</h4><p>　　Applet被称为小应用程序，运行于支持Java的Web浏览器中。浏览器的解释器把字节码转换成和机器匹配的指令，在网页中执行小程序。Applet和Application的差别来自于运行环境的不同。Applet需要来自Web浏览器的大量信息：它需要知道何时启动、何时放在浏览器窗口中、何时何处激活或者关闭。小应用程序总是放在Web浏览器的图形用户界面中。</p>
-<p>　　Applet的优点在于Web浏览器软件包括很多小应用程序运行所需的功能；局限性时不能从客户端主机的文件系统中读&#x2F;写，不能运行客户端主机的任何程序，仅能在服务器和客户端之间建立联系。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.awt.Graphics;</span><br><span class="line"><span class="keyword">import</span> java.applet.Applet;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloWord</span> <span class="keyword">extends</span> <span class="title class_">Applet</span>&#123;</span><br><span class="line">　　<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span>&#123; </span><br><span class="line">　　　　　<span class="comment">//初始化变量、装载图片、读取参数值等</span></span><br><span class="line">　　&#125;</span><br><span class="line">　　<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">start</span><span class="params">()</span>&#123; </span><br><span class="line">　　　　　<span class="comment">//启动程序执行或恢复程序执行</span></span><br><span class="line">　　&#125;</span><br><span class="line">　　<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">stop</span><span class="params">()</span>&#123; </span><br><span class="line">　　　　　<span class="comment">//挂起正在执行的程序，暂停程序的执行</span></span><br><span class="line">　　&#125;</span><br><span class="line">　　<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">destroy</span><span class="params">()</span>&#123; </span><br><span class="line">　　　　　<span class="comment">//终止程序的执行释放资源</span></span><br><span class="line">　　&#125;</span><br><span class="line">　　<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">paint</span><span class="params">(Graphics g)</span>&#123; </span><br><span class="line">　　　　　<span class="comment">//完成绘制图形等操作</span></span><br><span class="line">　　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Java Applet<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">applet</span> <span class="attr">code</span>=<span class="string">&quot;HelloWord.class&quot;</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">applet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>运行方式：appletviewer ***.html或浏览器打开</p>
-</blockquote>
-<h4 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h4><p>　　就像Applet拓展了浏览器的功能一样，Servlet运行在服务器端，响应客户的请求，拓展了服务器的功能。Servlet并没有跟客户端的特定协议绑定，但是通常使用的是超文本传送协议（HTTP）。</p>
-<h4 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h4><p>　　JSP是JavaServer Pages的缩写，是Servlet技术的拓展，目的是为了简化动态网页的构建和管理。JSP将Html语句和Java程序代码结合在一起，简化了网页的维护。JSP可以重用JavaBean，创建自定义的标签库以封装复杂的功能。于JSP编程有关的类和接口位于<code>javax.servlet.jsp</code>和<code>javax.servlet.jsp.tagext</code>包中。
-　　</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>JSP<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>The time in second is:&lt;%=System.currentTimeMillis()/1000 %&gt;&lt;/h1 &gt;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h4><p>　　JavaBean是一个轻便的、不依赖平台的Java组件模型，它的目的是在其他基于构件的结构中连接Java构件。这是的Java程序可以集成到非Java应用程序中，从而拓展Java的用途。使用JavaBean不必重写程序就能使构件连接到一起，是应用程序开发更容易，提高程序的可复用性。JavaBean是离散的，可复用的。JavaBean的主要特性为：跨平台兼容性；易于即成到当前平台；易于构件间通信；简化应用程序开发。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/17/Java-%E7%A7%8D%E7%B1%BB%E5%92%8C%E8%BF%90%E8%A1%8C%E6%96%B9%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -899,7 +782,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2016-07-05 19:12:08" itemprop="dateModified" datetime="2016-07-05T19:12:08+08:00">2016-07-05</time>
+      <time title="修改时间：2024-03-05 21:36:56" itemprop="dateModified" datetime="2024-03-05T21:36:56+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -917,7 +800,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>413</span>
+      <span>414</span>
     </span>
 </div>
 
@@ -929,29 +812,18 @@
     
     <div class="post-body" itemprop="articleBody">
           <blockquote>
-<p>&emsp;&emsp;Web开发，为了使开发环境和服务器环境保持一致，由于服务器环境使用Linux居多，而我们又习惯于使用win系统，所以会经常搭建VMware虚拟机来搭建服务器环境。<br>&emsp;&emsp;现在问题来了，如何保持VMware虚拟机内的项目代码文件时刻保持最新？我们使用网络共享来解决。</p>
+<p>  Web开发，为了使开发环境和服务器环境保持一致，由于服务器环境使用Linux居多，而我们又习惯于使用win系统，所以会经常搭建VMware虚拟机来搭建服务器环境。<br />
+  现在问题来了，如何保持VMware虚拟机内的项目代码文件时刻保持最新？我们使用网络共享来解决。</p>
 </blockquote>
 <p><em>笔者环境：win7+VMware+CentOS-7-x86_64-Minimal</em></p>
-<h2 id="一、win系统需要操作部分"><a href="#一、win系统需要操作部分" class="headerlink" title="一、win系统需要操作部分"></a>一、win系统需要操作部分</h2><hr>
-<h3 id="1、找到需要共享的项目文件夹，右键—-属性—-切换到共享Tab"><a href="#1、找到需要共享的项目文件夹，右键—-属性—-切换到共享Tab" class="headerlink" title="1、找到需要共享的项目文件夹，右键—-&gt;属性—-&gt;切换到共享Tab"></a>1、找到需要共享的项目文件夹，右键—-&gt;属性—-&gt;切换到共享Tab</h3><img data-src="/2015/07/18/CentOS-7-%E6%8C%82%E8%BD%BDwin%E5%85%B1%E4%BA%AB%E5%86%85%E5%AE%B9/QQ%E5%9B%BE%E7%89%8720150505175211.png" class="" title="[步骤1]">
-
-<h3 id="2、然后点共享按钮"><a href="#2、然后点共享按钮" class="headerlink" title="2、然后点共享按钮"></a>2、然后点共享按钮</h3><img data-src="/2015/07/18/CentOS-7-%E6%8C%82%E8%BD%BDwin%E5%85%B1%E4%BA%AB%E5%86%85%E5%AE%B9/QQ%E5%9B%BE%E7%89%8720150713141259.jpg" class="" title="[步骤2]">
-
-<p><em>注意选择的登录用户名和权限级别（根据需要选择），然后点击下面的共享按钮，等待修改完成。</em></p>
-<h2 id="二、服务器端配置"><a href="#二、服务器端配置" class="headerlink" title="二、服务器端配置"></a>二、服务器端配置</h2><hr>
-<h3 id="1、先检查是否有安装cifs-utils"><a href="#1、先检查是否有安装cifs-utils" class="headerlink" title="1、先检查是否有安装cifs-utils"></a>1、先检查是否有安装cifs-utils</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# whereis cifs-utils</span><br><span class="line">cifs-utils: /usr/lib64/cifs-utils /etc/cifs-utils /*已安装*/</span><br><span class="line">[root@localhost /]#</span><br><span class="line">/*如果没有安装*/</span><br><span class="line">[root@localhost /]# yum -y install cifs-utils.x86_64</span><br></pre></td></tr></table></figure>
-
-<h3 id="2、开始挂载共享目录"><a href="#2、开始挂载共享目录" class="headerlink" title="2、开始挂载共享目录"></a>2、开始挂载共享目录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost vhost]# mkdir /mnt /* mnt 创建共享目录挂载的位置*/</span><br><span class="line">[root@localhost vhost]# mount -t cifs -o username=litl,password=000000 //100.84.56.208/vhosts /mnt/</span><br></pre></td></tr></table></figure>
-
-<p><em>输入的密码和两个斜杠（&#x2F;&#x2F;）中间有空格；</em></p>
-<p><em>username的位置需要输入在win端的用户名称，而并不是用户全称，否则会提示Permission denied（没有权限）</em></p>
-<img data-src="/2015/07/18/CentOS-7-%E6%8C%82%E8%BD%BDwin%E5%85%B1%E4%BA%AB%E5%86%85%E5%AE%B9/QQ%E6%88%AA%E5%9B%BE20150713151032.png" class="" title="[提示]">
-<p><strong>如上图，username&#x3D;profes，而不是litl</strong></p>
-<h3 id="3、设置开机自动挂载"><a href="#3、设置开机自动挂载" class="headerlink" title="3、设置开机自动挂载"></a>3、设置开机自动挂载</h3><p><strong>编辑&#x2F;etc&#x2F;fstab文件，添加代码</strong></p>
-<blockquote>
-<p>&#x2F;&#x2F;100.84.56.208&#x2F;vhosts &#x2F;mnt&#x2F; cifs auto, username&#x3D;litl,password&#x3D;000000 0 0</p>
-</blockquote>
-<h3 id="4、如果要取消挂载"><a href="#4、如果要取消挂载" class="headerlink" title="4、如果要取消挂载"></a>4、如果要取消挂载</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost vhost]# umount /mnt/</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/07/18/CentOS-7-%E6%8C%82%E8%BD%BDwin%E5%85%B1%E4%BA%AB%E5%86%85%E5%AE%B9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1013,7 +885,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2016-07-05 19:12:14" itemprop="dateModified" datetime="2016-07-05T19:12:14+08:00">2016-07-05</time>
+      <time title="修改时间：2024-03-05 21:37:12" itemprop="dateModified" datetime="2024-03-05T21:37:12+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1031,7 +903,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>874</span>
+      <span>875</span>
     </span>
 </div>
 
@@ -1042,58 +914,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="一、准备（以下拓展有选择性安装，安装过的不需要安装）"><a href="#一、准备（以下拓展有选择性安装，安装过的不需要安装）" class="headerlink" title="一、准备（以下拓展有选择性安装，安装过的不需要安装）"></a>一、准备（以下拓展有选择性安装，安装过的不需要安装）</h2><hr>
+          <h2 id="一准备以下拓展有选择性安装安装过的不需要安装">##
+一、准备（以下拓展有选择性安装，安装过的不需要安装）</h2>
 <ul>
 <li><p>m4:********</p>
-<p>下载页面：<span class="exturl" data-url="aHR0cDovL2Z0cC5nbnUub3JnL2dudS9tNC8=">http://ftp.gnu.org/gnu/m4/<i class="fa fa-external-link-alt"></i></span></p>
-</li>
+<p>下载页面：<span class="exturl" data-url="aHR0cDovL2Z0cC5nbnUub3JnL2dudS9tNC8=">http://ftp.gnu.org/gnu/m4/<i class="fa fa-external-link-alt"></i></span></p></li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# cd /home/iceberg/</span><br><span class="line">[root@localhost iceberg]# wget http://ftp.gnu.org/gnu/m4/m4-1.4.17.tar.gz</span><br><span class="line">[root@localhost iceberg]# tar -xzvf m4-1.4.17.tar.gz </span><br><span class="line">[root@localhost iceberg]# cd m4-1.4.17</span><br><span class="line">[root@localhost m4-1.4.17]# ./configure </span><br><span class="line">[root@localhost m4-1.4.17]# make</span><br><span class="line">[root@localhost m4-1.4.17]# make install</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>perl：一种语言环境</p>
-<p>下载页面：<span class="exturl" data-url="aHR0cHM6Ly93d3cucGVybC5vcmcvZ2V0Lmh0bWwjdW5peF9saWtl">https://www.perl.org/get.html#unix_like<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# cd /home/iceberg/</span><br><span class="line">[root@localhost iceberg]# wget http://www.cpan.org/src/5.0/perl-5.22.0.tar.gz</span><br><span class="line">[root@localhost iceberg]# tar -xvzf perl-5.22.0.tar.gz </span><br><span class="line">[root@localhost iceberg]# cd perl-5.22.0</span><br><span class="line">[root@localhost perl-5.22.0]# ./configure.gnu </span><br><span class="line">[root@localhost perl-5.22.0]# make</span><br><span class="line">[root@localhost perl-5.22.0]# make install</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>autoconf：根据configure.in和aclocal.m4来产生configure文件</p>
-<p>下载页面：<span class="exturl" data-url="aHR0cDovL2Z0cC5nbnUub3JnL2dudS9hdXRvY29uZi8=">http://ftp.gnu.org/gnu/autoconf/<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# cd /home/iceberg/</span><br><span class="line">[root@localhost iceberg]# wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz</span><br><span class="line">[root@localhost iceberg]# tar -xzvf autoconf-2.69.tar.gz </span><br><span class="line">[root@localhost iceberg]# cd autoconf-2.69</span><br><span class="line">[root@localhost autoconf-2.69]# ./configure </span><br><span class="line">[root@localhost autoconf-2.69]# make</span><br><span class="line">[root@localhost autoconf-2.69]# make install</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、安装"><a href="#二、安装" class="headerlink" title="二、安装"></a>二、安装</h2><hr>
-<h3 id="1、安装igbinary拓展"><a href="#1、安装igbinary拓展" class="headerlink" title="1、安装igbinary拓展"></a>1、安装igbinary拓展</h3><blockquote>
-<p>下载页面：<span class="exturl" data-url="aHR0cDovL3BlY2wucGhwLm5ldC9wYWNrYWdlL2lnYmluYXJ5">http://pecl.php.net/package/igbinary<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# cd /home/iceberg/</span><br><span class="line">[root@localhost iceberg]# wget http://pecl.php.net/get/igbinary-1.2.1.tgz</span><br><span class="line">[root@localhost iceberg]# tar -xzvf igbinary-1.2.1.tgz</span><br><span class="line">[root@localhost iceberg]# cd igbinary-1.2.1</span><br><span class="line">[root@localhost igbinary-1.2.1]# /usr/local/bin/phpize </span><br><span class="line">[root@localhost igbinary-1.2.1]# ./configure --with-php-config=/usr/local/bin/php-config </span><br><span class="line">[root@localhost igbinary-1.2.1]# make</span><br><span class="line">[root@localhost igbinary-1.2.1]# make install</span><br></pre></td></tr></table></figure>
-
-<h3 id="2、安装curl拓展"><a href="#2、安装curl拓展" class="headerlink" title="2、安装curl拓展"></a>2、安装curl拓展</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# yum -y install libcurl-devel.x86_64</span><br><span class="line">[root@localhost /]# cd /home/iceberg/php-5.6.10/ext/curl/</span><br><span class="line">[root@localhost curl]# /usr/local/bin/phpize</span><br><span class="line">[root@localhost curl]# ./configure --with-php-config=/usr/local/bin/php-config</span><br><span class="line">[root@localhost curl]# make</span><br><span class="line">[root@localhost curl]# make install</span><br></pre></td></tr></table></figure>
-
-<h3 id="3、安装Memcached拓展"><a href="#3、安装Memcached拓展" class="headerlink" title="3、安装Memcached拓展"></a>3、安装Memcached拓展</h3><blockquote>
-<ul>
-<li>下载页面：<span class="exturl" data-url="aHR0cDovL3BlY2wucGhwLm5ldC9wYWNrYWdlL21lbWNhY2hlZA==">http://pecl.php.net/package/memcached<i class="fa fa-external-link-alt"></i></span><br> <em>该拓展依赖libmemcached库</em></li>
-</ul>
-</blockquote>
-<blockquote>
-<ul>
-<li>下载页面：<span class="exturl" data-url="aHR0cHM6Ly9sYXVuY2hwYWQubmV0L2xpYm1lbWNhY2hlZC8rZG93bmxvYWQ=">https://launchpad.net/libmemcached/+download<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# cd /home/iceberg/</span><br><span class="line">[root@localhost iceberg]# yum -y install cyrus-sasl.x86_64</span><br><span class="line">[root@localhost iceberg]# yum -y install cyrus-sasl-devel.x86_64</span><br><span class="line">[root@localhost iceberg]# wget https://launchpad.net/libmemcached/1.0/1.0.18/+download/libmemcached-1.0.18.tar.gz</span><br><span class="line">[root@localhost iceberg]# tar -xzvf libmemcached-1.0.18</span><br><span class="line">[root@localhost iceberg]# cd libmemcached-1.0.18</span><br><span class="line">[root@localhost libmemcached-1.0.18]# ./configure --enable-sasl</span><br><span class="line">[root@localhost libmemcached-1.0.18]# make</span><br><span class="line">[root@localhost libmemcached-1.0.18]# make install</span><br><span class="line">[root@localhost libmemcached-1.0.18]# cd ../</span><br><span class="line">[root@localhost iceberg]# wget http://pecl.php.net/get/memcached-2.2.0.tgz</span><br><span class="line">[root@localhost iceberg]# tar -xzvf memcached-2.2.0.tgz </span><br><span class="line">[root@localhost iceberg]# cd memcached-2.2.0</span><br><span class="line">[root@localhost memcached-2.2.0]# /usr/local/bin/phpize </span><br><span class="line">[root@localhost memcached-2.2.0]# ./configure --with-php-config=/usr/local/bin/php-config --disable-memcached --enable-memcached-igbinary --enable-memcached-json --enable-memcached-sasl</span><br><span class="line">[root@localhost memcached-2.2.0]# make</span><br><span class="line">[root@localhost memcached-2.2.0]# make install</span><br></pre></td></tr></table></figure>
-
-<h3 id="4、安装Redis拓展"><a href="#4、安装Redis拓展" class="headerlink" title="4、安装Redis拓展"></a>4、安装Redis拓展</h3><blockquote>
-<p>下载页面：<span class="exturl" data-url="aHR0cDovL3BlY2wucGhwLm5ldC9wYWNrYWdlL3JlZGlz">http://pecl.php.net/package/redis<i class="fa fa-external-link-alt"></i></span></p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# cd /home/iceberg/</span><br><span class="line">[root@localhost iceberg]# wget http://pecl.php.net/get/redis-2.2.7.tgz</span><br><span class="line">[root@localhost iceberg]# tar -xzvf redis-2.2.7.tgz </span><br><span class="line">[root@localhost iceberg]# cd redis-2.2.7</span><br><span class="line">[root@localhost redis-2.2.7]# /usr/local/bin/phpize</span><br><span class="line">[root@localhost redis-2.2.7]# ./configure --with-php-config=/usr/local/bin/php-config --disable-redis</span><br><span class="line">[root@localhost redis-2.2.7]# make</span><br><span class="line">[root@localhost redis-2.2.7]# make install</span><br></pre></td></tr></table></figure>
-
-<h3 id="5、安装zlib拓展"><a href="#5、安装zlib拓展" class="headerlink" title="5、安装zlib拓展"></a>5、安装zlib拓展</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost iceberg]# cd /home/iceberg/php-5.6.10/ext/zlib/</span><br><span class="line">[root@localhost zlib]# cp config0.m4 config.m4</span><br><span class="line">[root@localhost zlib]# /usr/local/bin/phpize </span><br><span class="line">[root@localhost zlib]# ./configure --with-php-config=/usr/local/bin/php-config --with-zlib-dir=/home/iceberg/zlib-1.2.8</span><br><span class="line">[root@localhost zlib]# make</span><br><span class="line">[root@localhost zlib]# make install</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、启用"><a href="#三、启用" class="headerlink" title="三、启用"></a>三、启用</h2><hr>
-<p><strong>安装完成之后，会打印出生成的.so配置文件位置</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Installing shared extensions: /usr/local/lib/php/extensions/no-debug-non-zts-20131226/</span><br><span class="line">[root@localhost /]# cd /usr/local/lib/php/extensions/no-debug-non-zts-20131226/</span><br><span class="line">/*找到刚刚生成的拓展文件文件名*/</span><br><span class="line">[root@localhost no-debug-non-zts-20131226]# ls</span><br><span class="line">curl.so  opcache.a  opcache.so</span><br><span class="line">[root@localhost /]# vi /usr/local/lib/php.ini </span><br><span class="line">/*在大概900行左右添加*/</span><br><span class="line">extension=刚刚生成的文件文件名.so</span><br><span class="line">:wq</span><br><span class="line"></span><br><span class="line">[root@localhost no-debug-non-zts-20131226]# ps aux | grep php</span><br><span class="line">root      79567  0.0  0.5 148092  2872 ?        Ss   05:19   0:00 php-fpm: master process (/usr/local/etc/php-fpm.conf)</span><br><span class="line">nobody    79568  0.0  0.8 148100  4044 ?        S    05:19   0:00 php-fpm: pool www</span><br><span class="line">nobody    79569  0.0  0.8 148100  4020 ?        S    05:19   0:00 php-fpm: pool www</span><br><span class="line">root     106776  0.0  0.1 112640   960 pts/1    S+   06:41   0:00 grep --color=auto php</span><br><span class="line">[root@localhost no-debug-non-zts-20131226]# kill -USR2 79567</span><br><span class="line">/*验证是否安装成功*/</span><br><span class="line">[root@localhost no-debug-non-zts-20131226]# /usr/local/sbin/php-fpm -m</span><br><span class="line">/*查看新安装的拓展在不在下面的列表之内*/</span><br><span class="line">[PHP Modules]</span><br><span class="line">cgi-fcgi</span><br><span class="line">Core</span><br><span class="line">ctype</span><br><span class="line">curl</span><br><span class="line">...</span><br><span class="line">mysql</span><br><span class="line"></span><br><span class="line">[Zend Modules]</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/07/13/CentOS-7-PHP%E5%AE%89%E8%A3%85%E6%8B%93%E5%B1%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1155,7 +989,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2016-07-05 19:12:34" itemprop="dateModified" datetime="2016-07-05T19:12:34+08:00">2016-07-05</time>
+      <time title="修改时间：2024-03-05 21:37:23" itemprop="dateModified" datetime="2024-03-05T21:37:23+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1173,7 +1007,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>812</span>
+      <span>813</span>
     </span>
 </div>
 
@@ -1184,52 +1018,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="零、准备工作"><a href="#零、准备工作" class="headerlink" title="零、准备工作"></a>零、准备工作</h2><hr>
+          <h2 id="零准备工作">## 零、准备工作</h2>
 <p><strong>你需要确保当前环境以及安装过gcc和gcc-c++，否则按照下面的方法安装</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum -y install gcc-c++.x86_64</span><br><span class="line">[root@localhost ~]# yum -y install gcc.x86_64</span><br></pre></td></tr></table></figure>
-
-<h2 id="一、资源下载"><a href="#一、资源下载" class="headerlink" title="一、资源下载"></a>一、资源下载</h2><hr>
-<ul>
-<li>nginx：下载页面 <span class="exturl" data-url="aHR0cDovL25naW54Lm9yZy9lbi9kb3dubG9hZC5odG1s">http://nginx.org/en/download.html<i class="fa fa-external-link-alt"></i></span></li>
-<li>PHP：下载页面 <span class="exturl" data-url="aHR0cDovL3BocC5uZXQvZG93bmxvYWRzLnBocA==">http://php.net/downloads.php<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/* 下载nginx，文章发表前最新版本为1.8.0 */</span><br><span class="line">[root@localhost iceberg]# wget http://nginx.org/download/nginx-1.8.0.tar.gz </span><br><span class="line">/* 下载PHP，文章发表前最新版本为5.6.10 */ </span><br><span class="line">[root@localhost iceberg]# wget http://cn2.php.net/distributions/php-5.6.10.tar.gz </span><br><span class="line">/* 解压压缩包 */ </span><br><span class="line">[root@localhost iceberg]# tar -xzvf nginx-1.8.0.tar.gz </span><br><span class="line">[root@localhost iceberg]# tar -xzvf php-5.6.10</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、安装nginx"><a href="#二、安装nginx" class="headerlink" title="二、安装nginx"></a>二、安装nginx</h2><hr>
-<h3 id="1、下载系统中尚未安装的依赖（拓展）包"><a href="#1、下载系统中尚未安装的依赖（拓展）包" class="headerlink" title="1、下载系统中尚未安装的依赖（拓展）包"></a>1、下载系统中尚未安装的依赖（拓展）包</h3><ul>
-<li><p>pcre: nginx中很多功能需要pcre包的支持，比如rewrite模块</p>
-<p>下载页面：<span class="exturl" data-url="aHR0cDovL3NvdXJjZWZvcmdlLm5ldC9wcm9qZWN0cy9wY3JlL2ZpbGVzLw==">http://sourceforge.net/projects/pcre/files/<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p>zlib: 使用 nginx支持内容压缩功能</p>
-<p>下载页面：<span class="exturl" data-url="aHR0cDovL3d3dy56bGliLm5ldC8=">http://www.zlib.net/<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p>OpenSSL: ***</p>
-<p>下载页面：<span class="exturl" data-url="aHR0cDovL3d3dy5vcGVuc3NsLm9yZy9zb3VyY2Uv">http://www.openssl.org/source/<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/*截止文章发表前，pcre版本为8.37*/</span><br><span class="line">[root@localhost iceberg]# wget http://ncu.dl.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.gz</span><br><span class="line">[root@localhost iceberg]# tar -xzvf pcre-8.37.tar.gz</span><br><span class="line">/*截止文章发表前，zlib版本为1.2.8*/</span><br><span class="line">[root@localhost iceberg]# wget http://zlib.net/zlib-1.2.8.tar.gz</span><br><span class="line">[root@localhost iceberg]# tar -xzvf zlib-1.2.8.tar.gz</span><br><span class="line">/*openssl*/</span><br><span class="line">[root@localhost iceberg]# wget http://www.openssl.org/source/openssl-1.0.1p.tar.gz</span><br><span class="line">[root@localhost iceberg]# tar -xvzf openssl-1.0.1p.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h3 id="2、完成安装"><a href="#2、完成安装" class="headerlink" title="2、完成安装"></a>2、完成安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost iceberg]# cd nginx-1.8.0</span><br><span class="line">[root@localhost nginx-1.8.0]# ./configure --with-pcre=/home/iceberg/pcre-8.37 --with-zlib=/home/iceberg/zlib-1.2.8 --with-http_ssl_module --with-openssl=/home/iceberg/openssl-1.0.1p</span><br><span class="line">[root@localhost nginx-1.8.0]# make</span><br><span class="line">[root@localhost nginx-1.8.0]# make install</span><br></pre></td></tr></table></figure>
-
-<h3 id="3、启动nginx服务"><a href="#3、启动nginx服务" class="headerlink" title="3、启动nginx服务"></a>3、启动nginx服务</h3><p><strong>启动前先检查80端口是否被其他程序占用</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost iceberg]# netstat -ano|grep 80</span><br><span class="line">如有有被占用，需要先kill掉占用的程序后开始启动nginx</span><br><span class="line">[root@localhost iceberg]# /usr/local/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
-
-<h3 id="4、其他操作"><a href="#4、其他操作" class="headerlink" title="4、其他操作"></a>4、其他操作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/*编辑nginx配置文件*/</span><br><span class="line">[root@localhost iceberg]# vi /usr/local/nginx/conf/nginx.conf</span><br><span class="line">/*停止nginx服务*/</span><br><span class="line">[root@localhost iceberg]# /usr/local/nginx/sbin/nginx -s stop</span><br><span class="line">/*使配置文件生效*/</span><br><span class="line">[root@localhost iceberg]# /usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、安装PHP"><a href="#三、安装PHP" class="headerlink" title="三、安装PHP"></a>三、安装PHP</h2><hr>
-<h3 id="1、依赖（拓展）包安装"><a href="#1、依赖（拓展）包安装" class="headerlink" title="1、依赖（拓展）包安装"></a>1、依赖（拓展）包安装</h3><ul>
-<li>libxml2: 实现读、创建、以及操作xml数据功能的C语言库</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost php-5.6.10]# yum -y install libxml2.x86_64</span><br><span class="line">[root@localhost php-5.6.10]# yum -y install libxml2-devel.x86_64</span><br></pre></td></tr></table></figure>
-<h3 id="2、完成安装-1"><a href="#2、完成安装-1" class="headerlink" title="2、完成安装"></a>2、完成安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost iceberg]# cd php-5.6.10</span><br><span class="line">[root@localhost php-5.6.10]# ./configure --enable-fpm --with-mysql</span><br><span class="line">[root@localhost php-5.6.10]# make</span><br><span class="line">[root@localhost php-5.6.10]# make install</span><br><span class="line">/*安装完成，设置PHP*/</span><br><span class="line">[root@localhost php-5.6.10]# cp php.ini-development /usr/local/php/php.ini</span><br><span class="line">[root@localhost php-5.6.10]# cp /usr/local/etc/php-fpm.conf.default /usr/local/etc/php-fpm.conf</span><br><span class="line">[root@localhost php-5.6.10]# cp sapi/fpm/php-fpm /usr/local/bin/</span><br></pre></td></tr></table></figure>
-<h3 id="3、PHP操作"><a href="#3、PHP操作" class="headerlink" title="3、PHP操作"></a>3、PHP操作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/*启动PHP*/</span><br><span class="line">[root@localhost php-5.6.10]# /usr/local/bin/php-fpm</span><br><span class="line">/*重启PHP*/</span><br><span class="line">[root@localhost iceberg]# ps aux | grep php</span><br><span class="line">root 79441 0.0 0.6 147960 3168 ? Ss 04:51 0:00 php-fpm: master process (/usr/local/etc/php-fpm.conf)</span><br><span class="line">nobody 79442 0.0 0.5 147960 2812 ? S 04:51 0:00 php-fpm: pool www</span><br><span class="line">nobody 79443 0.0 0.5 147960 2812 ? S 04:51 0:00 php-fpm: pool www</span><br><span class="line">root 79446 0.0 0.1 112640 956 pts/0 S+ 04:51 0:00 grep --color=auto php</span><br><span class="line">[root@localhost iceberg]# kill -USR2 79441</span><br></pre></td></tr></table></figure>
-<h2 id="四、让nginx支持PHP"><a href="#四、让nginx支持PHP" class="headerlink" title="四、让nginx支持PHP"></a>四、让nginx支持PHP</h2><hr>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost iceberg]# vi /usr/local/nginx/conf/nginx.conf</span><br><span class="line">/*修改下面的位置，添加index.php,使nginx支持 .php 文件*/</span><br><span class="line">location / &#123;</span><br><span class="line">    root   html;</span><br><span class="line">    index  index.html index.htm index.php;</span><br><span class="line">&#125;</span><br><span class="line">/*保证对于 .php 文件的请求将被传送到后端的 PHP-FPM 模块*/</span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">    root           html;</span><br><span class="line">    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">    fastcgi_index  index.php;</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;</span><br><span class="line">    include        fastcgi_params;</span><br><span class="line">&#125;</span><br><span class="line">:wq</span><br><span class="line">/*重启nginx*/</span><br><span class="line">[root@localhost iceberg]# /usr/local/nginx/sbin/nginx -s reload</span><br><span class="line">/*测试PHP运行*/</span><br><span class="line">[root@localhost iceberg]# vi /usr/local/nginx/html/index.php</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">phpinfo();</span><br><span class="line"></span><br><span class="line">:wq</span><br><span class="line">[root@localhost iceberg]# </span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>打开浏览器访问<span class="exturl" data-url="aHR0cDovL3lvdXJkb21haW4vaW5kZXgucGhwJUVGJUJDJThDJUU1JUE2JTgyJUU2JTlFJTlDJUU3JTlDJThCJUU1JTg4JUIwUEhQJUU0JUJGJUExJUU2JTgxJUFGJUU1JUIwJUIxJUU4JUExJUE4JUU3JUE0JUJBJUU1JUFFJTg5JUU4JUEzJTg1JUU2JTg4JTkwJUU1JThBJTlG">http://yourdomain/index.php，如果看到PHP信息就表示安装成功<i class="fa fa-external-link-alt"></i></span></strong></p>
-</blockquote>
-
+<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line">[root<span class="title">@localhost</span> ~]# yum -y install gcc-<span class="keyword">c</span>++.<span class="keyword">x</span><span class="number">86</span>_<span class="number">64</span></span><br><span class="line">[root<span class="title">@localhost</span> ~]# yum -y install gcc.<span class="keyword">x</span><span class="number">86</span>_<span class="number">64</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/06/18/CentOS-7-%E9%85%8D%E7%BD%AEnginx-PHP/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1291,7 +1090,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2016-07-21 19:12:58" itemprop="dateModified" datetime="2016-07-21T19:12:58+08:00">2016-07-21</time>
+      <time title="修改时间：2024-03-05 21:37:48" itemprop="dateModified" datetime="2024-03-05T21:37:48+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1324,7 +1123,63 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>　　窗外是一如既往的淡，光线阴沉沉的，像极了撒旦的脸。偶尔从开着的窗户上扑进来点凉风，我颤了颤身体，斜斜的看出去，撩开眼角的刘海，外面还是一片灰蒙蒙的，还是淡淡的，一片阴沉沉。小雨淅淅沥沥……<br>　　天气不知能不能算作阴霾。昏暗的光线让人看着很无力，天空飘着一切乱七八糟的东西。已经很难分辨清楚云朵的轮廊，给人的感觉就像小时候穿了浸了水的棉裤，随时都能拧出水来。<br>　　我读不懂南方的季节，夏天完了，没有秋季，也好像没有冬季，倒是像极了北方的春天，而又好似没有春天的那份盎然。我就是喜欢这样的单调，一年没什么变化，心中有的就是那么的一如既往，只是我还没有清楚的读懂它是春？是夏？还是别的什么。<br>　　不知道文字这东西为什么总是写的出现这种无奈和孤寂，而且不是一次的想起马致远的那几句“枯藤老树昏鸦，小桥流水人家，古道西风瘦马，夕阳西下，断肠人在天涯”，断肠人？在天涯？我很自嘲，多大的年龄，开始没完没了的过滤嘴，带着那种可以让人发疯的色彩，坐在阳台那张桌子的犄角，以最合适的舒服的姿势仰望天空，不是很明镜，看着一天又慢慢的溜走，快落山的时的那束余光，照射在脸部，还有头发，那点鱼尾纹，还有那根白的出奇的新生的头发。真的很想看一遍日出与日落，那么的清新脱俗，可还是算了，那样只会显得自己那么的颓废不堪。<br>　　二十一岁的年龄应该不算什么，但到我这就变了，感觉一切都变了，瞳孔开始找不到焦点，眼角里却只是那么抑郁的色，好多好多事情好像都明白了，却好似还在模糊，懂得了却好像还在糊涂。<br>　　看完了一整部的《蜗居》，生活真的有那么的迷茫？人生的意义难道就在于一辈子有那么属于自己的一套房子？虽然只是付了首付的。何必把自己搞的一辈子当牛做马，说的现实一点就是跟畜生一样。想想海萍为了一套属于自己的房子，每天吃泡面和挂面，的时候，这个社会的生活已经了然于胸，为了一块钱会和苏醇闹翻，为生活精打细算的时候还是免不了生活给她开个玩笑。当然女人也估计是人类中最傻的一类，海藻作为一个名副其实的二奶，竟然还敢为情人生一个孩子，有道是我又一栋大房子，可是里面不住人，跟没有什么区别，人们的私欲是来自各个方面的，其实幸福是最重要的。爱一个人，你要做的不是给她最好的，而是给她最窝心的。<br>　　看这种电视剧会让人心疼，演绎的那么的刺骨。<br>　　回头翻翻前面几篇文字，感觉我现在可真够矫情的，看的会起一身的鸡皮疙瘩。<br>　　现在胡子开始疯长了，突如其来。前天从同学那里抢了盆仙人球回来，就放在旁边，看着挺合适，那么一种浓浓的绿，看着挺有生气。<br>　　很长时间不回家了，爸爸估计怪想我的，也许到了这个年龄已经不是恋家的时候，各种金属的大厦，各种五颜六色的LOGO图案让你不得不开始想清楚自己的未来。每个人一辈子都会有一个转型期，只是迟与早的问题，也许我现在就到了这个转型期。<br>　　借自己以前写过的一篇不算是诗的诗来：<br>　　当付出没有任何意义<br>　　当眼泪只在心里默默地流<br>　　当认为这个世界真的没有什么<br>　　当寒风还是流过历史的伤口<br>　　我认为爱已经可以放手！<br>　　<br>　　爱<br>　　其实没有道理<br>　　恨<br>　　其实无从说起<br>　　情<br>　　其实只是虚谕<br>　　仇<br>　　其实只有一句“对不起”<br>　　大不了就是“baybay”<br>　　<br>　　爱与被爱<br>　　你永远会选择爱<br>　　因为那才是属于自己的爱<br>　　被爱只是建立在别人心灵上的爱<br>　　而我<br>　　一直错误地以为你会屈服于被爱<br>　　<br>　　树<br>　　开始发芽<br>　　草<br>　　开始抽绿<br>　　春<br>　　开始走来<br>　　你<br>　　永远喜欢春天<br>　　而我<br>　　一直怀念冬天<br>　　<br>　　这个春季<br>　　有点太不可思意<br>　　高高的领口不能掩饰一切<br>　　心痛只能装在心里<br>　　慢慢的让她折磨我自己<br>　　<br>　　一股明亮的蓝色渐渐变成褐色<br>　　幻化成许多不同的logo<br>　　圈圈圆圆圈圈<br>　　<br>　　发现以前比现在嫩了不少，爱情，很难说的清楚，为一个人许下一个诺言很简单，去实现这个诺言得有勇气。很少的回念过去，也许这就是人，新生活可以迷灭旧的。</p>
+          <span id="more"></span>
+<p>　　窗外是一如既往的淡，光线阴沉沉的，像极了撒旦的脸。偶尔从开着的窗户上扑进来点凉风，我颤了颤身体，斜斜的看出去，撩开眼角的刘海，外面还是一片灰蒙蒙的，还是淡淡的，一片阴沉沉。小雨淅淅沥沥……<br />
+　　天气不知能不能算作阴霾。昏暗的光线让人看着很无力，天空飘着一切乱七八糟的东西。已经很难分辨清楚云朵的轮廊，给人的感觉就像小时候穿了浸了水的棉裤，随时都能拧出水来。<br />
+　　我读不懂南方的季节，夏天完了，没有秋季，也好像没有冬季，倒是像极了北方的春天，而又好似没有春天的那份盎然。我就是喜欢这样的单调，一年没什么变化，心中有的就是那么的一如既往，只是我还没有清楚的读懂它是春？是夏？还是别的什么。<br />
+　　不知道文字这东西为什么总是写的出现这种无奈和孤寂，而且不是一次的想起马致远的那几句“枯藤老树昏鸦，小桥流水人家，古道西风瘦马，夕阳西下，断肠人在天涯”，断肠人？在天涯？我很自嘲，多大的年龄，开始没完没了的过滤嘴，带着那种可以让人发疯的色彩，坐在阳台那张桌子的犄角，以最合适的舒服的姿势仰望天空，不是很明镜，看着一天又慢慢的溜走，快落山的时的那束余光，照射在脸部，还有头发，那点鱼尾纹，还有那根白的出奇的新生的头发。真的很想看一遍日出与日落，那么的清新脱俗，可还是算了，那样只会显得自己那么的颓废不堪。<br />
+　　二十一岁的年龄应该不算什么，但到我这就变了，感觉一切都变了，瞳孔开始找不到焦点，眼角里却只是那么抑郁的色，好多好多事情好像都明白了，却好似还在模糊，懂得了却好像还在糊涂。<br />
+　　看完了一整部的《蜗居》，生活真的有那么的迷茫？人生的意义难道就在于一辈子有那么属于自己的一套房子？虽然只是付了首付的。何必把自己搞的一辈子当牛做马，说的现实一点就是跟畜生一样。想想海萍为了一套属于自己的房子，每天吃泡面和挂面，的时候，这个社会的生活已经了然于胸，为了一块钱会和苏醇闹翻，为生活精打细算的时候还是免不了生活给她开个玩笑。当然女人也估计是人类中最傻的一类，海藻作为一个名副其实的二奶，竟然还敢为情人生一个孩子，有道是我又一栋大房子，可是里面不住人，跟没有什么区别，人们的私欲是来自各个方面的，其实幸福是最重要的。爱一个人，你要做的不是给她最好的，而是给她最窝心的。<br />
+　　看这种电视剧会让人心疼，演绎的那么的刺骨。<br />
+　　回头翻翻前面几篇文字，感觉我现在可真够矫情的，看的会起一身的鸡皮疙瘩。<br />
+　　现在胡子开始疯长了，突如其来。前天从同学那里抢了盆仙人球回来，就放在旁边，看着挺合适，那么一种浓浓的绿，看着挺有生气。<br />
+　　很长时间不回家了，爸爸估计怪想我的，也许到了这个年龄已经不是恋家的时候，各种金属的大厦，各种五颜六色的LOGO图案让你不得不开始想清楚自己的未来。每个人一辈子都会有一个转型期，只是迟与早的问题，也许我现在就到了这个转型期。<br />
+　　借自己以前写过的一篇不算是诗的诗来：<br />
+　　当付出没有任何意义<br />
+　　当眼泪只在心里默默地流<br />
+　　当认为这个世界真的没有什么<br />
+　　当寒风还是流过历史的伤口<br />
+　　我认为爱已经可以放手！<br />
+　　<br />
+　　爱<br />
+　　其实没有道理<br />
+　　恨<br />
+　　其实无从说起<br />
+　　情<br />
+　　其实只是虚谕<br />
+　　仇<br />
+　　其实只有一句“对不起”<br />
+　　大不了就是“baybay”<br />
+　　<br />
+　　爱与被爱<br />
+　　你永远会选择爱<br />
+　　因为那才是属于自己的爱<br />
+　　被爱只是建立在别人心灵上的爱<br />
+　　而我<br />
+　　一直错误地以为你会屈服于被爱<br />
+　　<br />
+　　树<br />
+　　开始发芽<br />
+　　草<br />
+　　开始抽绿<br />
+　　春<br />
+　　开始走来<br />
+　　你<br />
+　　永远喜欢春天<br />
+　　而我<br />
+　　一直怀念冬天<br />
+　　<br />
+　　这个春季<br />
+　　有点太不可思意<br />
+　　高高的领口不能掩饰一切<br />
+　　心痛只能装在心里<br />
+　　慢慢的让她折磨我自己<br />
+　　<br />
+　　一股明亮的蓝色渐渐变成褐色<br />
+　　幻化成许多不同的logo<br />
+　　圈圈圆圆圈圈<br />
+　　<br />
+　　发现以前比现在嫩了不少，爱情，很难说的清楚，为一个人许下一个诺言很简单，去实现这个诺言得有勇气。很少的回念过去，也许这就是人，新生活可以迷灭旧的。</p>
 
       
     </div>
@@ -1387,7 +1242,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2016-07-21 18:32:56" itemprop="dateModified" datetime="2016-07-21T18:32:56+08:00">2016-07-21</time>
+      <time title="修改时间：2024-03-05 21:38:03" itemprop="dateModified" datetime="2024-03-05T21:38:03+08:00">2024-03-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1420,7 +1275,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>　　好久都不写东西了！<br>　　寂寞的人儿拖着疲倦的身体，满载着这个世界所应有的一切悲痛与莫名的力量用无奈且突兀的手指敲击出一段一段叫寂寞和悲痛的文字。昏暗的路灯把自己拉的很长很长，错乱的心跳带着不应有的赫兹去解密那些奇奇怪怪的思想，最后却只留下无奈。<br>　　谁说广东的冬天如妙龄女郎？萎缩在充杂着不能以任何词汇形容的味道的棉大衣里面，身上还是硬生生起了一身的鸡皮疙瘩，气候没有想象中的那么温暖如春，哆嗦着以60度的仰角仰望夜空，无论如何却不知道自己应该寻找什么。南方的夜空比北方的明镜了许多。耳旁永远都是车间里机器嘈杂的声音，偶尔还会传来两声狗吠，竟然莫名地感觉到了一种从未有过的空旷，深邃的让久经尘世的心可以拧出水来。<br>　　不知从哪冒出这么一个不回家过年的怪念头？这么多年，因为无奈我放弃的东西太多，放下的还是放不下的现在却都已经放下了，我不后悔曾经做过的一切，过去的就该让它过去，有人说翻看过去，抖起的灰尘会迷了双眼。人的负重能力有限，不管来自哪方面，所以我不必在为“这个世界”付出与放下任何东西，我得过我自己的生活，所以我必须长大，我得逼自己长大，尽管只是一种及其虚伪而且只是薄薄的一层糖衣包。把一切来自心灵上的水雾统统都掩埋，然后去种植一种叫做沧桑的东西。<br>　　有人说笑容是一种最好的防腐剂，可是用来防腐心灵的时候却显得那么苍白，一种悲剧的白。我只喜欢黑色，我认为黑色可以抗拒任何有形亦或无形的软弱，有人说黑色掩盖了软弱，我不这么认为，我认为是黑色创造了坚强，给自己披一件坚强的外衣，不然你拿什么与这个“世界”抗衡？<br>　　我曾经一度在新浪博客里面写悲惨的小说故事，去映射自己的生活。后来想想，灰白的生活由不得自己去添色彩，最后顶多只是达到一种可怕而单调的渲染，连色彩都显得那么的苍劲，而又何必悲惨着自己的悲惨，文字这东西就是一个游戏，文字游戏里其实也有潜规则，也有输赢，只是所有人都只把她当做工具罢了。不知从什么时候开始，用户名我总喜欢用icecold和iceberg这两个单词，也许真的双鱼座总是一副呆表情，也许真的什么地方都是冷的……<br>　　爱情在这个年龄不知还有没有懵懂，只知道爱上了却爱的那么彻底，那么的歇斯底里。每个人都不应该有任何痛楚，爱上了就别制造伤害，可是在世俗与理性面前完全没留给我任何选择的余地，在事实面前拥有的只有无奈。我不甘心屈服于那种被叫做命运的东西，却找不到任何解救的理由，分手二字在这个时候真的显得那么的苍白无力，空洞的肉体显得那么的脆弱，说出口的却那么的虚伪而不堪一击，风雨过后留下的只有耳机里那空灵的声音和食指与无名指间那股淡淡的烟草的香味，阳光斜斜地照进来，刺的眼睛里都是水雾。不知从什么时候开始眼睛里常常朦胧于或多或少的水雾，还没来得及拭去脸上却已经有少许的潮湿，湿了的还有那些角落里的尘埃。<br>　　有谁在意我的心里有多苦，我不愿只做一只永远躲在翅膀底下的一只雏鹰，当有天我挣脱了翅膀的时候，却只能化为一只风筝，去走别人给自己划定的界限，并且挣扎着，而又无可奈何！这个空间里活着的人太多，你不能只为自己活着，你有的只是无止尽的无奈地活着，并且还得笑着，灿烂地掩盖自己，有时你笑的不怎么灿烂了，那么你就是叛逆，背离了世俗好像背离了整个世界。<br>　　不知是不是每个人身上都有无论如何也祛除不掉的“污垢”，我感觉我有，没有哪个品牌的“沐浴露”有那个高效的除污特效。其实不必太在意它的存在，至少它证明了你的长大与成熟。<br>　　以前一直以为大学是天堂，我来了，感觉它变成了地域，里面有无止境的落寞，每天清闲的让人感到浑身不自在。<br>　　晚上睡觉手机照样还是放在枕头边，尽管这样辐射很大，不是怕错过任何一个讯息，我会把闹钟音量开的很大，它叫醒我的第一刻摸摸自己的眼睛鼻子，动动大腿，然后庆幸地说我还活着。阳光从窗户洒进来，长长的烟灰倒影在那双破烂的鞋子上，看着看着世界已经没有了色彩，慢慢的淡了下来，只有一片灰蒙蒙。索性闭上眼睛，音响里飘逸着那么空灵的声音：<br>　　“心跳乱了节奏，梦亦不自由……”。</p>
+          <span id="more"></span>
+<p>　　好久都不写东西了！<br />
+　　寂寞的人儿拖着疲倦的身体，满载着这个世界所应有的一切悲痛与莫名的力量用无奈且突兀的手指敲击出一段一段叫寂寞和悲痛的文字。昏暗的路灯把自己拉的很长很长，错乱的心跳带着不应有的赫兹去解密那些奇奇怪怪的思想，最后却只留下无奈。<br />
+　　谁说广东的冬天如妙龄女郎？萎缩在充杂着不能以任何词汇形容的味道的棉大衣里面，身上还是硬生生起了一身的鸡皮疙瘩，气候没有想象中的那么温暖如春，哆嗦着以60度的仰角仰望夜空，无论如何却不知道自己应该寻找什么。南方的夜空比北方的明镜了许多。耳旁永远都是车间里机器嘈杂的声音，偶尔还会传来两声狗吠，竟然莫名地感觉到了一种从未有过的空旷，深邃的让久经尘世的心可以拧出水来。<br />
+　　不知从哪冒出这么一个不回家过年的怪念头？这么多年，因为无奈我放弃的东西太多，放下的还是放不下的现在却都已经放下了，我不后悔曾经做过的一切，过去的就该让它过去，有人说翻看过去，抖起的灰尘会迷了双眼。人的负重能力有限，不管来自哪方面，所以我不必在为“这个世界”付出与放下任何东西，我得过我自己的生活，所以我必须长大，我得逼自己长大，尽管只是一种及其虚伪而且只是薄薄的一层糖衣包。把一切来自心灵上的水雾统统都掩埋，然后去种植一种叫做沧桑的东西。<br />
+　　有人说笑容是一种最好的防腐剂，可是用来防腐心灵的时候却显得那么苍白，一种悲剧的白。我只喜欢黑色，我认为黑色可以抗拒任何有形亦或无形的软弱，有人说黑色掩盖了软弱，我不这么认为，我认为是黑色创造了坚强，给自己披一件坚强的外衣，不然你拿什么与这个“世界”抗衡？<br />
+　　我曾经一度在新浪博客里面写悲惨的小说故事，去映射自己的生活。后来想想，灰白的生活由不得自己去添色彩，最后顶多只是达到一种可怕而单调的渲染，连色彩都显得那么的苍劲，而又何必悲惨着自己的悲惨，文字这东西就是一个游戏，文字游戏里其实也有潜规则，也有输赢，只是所有人都只把她当做工具罢了。不知从什么时候开始，用户名我总喜欢用icecold和iceberg这两个单词，也许真的双鱼座总是一副呆表情，也许真的什么地方都是冷的……<br />
+　　爱情在这个年龄不知还有没有懵懂，只知道爱上了却爱的那么彻底，那么的歇斯底里。每个人都不应该有任何痛楚，爱上了就别制造伤害，可是在世俗与理性面前完全没留给我任何选择的余地，在事实面前拥有的只有无奈。我不甘心屈服于那种被叫做命运的东西，却找不到任何解救的理由，分手二字在这个时候真的显得那么的苍白无力，空洞的肉体显得那么的脆弱，说出口的却那么的虚伪而不堪一击，风雨过后留下的只有耳机里那空灵的声音和食指与无名指间那股淡淡的烟草的香味，阳光斜斜地照进来，刺的眼睛里都是水雾。不知从什么时候开始眼睛里常常朦胧于或多或少的水雾，还没来得及拭去脸上却已经有少许的潮湿，湿了的还有那些角落里的尘埃。<br />
+　　有谁在意我的心里有多苦，我不愿只做一只永远躲在翅膀底下的一只雏鹰，当有天我挣脱了翅膀的时候，却只能化为一只风筝，去走别人给自己划定的界限，并且挣扎着，而又无可奈何！这个空间里活着的人太多，你不能只为自己活着，你有的只是无止尽的无奈地活着，并且还得笑着，灿烂地掩盖自己，有时你笑的不怎么灿烂了，那么你就是叛逆，背离了世俗好像背离了整个世界。<br />
+　　不知是不是每个人身上都有无论如何也祛除不掉的“污垢”，我感觉我有，没有哪个品牌的“沐浴露”有那个高效的除污特效。其实不必太在意它的存在，至少它证明了你的长大与成熟。<br />
+　　以前一直以为大学是天堂，我来了，感觉它变成了地域，里面有无止境的落寞，每天清闲的让人感到浑身不自在。<br />
+　　晚上睡觉手机照样还是放在枕头边，尽管这样辐射很大，不是怕错过任何一个讯息，我会把闹钟音量开的很大，它叫醒我的第一刻摸摸自己的眼睛鼻子，动动大腿，然后庆幸地说我还活着。阳光从窗户洒进来，长长的烟灰倒影在那双破烂的鞋子上，看着看着世界已经没有了色彩，慢慢的淡了下来，只有一片灰蒙蒙。索性闭上眼睛，音响里飘逸着那么空灵的声音：<br />
+　　“心跳乱了节奏，梦亦不自由……”。</p>
 
       
     </div>
