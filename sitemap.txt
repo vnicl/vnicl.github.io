@@ -1,3 +1,4 @@
+https://vnicl.github.io/2017/06/13/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/
 https://vnicl.github.io/2016/06/23/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/
 https://vnicl.github.io/2010/01/27/%E4%B8%80%E9%9B%B6%E5%B9%B4%E4%B8%80%E6%9C%88%E4%BA%8E%E5%B9%BF%E4%B8%9C/
 https://vnicl.github.io/2010/04/03/%E9%98%B4%E9%9B%A8%E5%A4%A9/
@@ -25,7 +26,6 @@ https://vnicl.github.io/2017/05/16/%E9%A2%84%E6%B5%8B%E6%95%B0%E5%80%BC%E5%9E%8B
 https://vnicl.github.io/2017/05/17/%E6%A0%91%E5%9B%9E%E5%BD%92/
 https://vnicl.github.io/2017/06/02/Spark%E6%A6%82%E8%BF%B0/
 https://vnicl.github.io/2017/06/03/Spark%E5%85%A5%E9%97%A8/
-https://vnicl.github.io/2017/06/13/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/
 https://vnicl.github.io/2017/09/15/Play-Framework%E5%85%A5%E9%97%A8/
 https://vnicl.github.io/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/
 https://vnicl.github.io/categories/index.html
@@ -39,8 +39,8 @@ https://vnicl.github.io/tags/PHP/
 https://vnicl.github.io/tags/PHP-Extension/
 https://vnicl.github.io/tags/mnt/
 https://vnicl.github.io/tags/JAVA/
-https://vnicl.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/
 https://vnicl.github.io/tags/Maven/
+https://vnicl.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/
 https://vnicl.github.io/tags/Jar/
 https://vnicl.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/
 https://vnicl.github.io/tags/kNN/
@@ -58,8 +58,13 @@ https://vnicl.github.io/tags/AdaBoost/
 https://vnicl.github.io/tags/%E5%85%83%E7%AE%97%E6%B3%95/
 https://vnicl.github.io/tags/%E6%A0%91%E5%9B%9E%E5%BD%92/
 https://vnicl.github.io/tags/Spark/
-https://vnicl.github.io/tags/TF-IDF/
 https://vnicl.github.io/tags/Play2/
+https://vnicl.github.io/tags/TF-IDF/
+https://vnicl.github.io/tags/Word2Vec/
+https://vnicl.github.io/tags/N-Gram/
+https://vnicl.github.io/tags/Binarizer/
+https://vnicl.github.io/tags/PCA/
+https://vnicl.github.io/tags/DCT/
 https://vnicl.github.io/tags/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88/
 https://vnicl.github.io/tags/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/
 https://vnicl.github.io/tags/%E5%B9%82%E5%87%BD%E6%95%B0%E6%8B%9F%E5%90%88/
@@ -69,8 +74,8 @@ https://vnicl.github.io/categories/CentOS-7/
 https://vnicl.github.io/categories/PHP/
 https://vnicl.github.io/categories/%E6%96%87%E8%89%BA%E8%8C%83/%E6%95%A3%E6%96%87/
 https://vnicl.github.io/categories/JAVA/
-https://vnicl.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/
 https://vnicl.github.io/categories/Apache-Maven/
+https://vnicl.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/
 https://vnicl.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/
 https://vnicl.github.io/categories/JAVA/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/
 https://vnicl.github.io/categories/%E7%AE%97%E6%B3%95%E5%BA%94%E7%94%A8/

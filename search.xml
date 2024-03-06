@@ -591,43 +591,6 @@ Pages的缩写，是Servlet技术的拓展，目的是为了简化动态网页�
       </tags>
   </entry>
   <entry>
-    <title>Java 语言特性</title>
-    <url>/2016/06/17/Java-%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/</url>
-    <content><![CDATA[<h4 id="抽象">抽象</h4>
-<p>　　抽象就是忽略问题中与当前目标无关的那些方面，以便更充分的注意与当前目标有关的方面。</p>
-<p>　　过程抽象将整个系统的功能划分为若干部分，强调功能完成的过程和步骤，而隐藏其具体的实现。任何一个明确定义的功能操作都可被使用者作为单个的实体看待，尽管这个操作实际上可能由一系列更低级的操作来完成。基于过程抽象的两个标准程序设计技术是过程分解及递归技术。</p>
-<p>　　数据抽象是将系统中需要处理的数据和这些数据上的操作结合在一起，抽象成不同的抽象数据类型，每个抽象数据类型既包含了数据，也包含了针对这些数据的操作。相对于过程抽象，数据抽象是更为合理的抽象方法。</p>
-<p>　　面向对象的软件开发方法的主要特点之一就是采用了数据抽象的方法来构建程序的类以及对象。</p>
-<span id="more"></span>
-<h4 id="封装">封装</h4>
-<p>　　面向对象的封装特性与抽象特性密切相关。封装是一种信息隐蔽技术，就是利用抽象数据类型将数据和基于数据的操作封装在一起。用户只能看到对象的封装界面信息，对象的内部细节对用户是隐蔽的。封装的目的在于将对象的使用者和设计者分开，使用者不必知道行为实现的细节，只需使用设计者提供的消息来访问对象。</p>
-<p>　封装的定义是：</p>
-<p>　（1）清楚的边界，所有对象的内部信息被限定在这个边界内；</p>
-<p>　（2）接口，既对象向外界提供的方法，外界可以通过这些方法和对象进行交互；</p>
-<p>　（3）受保护的内部实现，既软件对象功能的实现细节，实现细节不能从类外访问。</p>
-<p>　　通过封装规定了程序如何使用对象的数据，控制用户对类的修改和数据访问权限。多数情况下往往会紧致直接访问对象的数据，只能通过接口访问对象。</p>
-<p>　　在面相对象的程序设计中，抽象数据类型是用“类”来实现的，类封装了数据及对数据的操作，是程序中的最小模块。由于封装特性紧致了外界直接操作类中的数据，模块和模块之间只能通过严格控制的接口进行交互，这使得模块之间的耦合度大大降低，从而保证了模块具有很好的独立性，使得程序维护和修改较为容易。</p>
-<h4 id="继承">继承</h4>
-<p>　　继承是指新的类可以获得已有类（称为父类或基类）的属性和行为，称新类为已有类的派生类（或子类）。继承是类联结的层次模型，为类的重用提供了方便，它提供了明确表述不同类之间的共性的方法。新类从现有类中派生的过程，称为继承。在继承过程中派生类继承了基类的特性，包括方法和实例变量，派生类也可以修改继承的方法或新增新的方法使之更适合特殊的需要。这也体现了自然社会中一般与特殊的关系。继承性很有助于解决软件的可重用性问题。使用继承使程序结构清晰，降低了编码和维护的工作量。</p>
-<p>　　在面向对象的继承特性中，还有一个关于单继承和多继承的概念。单继承是指任何一个派生类都只有一个单一的直接父类；而多继承是指一个类可以有一个以上的直接父类。采用单继承的类层次结构为树状结构；采用多继承的类层次为网状结构，设计和实现都比较复杂。</p>
-<p>　　Java语言仅支持单继承。</p>
-<h4 id="多态">多态</h4>
-<p>　　多态是面相对象程序设计的又一个特殊特性。在面向过程的程序设计中，只要工作是编写一个个的过程或函数，这些过程和函数不能重名。</p>
-<p>　　在面向对象程序设计中，可以利用“重名”来提高程序的抽象度和简洁性。</p>
-<p>　　多态是指一个程序中同名的不同方法共存的情况。主要通过子类对父类方法的覆盖来实现多态。这样一来，不同类的对象可以响应同名的消息（方法）来完成特定的功能，但其具体的实现方法却可以不同。</p>
-<p>　　多态性使语言具有灵活、抽象、行为共享、代码共享的优势，很好的解决了应用程序函数同名的问题。</p>
-<h4 id="重载">重载</h4>
-<p>　　方法的重载（overloading）是指在一个类中可以有名字相同的多个方法，但这些方法的参数必须不同，或者参数的个数不同，或者参数的类型不同。返回值可以相同也可以不同。</p>
-]]></content>
-      <categories>
-        <category>JAVA</category>
-        <category>基础知识</category>
-      </categories>
-      <tags>
-        <tag>JAVA</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java 输入输出流</title>
     <url>/2016/06/17/Java-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81/</url>
     <content><![CDATA[<h4
@@ -733,57 +696,40 @@ id="七file文件读写java.io方法">七、File(文件读写)(java.io)方法：
       </tags>
   </entry>
   <entry>
-    <title>大数据概述</title>
-    <url>/2016/06/23/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<blockquote>
-<p><strong>文章中提到的所有内容和名词包括释义都只是<code>博主个人观点</code>。且博主为互联网软件工程师出身，有些观点可能会有<code>偏向性</code>或<code>片面性</code>，请<code>有选择的进行阅读</code>。</strong><br />
-另文章为作者原创，如需转载敬请注明出处，谢谢！
-本文撰写与<code>2016年6月</code>，所以不保证未来几年内，文中的有些观点还站得住脚。</p>
-</blockquote>
-<h2 id="零大数据的魅力">零、大数据的魅力</h2>
-<img src="/2016/06/23/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/QQ20160621-0@2x.png" class="" title="[一个大数据研究方向的例子]">
-<p>  你可能会觉得这个例子比较简单，因为一个每天会上网看新闻的人都应该知道这些娱乐八卦新闻，但是从技术的角度来看，机器并不认识这些娱乐明星，也不会了解他们之间这种繁杂的关系，所以要理清这些娱乐明星的关系，就必须通过一些数据的计算和整理，分析的数据量越多，就越能证明这个关系的准确性。<br />
-  机器处理和分析也不会单一的只是例子中给出的人物关系，而是成千上万的娱乐明星、政坛大鳄和历史人物等等等等，如果要考虑人工去一一整理，这无疑是一项巨大且不可能完成的任务，并且维护起来也是很困难的，这样就引入了大数据这个概念。</p>
+    <title>Java 语言特性</title>
+    <url>/2016/06/17/Java-%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/</url>
+    <content><![CDATA[<h4 id="抽象">抽象</h4>
+<p>　　抽象就是忽略问题中与当前目标无关的那些方面，以便更充分的注意与当前目标有关的方面。</p>
+<p>　　过程抽象将整个系统的功能划分为若干部分，强调功能完成的过程和步骤，而隐藏其具体的实现。任何一个明确定义的功能操作都可被使用者作为单个的实体看待，尽管这个操作实际上可能由一系列更低级的操作来完成。基于过程抽象的两个标准程序设计技术是过程分解及递归技术。</p>
+<p>　　数据抽象是将系统中需要处理的数据和这些数据上的操作结合在一起，抽象成不同的抽象数据类型，每个抽象数据类型既包含了数据，也包含了针对这些数据的操作。相对于过程抽象，数据抽象是更为合理的抽象方法。</p>
+<p>　　面向对象的软件开发方法的主要特点之一就是采用了数据抽象的方法来构建程序的类以及对象。</p>
 <span id="more"></span>
-<h2 id="一认识大数据">一、认识大数据</h2>
-<p>  大数据是什么？多大的数据才能称为大数据？<br />
-  就好比上面的例子，怎么才能让机器理清这些人物关系呢？如果是一个历史人物的人物关系，那么一些竟可能多的历史资料则作为研究的样本，即数据，然后将这些数据丢给机器去辨认、学习和整理得出的结果就是人物关系的图谱，而为了使该人物关系图谱更加的准确和可信，我们需要更多的历史资料让机器学习来得到一个能准确描述事实本身的结果数据。这应该可以让我们可以简单了解到大数据。<br />
-  其实个人理解，大数据应该属于一个学术范畴或是一个研究过程，而不是简单的指明为量很大的数据，或者说多大量级的数据只是作为一个大数据的载体或是内容形式罢了。大数据应该从根本上来释义的话，应该是对数据的计算、研究、分析和整理然后得到有效应用的过程。<br />
-  为什么叫大数据呢？其实大数据从字面上来理解的话其实就是一堆很多的数据，但是事实上，数据的量级并不能直接去定义和解释大数据一词，如果你有上TB或者PB级别的数据，但只是以Log形式简单提供项目运行勘错的能力，那么只能说你有一堆数据，而不见得你有大数据处理的能力；如果你只有GB甚至只是MB级别的数据量，但是你合理分析并将数据分析结果应用到实际项目的发展方向、优化空间和用户研究等，那么可以说你已经具备大数据的能力。<br />
-  直接用量型单位大来表述大数据，其直接原因还是对处理数据的量级最直接的表现，因为要保证研究、分析和实验结果的准确性和更贴近事物本身，需要尽可能多的数据样本做支撑，所以习惯意义上我们直呼其为大数据。<br />
-  其实大数据不是只局限于对数据、数据处理和数据分析运用本身，大数据是一个很宽泛的概念，其中包括了上面所提到的范畴外，还包含了对大的数据请求、响应和安全储存等方方面面。<br />
-  作为日常用户本身，我们生活中方方面面都会接触到大数据，不同的是我们只是关注于大数据给我们生活带来的便利，而不会去关注大数据的处理和反馈过程。举些简单的例子：你每天上网购物、银行流水、购物推荐、上网看电影听音乐等等等等，你应该感觉到这些日常生活中的服务都变得越来越人性化和智能化，这些都完全得益于大数据，得益于那些每天熬夜加班的数据研究工作者和数据工程师们，我们应该真心感谢这些人，因为是他们让我们的生活变得如此的丰富和多姿。</p>
-<h2 id="二大数据起源">二、大数据起源</h2>
-<p>  数据是大数据的根本所在，所以数据直接决定了大数据的发展或者说大数据的发展和研究成果完全依赖于数据。<br />
-  我们生活在一个科技迅猛发展的时代，而数据就像我们日常生活中的生活垃圾，是无时无刻不在产生的。如果你身边放着任何一个正常运行的电子设备，那么你就在不停的生产数据，所以在大数据中，我们每个人充当了一个生产者的角色。<br />
-  其实在科技没有很发达甚至互联网不存在的古代，我们也已经充当了数据生产者的角色，举个例子，如果有一家卖馒头的店铺，当有一天买花卷的人很多，花卷的销量很好的时候，很自然的老板会在第二天多蒸一些花卷出来卖，这就是一个简单的大数据例子，当有客人每买一次馒头的同时也生产了一次数据，而馒头店老板通过分析和整理这些数据，他会在第二天多蒸一些花卷来避免花卷热销导致花卷断货而流失的一批喜欢吃花卷客户。把这个例子在进一步假设，如果一个月下来馒头店老板发现有时候还会出现花卷在第一天卖不出去导致第二天就馊了的情况，这无疑是馒头店老板的一笔损失，但是经过对一个月花卷销量的分析和整理，发现每个礼拜天的时候花卷的销量不是很好，反而礼拜五的时候买花卷的人会很多，所以老板就可以在礼拜五适当的比平时多蒸一点花卷出来，而礼拜天的时候控制减少花卷的数量，这样一来就会很好的控制花卷变馊的数量，从而降低老板的损失。我们在购物行为中日积月累生产了一些数据，而馒头店老板做为了这些数据的直接消费者。馒头店的老板刚开始用一天的数据做分析，结果花卷是可以满足市场的需求了，但是销售成本也因为馊了的馒头而上升了。后来通过对一个月的数据做分析后，馒头店老板很好的控制了成本。通过例子很容易理解数据对大数据分析结果可信度和接近事物本身的直接影响。<br />
-  博主主要讨论的只是偏向于互联网方向的大数据，对传统数据不做讨论。<br />
-  从互联网最初开始的阶段，因为作为数据生产者的人很少，并且生产数据的频次也很低，所以在整个互联网界很难找到一个数据消费者，或者说没有人去主动消费这些数据。随着科技的发展，互联网内容并承井喷式发展，直接参与数据生产的生产者越来越多，数据生产的频率也在直线上升。而一个有意思的现象是，现在的数据直接消费者在互联网发展初期并没有重视对数据的挖掘，而日趋增长的数据量级持续困扰着他们，包括他们要为承井喷式的数据生产者提供不间断稳定的服务、这些<code>数据垃圾</code>存储问题等等，其中数据存储问题算是一个比较小的问题，因为存储消耗的只是成本而已，但是因为数据生产者队伍的不断扩大和生产频率的增加无疑是致命的，比较直接的例子就是<code>12306</code>的订票问题，由于<code>12306</code>的特殊性，导致所有业内互联网公司的并发性访问问题都得到妥善解决的时候，它还是一个国民性大数据难题（虽然已经通过各种限制手段也算是解决了问题）。
-  人都是永远不会满足的，也正是因为这个人性的特殊性，所以才使得社会不停的进步，我们所处的世界也会日新月异。当工程师们解决了多并发请求响应的时候，他们的目光转向了那堆消耗成本的<code>数据垃圾</code>上，又不能直接丢了，却要做好成本控制，所以最好的做法就是将垃圾回收，变废为宝嘛。就是这样的，大数据就开始发展起来了。</p>
-<h2 id="三拥抱大数据">三、拥抱大数据</h2>
-<p>  值得一提的是，国内的大数据还是起步状态，BAT也不例外。所以现在入门大数据做个算法工程师啥的，绝对是牛逼哄哄，现在市场上对大数据工程师是供不应求，只要参与过大数据相关工作的工程师都是抢手货。
-  由于国内各大公司的大数据部门也都在摸索阶段，所以业界除了共用一些处理工具（如<code>Hadoop</code>、<code>word2vec</code>...）外，还没有统一的知识体系，研究成果也都各有所长，其实还因为国内技术的闭源环境，使得大数据甚至所有技术都各成一家、各成一派。有人曾经说过，如果把BAT三家互联网公司的数据整合起来，通过对数据的分析可以准确给任何一个数据生产者画像，包括年龄、性别、兴趣、社交关系、社会属性以及购物取向，或者研究的更深点，可以准确预知一个数据生产者将要做的事儿，当然在社会事业上也能大显身手，最直接的就是通过出行意向去调剂交通压力。不过这都是人们意淫而已，因为BAT在忙着掐架，顾不上这件可有可无的<code>大事</code>。
-  说了这么多，最后简单说一下博主目前了解的几个大数据研究方向和简单案例吧：</p>
-<h3 id="指标统计">指标统计</h3>
-<p>  最基础的大数据方向，就是统计页面或站点的<code>PV/UV</code>等基础指标，不过相当一部分的公司会选择直接使用其他现成的统计，免费还不费力。不过当你要统计一个复杂或者是自己想知道的数据就无能为力了。<br />
-  如果你尝试从一些仅有的数据中去充分分析而不是简单的只关注<code>PV/UV</code>的时候，你会慢慢的发现你会变得越来越了解你的客户。<br />
-  成功从第一步开始，不要让你的数据成就了别人的辉煌。</p>
-<h3 id="用户画像">用户画像</h3>
-<p>  用户画像顾名思义就是给你的用户画像，就是尽可能真实的从以业务范畴来详细、真实的描述用户的维度，其中可能包括性别、年龄范围、地区、工作性质、贫富状态和兴趣爱好标签等属性维度，比如本文上面说道的BAT数据的例子。<br />
-  给一个用户准确的画像在相应的业务场景中使用可以给用户更精准的推荐业务、内容或者是个性化服务。常见的场景包括消息内容推送、商品内容推送等，圈出特定群体的用户去精准推送更垂直的业务。<br />
-  为了保证画像的准确性，所以需要量级更大的数据作为支撑。</p>
-<h3 id="知识图谱">知识图谱</h3>
-<p>  文章开头的百度的例子其实就是一个知识图谱的运用。<br />
-  知识图谱是准确描述事实环境中每个实体的画像结构。常见的业务场景就是搜索类工具中使用，其次在做大数据其他方向的运用中可以当作一个工具内容来使用，例如用户画像。</p>
-<h3 id="其他">其他</h3>
-<p>  进店数据是百度内部的一个项目，据说可以分析计算到用户走在马路上后，走进路边某家店铺的指数。这就是去预估用户消费的一个大数据应用。
-  通过提前做好的用户画像数据，指定分析某一个时刻或者是指定某个商场地点的所有用户信息，供商家参考用户消费需求和推出更精准的业务。例如如果分析某商场内老年人的比例达到了80%以上，那么商家肯定不会傻到搞一个比基尼促销活动。</p>
+<h4 id="封装">封装</h4>
+<p>　　面向对象的封装特性与抽象特性密切相关。封装是一种信息隐蔽技术，就是利用抽象数据类型将数据和基于数据的操作封装在一起。用户只能看到对象的封装界面信息，对象的内部细节对用户是隐蔽的。封装的目的在于将对象的使用者和设计者分开，使用者不必知道行为实现的细节，只需使用设计者提供的消息来访问对象。</p>
+<p>　封装的定义是：</p>
+<p>　（1）清楚的边界，所有对象的内部信息被限定在这个边界内；</p>
+<p>　（2）接口，既对象向外界提供的方法，外界可以通过这些方法和对象进行交互；</p>
+<p>　（3）受保护的内部实现，既软件对象功能的实现细节，实现细节不能从类外访问。</p>
+<p>　　通过封装规定了程序如何使用对象的数据，控制用户对类的修改和数据访问权限。多数情况下往往会紧致直接访问对象的数据，只能通过接口访问对象。</p>
+<p>　　在面相对象的程序设计中，抽象数据类型是用“类”来实现的，类封装了数据及对数据的操作，是程序中的最小模块。由于封装特性紧致了外界直接操作类中的数据，模块和模块之间只能通过严格控制的接口进行交互，这使得模块之间的耦合度大大降低，从而保证了模块具有很好的独立性，使得程序维护和修改较为容易。</p>
+<h4 id="继承">继承</h4>
+<p>　　继承是指新的类可以获得已有类（称为父类或基类）的属性和行为，称新类为已有类的派生类（或子类）。继承是类联结的层次模型，为类的重用提供了方便，它提供了明确表述不同类之间的共性的方法。新类从现有类中派生的过程，称为继承。在继承过程中派生类继承了基类的特性，包括方法和实例变量，派生类也可以修改继承的方法或新增新的方法使之更适合特殊的需要。这也体现了自然社会中一般与特殊的关系。继承性很有助于解决软件的可重用性问题。使用继承使程序结构清晰，降低了编码和维护的工作量。</p>
+<p>　　在面向对象的继承特性中，还有一个关于单继承和多继承的概念。单继承是指任何一个派生类都只有一个单一的直接父类；而多继承是指一个类可以有一个以上的直接父类。采用单继承的类层次结构为树状结构；采用多继承的类层次为网状结构，设计和实现都比较复杂。</p>
+<p>　　Java语言仅支持单继承。</p>
+<h4 id="多态">多态</h4>
+<p>　　多态是面相对象程序设计的又一个特殊特性。在面向过程的程序设计中，只要工作是编写一个个的过程或函数，这些过程和函数不能重名。</p>
+<p>　　在面向对象程序设计中，可以利用“重名”来提高程序的抽象度和简洁性。</p>
+<p>　　多态是指一个程序中同名的不同方法共存的情况。主要通过子类对父类方法的覆盖来实现多态。这样一来，不同类的对象可以响应同名的消息（方法）来完成特定的功能，但其具体的实现方法却可以不同。</p>
+<p>　　多态性使语言具有灵活、抽象、行为共享、代码共享的优势，很好的解决了应用程序函数同名的问题。</p>
+<h4 id="重载">重载</h4>
+<p>　　方法的重载（overloading）是指在一个类中可以有名字相同的多个方法，但这些方法的参数必须不同，或者参数的个数不同，或者参数的类型不同。返回值可以相同也可以不同。</p>
 ]]></content>
       <categories>
-        <category>大数据</category>
+        <category>JAVA</category>
+        <category>基础知识</category>
       </categories>
       <tags>
-        <tag>大数据</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
@@ -944,22 +890,57 @@ Maven 的坐标，坐标能唯一的确定一个项目。 <figure class="highlig
       </tags>
   </entry>
   <entry>
-    <title>org.apache.commons.cli</title>
-    <url>/2016/07/14/org-apache-commons-cli/</url>
+    <title>大数据概述</title>
+    <url>/2016/06/23/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/</url>
     <content><![CDATA[<blockquote>
-<p>org.apache.commons.cli version：1.3</p>
+<p><strong>文章中提到的所有内容和名词包括释义都只是<code>博主个人观点</code>。且博主为互联网软件工程师出身，有些观点可能会有<code>偏向性</code>或<code>片面性</code>，请<code>有选择的进行阅读</code>。</strong><br />
+另文章为作者原创，如需转载敬请注明出处，谢谢！
+本文撰写与<code>2016年6月</code>，所以不保证未来几年内，文中的有些观点还站得住脚。</p>
 </blockquote>
-<figure class="highlight xml"><figcaption><span>pom.xml > Maven</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-cli<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-cli<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="零大数据的魅力">零、大数据的魅力</h2>
+<img src="/2016/06/23/%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/QQ20160621-0@2x.png" class="" title="[一个大数据研究方向的例子]">
+<p>  你可能会觉得这个例子比较简单，因为一个每天会上网看新闻的人都应该知道这些娱乐八卦新闻，但是从技术的角度来看，机器并不认识这些娱乐明星，也不会了解他们之间这种繁杂的关系，所以要理清这些娱乐明星的关系，就必须通过一些数据的计算和整理，分析的数据量越多，就越能证明这个关系的准确性。<br />
+  机器处理和分析也不会单一的只是例子中给出的人物关系，而是成千上万的娱乐明星、政坛大鳄和历史人物等等等等，如果要考虑人工去一一整理，这无疑是一项巨大且不可能完成的任务，并且维护起来也是很困难的，这样就引入了大数据这个概念。</p>
 <span id="more"></span>
-<p><code>org.apache.commons.cli</code>项目是<code>Apache Commons</code>项目中的一个子项目，实现了处理和解析命令行参数的功能。
-<figure class="highlight java"><figcaption><span>例子</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.test.helloworld;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.CommandLine;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.CommandLineParser;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.DefaultParser;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.Option;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.Options;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.ParseException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Hello world!</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">App</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">( String[] args )</span> <span class="keyword">throws</span> ParseException</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="type">CommandLineParser</span> <span class="variable">clp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultParser</span>();</span><br><span class="line">    	<span class="type">CommandLine</span> <span class="variable">cl</span> <span class="operator">=</span> clp.parse(options, args);</span><br><span class="line">    	System.out.println(cl.getOptionValue(<span class="string">&quot;input&quot;</span>));</span><br><span class="line">    	System.out.println(cl.getOptionValue(<span class="string">&quot;output&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;serial&quot;)</span></span><br><span class="line">	<span class="keyword">static</span> <span class="type">Options</span> <span class="variable">options</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Options</span>() </span><br><span class="line">	&#123;</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">Option</span> <span class="variable">input</span> <span class="operator">=</span> Option.builder(<span class="string">&quot;i&quot;</span>)</span><br><span class="line">					.hasArg()</span><br><span class="line">					.desc(<span class="string">&quot; the input&quot;</span>)</span><br><span class="line">					.longOpt(<span class="string">&quot;input&quot;</span>)</span><br><span class="line">					.build();</span><br><span class="line">			<span class="type">Option</span> <span class="variable">output</span> <span class="operator">=</span> Option.builder(<span class="string">&quot;o&quot;</span>)</span><br><span class="line">					.hasArg()</span><br><span class="line">					.desc(<span class="string">&quot; the output &quot;</span>)</span><br><span class="line">					.longOpt(<span class="string">&quot;output&quot;</span>)</span><br><span class="line">					.build();</span><br><span class="line">			addOption(input);</span><br><span class="line">			addOption(output);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="一认识大数据">一、认识大数据</h2>
+<p>  大数据是什么？多大的数据才能称为大数据？<br />
+  就好比上面的例子，怎么才能让机器理清这些人物关系呢？如果是一个历史人物的人物关系，那么一些竟可能多的历史资料则作为研究的样本，即数据，然后将这些数据丢给机器去辨认、学习和整理得出的结果就是人物关系的图谱，而为了使该人物关系图谱更加的准确和可信，我们需要更多的历史资料让机器学习来得到一个能准确描述事实本身的结果数据。这应该可以让我们可以简单了解到大数据。<br />
+  其实个人理解，大数据应该属于一个学术范畴或是一个研究过程，而不是简单的指明为量很大的数据，或者说多大量级的数据只是作为一个大数据的载体或是内容形式罢了。大数据应该从根本上来释义的话，应该是对数据的计算、研究、分析和整理然后得到有效应用的过程。<br />
+  为什么叫大数据呢？其实大数据从字面上来理解的话其实就是一堆很多的数据，但是事实上，数据的量级并不能直接去定义和解释大数据一词，如果你有上TB或者PB级别的数据，但只是以Log形式简单提供项目运行勘错的能力，那么只能说你有一堆数据，而不见得你有大数据处理的能力；如果你只有GB甚至只是MB级别的数据量，但是你合理分析并将数据分析结果应用到实际项目的发展方向、优化空间和用户研究等，那么可以说你已经具备大数据的能力。<br />
+  直接用量型单位大来表述大数据，其直接原因还是对处理数据的量级最直接的表现，因为要保证研究、分析和实验结果的准确性和更贴近事物本身，需要尽可能多的数据样本做支撑，所以习惯意义上我们直呼其为大数据。<br />
+  其实大数据不是只局限于对数据、数据处理和数据分析运用本身，大数据是一个很宽泛的概念，其中包括了上面所提到的范畴外，还包含了对大的数据请求、响应和安全储存等方方面面。<br />
+  作为日常用户本身，我们生活中方方面面都会接触到大数据，不同的是我们只是关注于大数据给我们生活带来的便利，而不会去关注大数据的处理和反馈过程。举些简单的例子：你每天上网购物、银行流水、购物推荐、上网看电影听音乐等等等等，你应该感觉到这些日常生活中的服务都变得越来越人性化和智能化，这些都完全得益于大数据，得益于那些每天熬夜加班的数据研究工作者和数据工程师们，我们应该真心感谢这些人，因为是他们让我们的生活变得如此的丰富和多姿。</p>
+<h2 id="二大数据起源">二、大数据起源</h2>
+<p>  数据是大数据的根本所在，所以数据直接决定了大数据的发展或者说大数据的发展和研究成果完全依赖于数据。<br />
+  我们生活在一个科技迅猛发展的时代，而数据就像我们日常生活中的生活垃圾，是无时无刻不在产生的。如果你身边放着任何一个正常运行的电子设备，那么你就在不停的生产数据，所以在大数据中，我们每个人充当了一个生产者的角色。<br />
+  其实在科技没有很发达甚至互联网不存在的古代，我们也已经充当了数据生产者的角色，举个例子，如果有一家卖馒头的店铺，当有一天买花卷的人很多，花卷的销量很好的时候，很自然的老板会在第二天多蒸一些花卷出来卖，这就是一个简单的大数据例子，当有客人每买一次馒头的同时也生产了一次数据，而馒头店老板通过分析和整理这些数据，他会在第二天多蒸一些花卷来避免花卷热销导致花卷断货而流失的一批喜欢吃花卷客户。把这个例子在进一步假设，如果一个月下来馒头店老板发现有时候还会出现花卷在第一天卖不出去导致第二天就馊了的情况，这无疑是馒头店老板的一笔损失，但是经过对一个月花卷销量的分析和整理，发现每个礼拜天的时候花卷的销量不是很好，反而礼拜五的时候买花卷的人会很多，所以老板就可以在礼拜五适当的比平时多蒸一点花卷出来，而礼拜天的时候控制减少花卷的数量，这样一来就会很好的控制花卷变馊的数量，从而降低老板的损失。我们在购物行为中日积月累生产了一些数据，而馒头店老板做为了这些数据的直接消费者。馒头店的老板刚开始用一天的数据做分析，结果花卷是可以满足市场的需求了，但是销售成本也因为馊了的馒头而上升了。后来通过对一个月的数据做分析后，馒头店老板很好的控制了成本。通过例子很容易理解数据对大数据分析结果可信度和接近事物本身的直接影响。<br />
+  博主主要讨论的只是偏向于互联网方向的大数据，对传统数据不做讨论。<br />
+  从互联网最初开始的阶段，因为作为数据生产者的人很少，并且生产数据的频次也很低，所以在整个互联网界很难找到一个数据消费者，或者说没有人去主动消费这些数据。随着科技的发展，互联网内容并承井喷式发展，直接参与数据生产的生产者越来越多，数据生产的频率也在直线上升。而一个有意思的现象是，现在的数据直接消费者在互联网发展初期并没有重视对数据的挖掘，而日趋增长的数据量级持续困扰着他们，包括他们要为承井喷式的数据生产者提供不间断稳定的服务、这些<code>数据垃圾</code>存储问题等等，其中数据存储问题算是一个比较小的问题，因为存储消耗的只是成本而已，但是因为数据生产者队伍的不断扩大和生产频率的增加无疑是致命的，比较直接的例子就是<code>12306</code>的订票问题，由于<code>12306</code>的特殊性，导致所有业内互联网公司的并发性访问问题都得到妥善解决的时候，它还是一个国民性大数据难题（虽然已经通过各种限制手段也算是解决了问题）。
+  人都是永远不会满足的，也正是因为这个人性的特殊性，所以才使得社会不停的进步，我们所处的世界也会日新月异。当工程师们解决了多并发请求响应的时候，他们的目光转向了那堆消耗成本的<code>数据垃圾</code>上，又不能直接丢了，却要做好成本控制，所以最好的做法就是将垃圾回收，变废为宝嘛。就是这样的，大数据就开始发展起来了。</p>
+<h2 id="三拥抱大数据">三、拥抱大数据</h2>
+<p>  值得一提的是，国内的大数据还是起步状态，BAT也不例外。所以现在入门大数据做个算法工程师啥的，绝对是牛逼哄哄，现在市场上对大数据工程师是供不应求，只要参与过大数据相关工作的工程师都是抢手货。
+  由于国内各大公司的大数据部门也都在摸索阶段，所以业界除了共用一些处理工具（如<code>Hadoop</code>、<code>word2vec</code>...）外，还没有统一的知识体系，研究成果也都各有所长，其实还因为国内技术的闭源环境，使得大数据甚至所有技术都各成一家、各成一派。有人曾经说过，如果把BAT三家互联网公司的数据整合起来，通过对数据的分析可以准确给任何一个数据生产者画像，包括年龄、性别、兴趣、社交关系、社会属性以及购物取向，或者研究的更深点，可以准确预知一个数据生产者将要做的事儿，当然在社会事业上也能大显身手，最直接的就是通过出行意向去调剂交通压力。不过这都是人们意淫而已，因为BAT在忙着掐架，顾不上这件可有可无的<code>大事</code>。
+  说了这么多，最后简单说一下博主目前了解的几个大数据研究方向和简单案例吧：</p>
+<h3 id="指标统计">指标统计</h3>
+<p>  最基础的大数据方向，就是统计页面或站点的<code>PV/UV</code>等基础指标，不过相当一部分的公司会选择直接使用其他现成的统计，免费还不费力。不过当你要统计一个复杂或者是自己想知道的数据就无能为力了。<br />
+  如果你尝试从一些仅有的数据中去充分分析而不是简单的只关注<code>PV/UV</code>的时候，你会慢慢的发现你会变得越来越了解你的客户。<br />
+  成功从第一步开始，不要让你的数据成就了别人的辉煌。</p>
+<h3 id="用户画像">用户画像</h3>
+<p>  用户画像顾名思义就是给你的用户画像，就是尽可能真实的从以业务范畴来详细、真实的描述用户的维度，其中可能包括性别、年龄范围、地区、工作性质、贫富状态和兴趣爱好标签等属性维度，比如本文上面说道的BAT数据的例子。<br />
+  给一个用户准确的画像在相应的业务场景中使用可以给用户更精准的推荐业务、内容或者是个性化服务。常见的场景包括消息内容推送、商品内容推送等，圈出特定群体的用户去精准推送更垂直的业务。<br />
+  为了保证画像的准确性，所以需要量级更大的数据作为支撑。</p>
+<h3 id="知识图谱">知识图谱</h3>
+<p>  文章开头的百度的例子其实就是一个知识图谱的运用。<br />
+  知识图谱是准确描述事实环境中每个实体的画像结构。常见的业务场景就是搜索类工具中使用，其次在做大数据其他方向的运用中可以当作一个工具内容来使用，例如用户画像。</p>
+<h3 id="其他">其他</h3>
+<p>  进店数据是百度内部的一个项目，据说可以分析计算到用户走在马路上后，走进路边某家店铺的指数。这就是去预估用户消费的一个大数据应用。
+  通过提前做好的用户画像数据，指定分析某一个时刻或者是指定某个商场地点的所有用户信息，供商家参考用户消费需求和推出更精准的业务。例如如果分析某商场内老年人的比例达到了80%以上，那么商家肯定不会傻到搞一个比基尼促销活动。</p>
 ]]></content>
       <categories>
-        <category>JAVA</category>
+        <category>大数据</category>
       </categories>
       <tags>
-        <tag>JAVA</tag>
-        <tag>Jar</tag>
+        <tag>大数据</tag>
       </tags>
   </entry>
   <entry>
@@ -1076,6 +1057,25 @@ System)和用来运行定义在生命周期阶段(phase)中插件(plugin)目标(
         <tag>原创</tag>
         <tag>JAVA</tag>
         <tag>Maven</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>org.apache.commons.cli</title>
+    <url>/2016/07/14/org-apache-commons-cli/</url>
+    <content><![CDATA[<blockquote>
+<p>org.apache.commons.cli version：1.3</p>
+</blockquote>
+<figure class="highlight xml"><figcaption><span>pom.xml > Maven</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-cli<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-cli<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p><code>org.apache.commons.cli</code>项目是<code>Apache Commons</code>项目中的一个子项目，实现了处理和解析命令行参数的功能。
+<figure class="highlight java"><figcaption><span>例子</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.test.helloworld;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.CommandLine;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.CommandLineParser;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.DefaultParser;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.Option;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.Options;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.cli.ParseException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Hello world!</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">App</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">( String[] args )</span> <span class="keyword">throws</span> ParseException</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="type">CommandLineParser</span> <span class="variable">clp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DefaultParser</span>();</span><br><span class="line">    	<span class="type">CommandLine</span> <span class="variable">cl</span> <span class="operator">=</span> clp.parse(options, args);</span><br><span class="line">    	System.out.println(cl.getOptionValue(<span class="string">&quot;input&quot;</span>));</span><br><span class="line">    	System.out.println(cl.getOptionValue(<span class="string">&quot;output&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;serial&quot;)</span></span><br><span class="line">	<span class="keyword">static</span> <span class="type">Options</span> <span class="variable">options</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Options</span>() </span><br><span class="line">	&#123;</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">Option</span> <span class="variable">input</span> <span class="operator">=</span> Option.builder(<span class="string">&quot;i&quot;</span>)</span><br><span class="line">					.hasArg()</span><br><span class="line">					.desc(<span class="string">&quot; the input&quot;</span>)</span><br><span class="line">					.longOpt(<span class="string">&quot;input&quot;</span>)</span><br><span class="line">					.build();</span><br><span class="line">			<span class="type">Option</span> <span class="variable">output</span> <span class="operator">=</span> Option.builder(<span class="string">&quot;o&quot;</span>)</span><br><span class="line">					.hasArg()</span><br><span class="line">					.desc(<span class="string">&quot; the output &quot;</span>)</span><br><span class="line">					.longOpt(<span class="string">&quot;output&quot;</span>)</span><br><span class="line">					.build();</span><br><span class="line">			addOption(input);</span><br><span class="line">			addOption(output);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>JAVA</tag>
+        <tag>Jar</tag>
       </tags>
   </entry>
   <entry>
@@ -3146,6 +3146,115 @@ Streaming的输入源时往往需要借助一些第三方开发的类包。</p>
       </tags>
   </entry>
   <entry>
+    <title>Play Framework入门</title>
+    <url>/2017/09/15/Play-Framework%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<blockquote>
+<p>博主环境（本文只讨论Play在Java下的开发）</p>
+<p>JDK：1.8</p>
+<p>Play：2.6</p>
+</blockquote>
+<h2 id="play是什么">Play是什么？</h2>
+<hr />
+<p>  Play是一种高效率的Java和Scala程序语言的Web应用开发框架，Play自身继承了所有Web应用程序开发需要的组件和API。</p>
+<p>  Play框架被官方描述为轻量级、无状态、网络友好的框架，并且具有可预测和消耗最少资源，适用于可扩展的应用程序。</p>
+<span id="more"></span>
+<h2 id="创建一个新应用">创建一个新应用</h2>
+<hr />
+<p>  Play框架在<code>2.6</code>版本中是由sbt管理的，并且sbt工具版本需要<code>0.13.13</code>或更高，并且JDK版本必须为<code>1.8</code>。</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line">sbt <span class="keyword">new</span> playframework/<span class="keyword">play</span>-java-seed.g8</span><br></pre></td></tr></table></figure>
+<p>初次运行该命令可能会下载许多第三方依赖，如果失败需要重试，直到下面的步骤</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line">This template generates a <span class="keyword">Play</span> Java project </span><br><span class="line"># 项目名称</span><br><span class="line"><span class="keyword">name</span> [<span class="keyword">play</span>-java-seed]: HelloPlay</span><br><span class="line"># 组织名称</span><br><span class="line">organization [<span class="keyword">com</span>.example]: <span class="keyword">com</span>.vnicl</span><br><span class="line"># 使用scala的版本，直接回车则使用默认版本</span><br><span class="line">scala_version [<span class="number">2.12</span>.<span class="number">2</span>]: </span><br><span class="line"># 使用<span class="keyword">play</span>的版本，直接回车则使用默认版本</span><br><span class="line">play_version [<span class="number">2.6</span>.<span class="number">5</span>]: </span><br></pre></td></tr></table></figure>
+<p>然后进入项目根目录，运行<code>run</code>命令即可在浏览器中预览</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line">cd ./HelloPlay</span><br><span class="line"># 当前环境JDK版本必须为<span class="number">1.8</span>，否则会抛出错误：Unsupported major.minor version <span class="number">52.0</span></span><br><span class="line">sbt <span class="keyword">run</span></span><br></pre></td></tr></table></figure>
+<p>也可以进入sbt控制台进行预览</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line">cd ./HelloPlay</span><br><span class="line">sbt</span><br><span class="line"># 指定Web服务端口，默认端口为<span class="number">9000</span></span><br><span class="line">[HelloPlay] $ <span class="keyword">run</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure>
+<h2 id="项目结构解析">项目结构解析</h2>
+<hr />
+<h3 id="app">app</h3>
+<p>  该目录包含可执行的项目源代码，默认里面包括三个包</p>
+<table>
+<thead>
+<tr class="header">
+<th>目录</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>app/controllers</td>
+<td>所有类库源代码</td>
+</tr>
+<tr class="even">
+<td>app/models</td>
+<td>模型文件</td>
+</tr>
+<tr class="odd">
+<td>app/views</td>
+<td>视图文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="public">public</h3>
+<p>  该目录包括所有的Web服务需要的静态资源，默认爆款三个文件夹</p>
+<table>
+<thead>
+<tr class="header">
+<th>目录</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>public/images</td>
+<td>静态图片资源</td>
+</tr>
+<tr class="even">
+<td>public/javascripts</td>
+<td>视图文件需要引入的JS资源</td>
+</tr>
+<tr class="odd">
+<td>public/stylesheets</td>
+<td>视图文件需要引入的CSS样式表资源</td>
+</tr>
+</tbody>
+</table>
+<h3 id="conf">conf</h3>
+<p>  该目录包含应用程序的配置文件，主要为下面两个配置文件</p>
+<table>
+<thead>
+<tr class="header">
+<th>文件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>conf/application.conf</td>
+<td>应用的主配置文件</td>
+</tr>
+<tr class="even">
+<td>conf/routes</td>
+<td>静态路由定义文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lib">lib</h3>
+<p>  此目录包含没有通过sbt托管的依赖库，即任何第三方开发的Jar包。该目录下的所有Jar文件会自动添加到应用程序的类路径中。</p>
+<h2 id="play中的mvc">Play中的MVC</h2>
+<hr />
+<p>  跟常规的MVC框架类似，在Play中，一个自定义的扩展类被称为一个控制器，该类中可以定义处理Web请求的方法并返回一个请求结果返回。</p>
+<p>  一个控制器须要继承自<code>play.mvc.Controller</code>，<code>Controller</code>类中实现了常用的以下方法供使用</p>
+<p>继承了<code>play.mvn.Results</code>，</p>
+<p>控制器中的一个操作必须返回一个<code>play.mvc.Result</code>对象作为该操作的响应。</p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>Play2</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>机器学习中的特征工程</title>
     <url>/2017/06/13/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/</url>
     <content><![CDATA[<p>  在机器学习算法中，算法的实现过程固然重要，但是作为算法训练的输入也决定算法好坏和算法预测结果准确性的重要因素。我们知道作为机器学习算法的输入是训练样本集，训练样本集中包含很多样本，并且每个样本都会有很多的特征作为机器学习算法的计算依据，所以在样本特征的选取和处理也显得格外重要。</p>
@@ -3350,119 +3459,15 @@ class="math inline">\([x,y)\)</span>进行切割，输出区间索引并生成�
 <hr />
 ]]></content>
       <categories>
-        <category>大数据</category>
+        <category>机器学习</category>
       </categories>
       <tags>
         <tag>TF-IDF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Play Framework入门</title>
-    <url>/2017/09/15/Play-Framework%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<blockquote>
-<p>博主环境（本文只讨论Play在Java下的开发）</p>
-<p>JDK：1.8</p>
-<p>Play：2.6</p>
-</blockquote>
-<h2 id="play是什么">Play是什么？</h2>
-<hr />
-<p>  Play是一种高效率的Java和Scala程序语言的Web应用开发框架，Play自身继承了所有Web应用程序开发需要的组件和API。</p>
-<p>  Play框架被官方描述为轻量级、无状态、网络友好的框架，并且具有可预测和消耗最少资源，适用于可扩展的应用程序。</p>
-<span id="more"></span>
-<h2 id="创建一个新应用">创建一个新应用</h2>
-<hr />
-<p>  Play框架在<code>2.6</code>版本中是由sbt管理的，并且sbt工具版本需要<code>0.13.13</code>或更高，并且JDK版本必须为<code>1.8</code>。</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line">sbt <span class="keyword">new</span> playframework/<span class="keyword">play</span>-java-seed.g8</span><br></pre></td></tr></table></figure>
-<p>初次运行该命令可能会下载许多第三方依赖，如果失败需要重试，直到下面的步骤</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line">This template generates a <span class="keyword">Play</span> Java project </span><br><span class="line"># 项目名称</span><br><span class="line"><span class="keyword">name</span> [<span class="keyword">play</span>-java-seed]: HelloPlay</span><br><span class="line"># 组织名称</span><br><span class="line">organization [<span class="keyword">com</span>.example]: <span class="keyword">com</span>.vnicl</span><br><span class="line"># 使用scala的版本，直接回车则使用默认版本</span><br><span class="line">scala_version [<span class="number">2.12</span>.<span class="number">2</span>]: </span><br><span class="line"># 使用<span class="keyword">play</span>的版本，直接回车则使用默认版本</span><br><span class="line">play_version [<span class="number">2.6</span>.<span class="number">5</span>]: </span><br></pre></td></tr></table></figure>
-<p>然后进入项目根目录，运行<code>run</code>命令即可在浏览器中预览</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line">cd ./HelloPlay</span><br><span class="line"># 当前环境JDK版本必须为<span class="number">1.8</span>，否则会抛出错误：Unsupported major.minor version <span class="number">52.0</span></span><br><span class="line">sbt <span class="keyword">run</span></span><br></pre></td></tr></table></figure>
-<p>也可以进入sbt控制台进行预览</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line">cd ./HelloPlay</span><br><span class="line">sbt</span><br><span class="line"># 指定Web服务端口，默认端口为<span class="number">9000</span></span><br><span class="line">[HelloPlay] $ <span class="keyword">run</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure>
-<h2 id="项目结构解析">项目结构解析</h2>
-<hr />
-<h3 id="app">app</h3>
-<p>  该目录包含可执行的项目源代码，默认里面包括三个包</p>
-<table>
-<thead>
-<tr class="header">
-<th>目录</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>app/controllers</td>
-<td>所有类库源代码</td>
-</tr>
-<tr class="even">
-<td>app/models</td>
-<td>模型文件</td>
-</tr>
-<tr class="odd">
-<td>app/views</td>
-<td>视图文件</td>
-</tr>
-</tbody>
-</table>
-<h3 id="public">public</h3>
-<p>  该目录包括所有的Web服务需要的静态资源，默认爆款三个文件夹</p>
-<table>
-<thead>
-<tr class="header">
-<th>目录</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>public/images</td>
-<td>静态图片资源</td>
-</tr>
-<tr class="even">
-<td>public/javascripts</td>
-<td>视图文件需要引入的JS资源</td>
-</tr>
-<tr class="odd">
-<td>public/stylesheets</td>
-<td>视图文件需要引入的CSS样式表资源</td>
-</tr>
-</tbody>
-</table>
-<h3 id="conf">conf</h3>
-<p>  该目录包含应用程序的配置文件，主要为下面两个配置文件</p>
-<table>
-<thead>
-<tr class="header">
-<th>文件</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>conf/application.conf</td>
-<td>应用的主配置文件</td>
-</tr>
-<tr class="even">
-<td>conf/routes</td>
-<td>静态路由定义文件</td>
-</tr>
-</tbody>
-</table>
-<h3 id="lib">lib</h3>
-<p>  此目录包含没有通过sbt托管的依赖库，即任何第三方开发的Jar包。该目录下的所有Jar文件会自动添加到应用程序的类路径中。</p>
-<h2 id="play中的mvc">Play中的MVC</h2>
-<hr />
-<p>  跟常规的MVC框架类似，在Play中，一个自定义的扩展类被称为一个控制器，该类中可以定义处理Web请求的方法并返回一个请求结果返回。</p>
-<p>  一个控制器须要继承自<code>play.mvc.Controller</code>，<code>Controller</code>类中实现了常用的以下方法供使用</p>
-<p>继承了<code>play.mvn.Results</code>，</p>
-<p>控制器中的一个操作必须返回一个<code>play.mvc.Result</code>对象作为该操作的响应。</p>
-]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>Play2</tag>
+        <tag>Word2Vec</tag>
+        <tag>N-Gram</tag>
+        <tag>Binarizer</tag>
+        <tag>PCA</tag>
+        <tag>DCT</tag>
       </tags>
   </entry>
   <entry>

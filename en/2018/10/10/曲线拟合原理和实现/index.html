@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico">
+  <link rel="mask-icon" href="/images/avatar.jpeg" color="#222">
+  <meta name="google-site-verification" content="d2tAnXrr34Y8JpdeBBtXb3s6KJuDmbZk7Kq1mlFW3qs">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"vnicl.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="概述    现实世界中，变量间未必都有线性关系，如服药后血药浓度与时间的关系、疾病疗效与疗程长短的关系和毒物剂量与致死率的关系等常呈曲线关系。曲线拟合（Curve Fitting）是指选择适当的曲线类型来拟合观测数据，并用拟合的曲线方程分析两变量间的关系。   实际工作中，我们通过统计或实验观察得到一组可以在二维坐标系中表示的点\((x_i, y_i)\)，其中\(x_i\)为自变量，\(y_i\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="曲线拟合原理和实现">
+<meta property="og:url" content="https://vnicl.github.io/en/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="攻城狮也文艺">
+<meta property="og:description" content="概述    现实世界中，变量间未必都有线性关系，如服药后血药浓度与时间的关系、疾病疗效与疗程长短的关系和毒物剂量与致死率的关系等常呈曲线关系。曲线拟合（Curve Fitting）是指选择适当的曲线类型来拟合观测数据，并用拟合的曲线方程分析两变量间的关系。   实际工作中，我们通过统计或实验观察得到一组可以在二维坐标系中表示的点\((x_i, y_i)\)，其中\(x_i\)为自变量，\(y_i\">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://vnicl.github.io/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/sdt.png">
+<meta property="og:image" content="https://vnicl.github.io/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/slqxnh.png">
+<meta property="article:published_time" content="2018-10-10T08:37:43.000Z">
+<meta property="article:modified_time" content="2024-03-05T13:28:30.903Z">
+<meta property="article:author" content="Iceberg">
+<meta property="article:tag" content="曲线拟合">
+<meta property="article:tag" content="最小二乘法">
+<meta property="article:tag" content="幂函数拟合">
+<meta property="article:tag" content="多项式拟合">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vnicl.github.io/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/sdt.png">
+
+
+<link rel="canonical" href="https://vnicl.github.io/en/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://vnicl.github.io/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/","path":"en/2018/10/10/曲线拟合原理和实现/","title":"曲线拟合原理和实现"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>曲线拟合原理和实现 | 攻城狮也文艺</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">攻城狮也文艺</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">渺小但执着</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">最小二乘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E6%8B%9F%E5%90%88"><span class="nav-number">3.</span> <span class="nav-text">线性拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%82%E5%87%BD%E6%95%B0%E6%8B%9F%E5%90%88"><span class="nav-number">4.</span> <span class="nav-text">幂函数拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88"><span class="nav-number">5.</span> <span class="nav-text">多项式拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%9F%E5%90%88%E4%BC%98%E5%BA%A6"><span class="nav-number">6.</span> <span class="nav-text">拟合优度</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Iceberg"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Iceberg</p>
+  <div class="site-description" itemprop="description">一个理想主义者 · 空想家 · LOSER</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_nd.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="bookmark">
+        <time class="popular-posts-time">2017-05-09</time>
+        <br>
+      支持向量机 (SVM)
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/04/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97/" rel="bookmark">
+        <time class="popular-posts-time">2017-04-28</time>
+        <br>
+      机器学习中的距离计算
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/04/30/k-%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95/" rel="bookmark">
+        <time class="popular-posts-time">2017-04-30</time>
+        <br>
+      k-近邻算法（kNN）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/05/04/Logistic%E5%9B%9E%E5%BD%92/" rel="bookmark">
+        <time class="popular-posts-time">2017-05-04</time>
+        <br>
+      Logistic回归
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/05/15/AdaBoost%E5%85%83%E7%AE%97%E6%B3%95/" rel="bookmark">
+        <time class="popular-posts-time">2017-05-15</time>
+        <br>
+      AdaBoost元算法
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://vnicl.github.io/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Iceberg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="攻城狮也文艺">
+      <meta itemprop="description" content="一个理想主义者 · 空想家 · LOSER">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="曲线拟合原理和实现 | 攻城狮也文艺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          曲线拟合原理和实现
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-10-10 16:37:43" itemprop="dateCreated datePublished" datetime="2018-10-10T16:37:43+08:00">2018-10-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-03-05 21:28:30" itemprop="dateModified" datetime="2024-03-05T21:28:30+08:00">2024-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95%E5%BA%94%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">算法应用</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>1.8k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="概述">概述</h2>
+<hr />
+<p>  现实世界中，变量间未必都有线性关系，如服药后血药浓度与时间的关系、疾病疗效与疗程长短的关系和毒物剂量与致死率的关系等常呈曲线关系。曲线拟合（Curve
+Fitting）是指选择适当的曲线类型来拟合观测数据，并用拟合的<code>曲线方程</code>分析两变量间的关系。</p>
+<p>  实际工作中，我们通过统计或实验观察得到一组可以在二维坐标系中表示的点<span
+class="math inline">\((x_i, y_i)\)</span>，其中<span
+class="math inline">\(x_i\)</span>为自变量，<span
+class="math inline">\(y_i\)</span>为因变量，用二维散点图的方式绘制出来如下</p>
+<center>
+<img src="/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/sdt.png" class="" title="以散点图的方式表示在二维坐标系中的数据">
+</center>
+<p>曲线拟合的目的即寻找可以连续并近似地刻画或比拟该二维坐标系中所有离散点的一条曲线，表示所有离散点和坐标系之间直接的一种函数关系<span
+class="math inline">\(y_i=f(x_i,
+c_m)\)</span>。该曲线函数即我们需要找到的拟合函数，包括自变量<span
+class="math inline">\(x_i\)</span>和<span
+class="math inline">\(m\)</span>个拟合系数<span
+class="math inline">\(c_m\)</span>组成，不同的拟合方式会有不同的拟合系数产生，所以曲线拟合就是求最优的拟合系数的问题。该拟合函数也被称为<code>拟合模型</code>。
+<span id="more"></span>
+  在日常工作生产中一般使用的拟合函数为<code>线形拟合</code>、<code>对数</code>、<code>多项式</code>、<code>幂函数</code>、<code>指数</code>和<code>移动平均</code>等几种，不同的拟合方式最终的结果亦不相同，需要根据提供离散数据组的分布和业务状况进行选择。其实很多数据软件中通常已经封装了曲线拟合的功能，以下展示分别为样例离散数据在<code>MacOs</code>系统中的<code>Number表格</code>实现的效果。</p>
+<center>
+<img src="/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/slqxnh.png" class="" title="曲线拟合示例">
+</center>
+<p>  由于该拟合模型会有不同个数的拟合系数<span
+class="math inline">\(c_m\)</span>，并且最终的拟合模型也只能近似的拟合所有离散数据点，所以就涉及到一个最优化解的过程，故曲线拟合也是一个求最优结果的优化问题。最优化理论在人工智能领域频繁的被提及，所有机器学习相关算法其实都是最优化问题。在工程上常用的求最优解的方式有两种，<code>梯度</code>和<code>最小二乘法</code>，梯度的概念在之前的几篇文章中都有提及，如<a href="/2017/05/09/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" title="支持向量机 (SVM)">支持向量机 (SVM)</a>等。在做拟合实践之前我们先来了解一下<code>最小二乘法</code>。</p>
+<h2 id="最小二乘法">最小二乘法</h2>
+<hr />
+<p>  <code>最小二乘法</code>是一种优化技术，其中<code>最小</code>表现为在所求内容（可以理解为算法预测结果）与真实数据的误差达到最小，该优化技术也由该点出发，常用的误差计算方式为<code>残差平方和</code>，即
+<span class="math display">\[
+\epsilon = \sum_{i=1}^n{(f(x_i) - y_i)^2}
+\]</span> 其中<span
+class="math inline">\(f(x_i)\)</span>表示预测值，最小二乘法是通过最小化误差的平方和寻找数据的最佳函数匹配；而<code>二乘</code>的意思个人理解为在该优化技术最后会将待求解的最佳函数以矩阵的方式表现为两个矩阵的乘法，以方便最后<code>超参数</code>或<code>拟合系数</code>的计算。</p>
+<p>  假定我们当前有一个超定方程组 <span class="math display">\[
+\begin{equation}
+\sum_{j=1}^nx_i^j\alpha_j = y_i \\
+\begin{pmatrix}
+i=1,2,3\cdots m \\
+j=1,2,3\cdots n \\
+\end{pmatrix}
+\end{equation}
+\]</span> 可以这样理解该超定方程组，<span
+class="math inline">\(x_i^j\)</span>表示一个包含<span
+class="math inline">\(n\)</span>个特征的<span
+class="math inline">\(m\)</span>个样本数据如下： <span
+class="math display">\[
+\begin{pmatrix}
+x_1^1 &amp; x_1^2 &amp; \cdots &amp; x_1^n \\
+x_2^1 &amp; x_2^2 &amp; \cdots &amp; x_2^n \\
+\vdots &amp; \ddots &amp; \vdots  &amp; \vdots \\
+x_m^1 &amp; x_m^2 &amp; \cdots &amp; x_m^n \\
+\end{pmatrix}
+\]</span> <span
+class="math inline">\(\alpha_j\)</span>表示待求的最优系数，<span
+class="math inline">\(y_i\)</span>则是因变量，方程组如下： <span
+class="math display">\[
+\begin{pmatrix}
+x_1^1\times\alpha_1 + x_1^2\times\alpha_2 &amp; \cdots &amp;
+x_1^n\times\alpha_n = y_1 \\
+x_2^1\times\alpha_1 + x_2^2\times\alpha_2 &amp; \cdots &amp;
+x_2^n\times\alpha_n = y_2 \\
+\vdots &amp; \ddots  &amp; \vdots \\
+x_m^1\times\alpha_1 + x_m^2\times\alpha_2 &amp; \cdots &amp;
+x_m^n\times\alpha_n = y_m \\
+\end{pmatrix}
+\]</span> 其中<span class="math inline">\(m\)</span>表示有<span
+class="math inline">\(m\)</span>个等式，<span
+class="math inline">\(n\)</span>表示有<span
+class="math inline">\(n\)</span>个未知数<span
+class="math inline">\(\alpha\)</span>，并且<span class="math inline">\(m
+\gt n\)</span>，根据向量的特性，将该超定方程组向量化后为<span
+class="math inline">\(x\alpha=y\)</span>（二乘） <span
+class="math display">\[
+x=\begin{bmatrix}
+x_1^1 &amp; x_1^2 &amp; \cdots &amp; x_1^n \\
+x_2^1 &amp; x_2^2 &amp; \cdots &amp; x_2^n \\
+\vdots &amp; \ddots &amp; \vdots  &amp; \vdots \\
+x_m^1 &amp; x_m^2 &amp; \cdots &amp; x_m^n \\
+\end{bmatrix}
+,\alpha=\begin{bmatrix}
+\alpha_1 \\
+\alpha_2 \\
+\vdots \\
+\alpha_n \\
+\end{bmatrix}
+,y=\begin{bmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n \\
+\end{bmatrix}
+\]</span>
+接下来我们用最小二乘法求解该方程组，根据上面提到的<code>最小</code>的最优理论，运用残差平方和则有
+<span class="math display">\[
+\epsilon(\alpha) = ||x\alpha-y||^2
+\]</span> 我们的目的是使的<span
+class="math inline">\(\epsilon(\alpha)\)</span>最小，对该函数进行微分求极值则有
+<span class="math display">\[
+x^Tx\times\hat \alpha=x^Ty
+\]</span> 其中<span class="math inline">\(\hat
+\alpha\)</span>表示当<span class="math inline">\(\alpha=\hat
+\alpha\)</span>时，函数$() <span
+class="math inline">\(取最小值，\)</span>$ = argmin(() ) <span
+class="math display">\[
+根据矩阵的特点，如果矩阵$x^Tx$非奇异则$\hat \alpha$有唯一解
+\]</span> =(x<sup>Tx)</sup>{-1}x^Ty $$</p>
+<h2 id="线性拟合">线性拟合</h2>
+<hr />
+<p>  所谓<code>线性拟合</code>意思为考虑最终的拟合模型表达式为 <span
+class="math display">\[
+f(a,b)=a+bx
+\]</span> 假设给定一批离散数据如 <span class="math display">\[
+\begin{equation}
+(x_i,y_i) \\
+i=1,2,3\cdots m \\
+\end{equation}
+\]</span> 即表示以<span
+class="math inline">\(m\)</span>个数据点做曲线拟合。运用上面提到的最小二乘法的最优技术，使平方误差最小
+<span class="math display">\[
+\begin{equation}\begin{split}
+\epsilon(a,b) &amp;=\sum_{i=1}^m(f(a,b) - y_i)^2 \\
+&amp;=\sum_{i=1}^m(a+bx_i- y_i)^2 \\
+\end{split}\end{equation}
+\]</span> 运用微积分知识，计算<span
+class="math inline">\(\epsilon(a,b)\)</span>的极小值要满足如下（分别对<span
+class="math inline">\(a,b\)</span>求偏导数） <span
+class="math display">\[
+\begin{equation}\begin{split}
+\frac {\partial \epsilon(a,b)} {\partial a}
+&amp;=2\sum_{i=1}^m(a+bx_i-y_i) \\
+&amp;=\sum_{i=1}^m(a+bx_i-y_i) \\
+&amp;=0 \\
+\frac {\partial \epsilon(a,b)} {\partial a}
+&amp;=2\sum_{i=1}^m(a+bx_i-y_i)x_i \\
+&amp;=\sum_{i=1}^m(a+bx_i-y_i)x_i \\
+&amp;=0 \\
+\end{split}\end{equation}
+\]</span> 将上面的内容整理成矩阵的形式（二乘）如下 <span
+class="math display">\[
+\begin{pmatrix}
+m &amp; \sum_{i=1}^m  x_i  \\
+\sum_{i=1}^mx_i &amp; \sum_{i=1}^mx_i^2 \\
+\end{pmatrix}
+\times
+\begin{pmatrix}
+a \\
+b \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+\sum_{i=1}^my_i  \\
+\sum_{i=1}^mx_iy_i \\
+\end{pmatrix}
+\]</span> 用消元法或克莱姆方法解出方程 <span class="math display">\[
+\begin{equation}\begin{split}
+a = &amp; \{\sum_{i=1}^my_i\sum_{i=1}^mx_i^2 -
+\sum_{i=1}^mx_i\sum_{i=1}^mx_iy_i\} \div
+\{m\sum_{i=1}^mx_i^2-(\sum_{i=1}^mx_i)^2\} \\
+b = &amp; \{m\sum_{i=1}^mx_iy_i - \sum_{i=1}^mx_i\sum_{i=1}^my_i\} \div
+\{m\sum_{i=1}^mx_i^2-(\sum_{i=1}^mx_i)^2\}
+\end{split}\end{equation}
+\]</span> 其中 <span class="math display">\[
+\begin{equation}\begin{split}
+m=&amp; 离散点的数量\\
+\sum_{i=1}^mx_i=&amp; x_1+x_2+x_3 \cdots+x_i \\
+\sum_{i=1}^my_i=&amp; y_1+y_2+y_3+\cdots+y_i\\
+\sum_{i=1}^mx_i^2=&amp; x_1^2 + x_2^2+x_3^2 + \cdots+x_i^2\\
+\sum_{i=1}^mx_iy_i=&amp; x_1y_1+x_2y_2+x_3y_3+\cdots + x_iy_i\\
+\end{split}\end{equation}
+\]</span></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">double</span>[] x = <span class="keyword">new</span> <span class="title class_">double</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, ··· ···, m&#125;;</span><br><span class="line"><span class="type">double</span>[] y = <span class="keyword">new</span> <span class="title class_">double</span>[]&#123;<span class="number">0.628289474</span>, <span class="number">0.537257824</span>, <span class="number">0.510469314</span>, ··· ···, <span class="number">0.441730635</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">double</span> <span class="variable">sumX</span> <span class="operator">=</span> <span class="number">0d</span>;</span><br><span class="line"><span class="type">double</span> <span class="variable">sumY</span> <span class="operator">=</span> <span class="number">0d</span>;</span><br><span class="line"><span class="type">double</span> <span class="variable">sumXX</span> <span class="operator">=</span> <span class="number">0d</span>;</span><br><span class="line"><span class="type">double</span> <span class="variable">sumXY</span> <span class="operator">=</span> <span class="number">0d</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; x.length; i ++)&#123;</span><br><span class="line">    sumX += x[i];</span><br><span class="line">  	sumY += y[i];</span><br><span class="line">  	sumXX += Math.pow(x[i], <span class="number">2d</span>);</span><br><span class="line">  	sumXY += x[i] * y[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">double</span> <span class="variable">a</span> <span class="operator">=</span> (sumY * sumXX - sumX * sumXY) / (x.length * sumXX - Math.pow(sumX, <span class="number">2d</span>));</span><br><span class="line"><span class="type">double</span> <span class="variable">b</span> <span class="operator">=</span> (x.length * sumXY - sumX * sumY) / (x.length * sumXX - Math.pow(sumX, <span class="number">2d</span>));</span><br><span class="line"><span class="comment">//f(x) = a + bx</span></span><br><span class="line">System.out.println(<span class="string">&quot;f(x) = &quot;</span> + a + <span class="string">&quot; + &quot;</span> + b + <span class="string">&quot;x&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="幂函数拟合">幂函数拟合</h2>
+<hr />
+<p>待出稿</p>
+<h2 id="多项式拟合">多项式拟合</h2>
+<hr />
+<p>待出稿</p>
+<h2 id="拟合优度">拟合优度</h2>
+<hr />
+<p>待出稿</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx.jpg" alt="Iceberg WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/zfb.jpg" alt="Iceberg Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Iceberg
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://vnicl.github.io/2018/10/10/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" title="曲线拟合原理和实现">https://vnicl.github.io/2018/10/10/曲线拟合原理和实现/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88/" rel="tag"># 曲线拟合</a>
+              <a href="/tags/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/" rel="tag"># 最小二乘法</a>
+              <a href="/tags/%E5%B9%82%E5%87%BD%E6%95%B0%E6%8B%9F%E5%90%88/" rel="tag"># 幂函数拟合</a>
+              <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88/" rel="tag"># 多项式拟合</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/09/15/Play-Framework%E5%85%A5%E9%97%A8/" rel="prev" title="Play Framework入门">
+                  <i class="fa fa-angle-left"></i> Play Framework入门
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2009 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Iceberg</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.umd.js" integrity="sha256-+2+qOqR8CKoHh/AsVR9k2qaDBKWjYNC2nozhYmv5j9k=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"vnicl","repo":"vnicl.github.io","client_id":"ea50bd82cc935904a602","client_secret":"e32d77f8e6c553622a8db1e7afee5719e2de95ff","admin_user":"vnicl","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"e5ec4b68628376dec1181e28e8653823"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

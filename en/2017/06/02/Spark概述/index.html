@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico">
+  <link rel="mask-icon" href="/images/avatar.jpeg" color="#222">
+  <meta name="google-site-verification" content="d2tAnXrr34Y8JpdeBBtXb3s6KJuDmbZk7Kq1mlFW3qs">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"vnicl.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.19.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Spark是UC Berkeley AMP lab (加州大学伯克利分校的AMP实验室)所开源的类似Hadoop MapReduce的通用并行框架，它拥有Hadoop MapReduce所具有的优点，但不同于MapReduce的是Job中间输出结果可以保存在内存中，从而不需要读写Hdfs，因此Spark能更好的适用于数据挖掘与机器学习等需要迭代的MapReduce算法。   Spark是在Sc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark概述">
+<meta property="og:url" content="https://vnicl.github.io/en/2017/06/02/Spark%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="攻城狮也文艺">
+<meta property="og:description" content="Spark是UC Berkeley AMP lab (加州大学伯克利分校的AMP实验室)所开源的类似Hadoop MapReduce的通用并行框架，它拥有Hadoop MapReduce所具有的优点，但不同于MapReduce的是Job中间输出结果可以保存在内存中，从而不需要读写Hdfs，因此Spark能更好的适用于数据挖掘与机器学习等需要迭代的MapReduce算法。   Spark是在Sc">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-06-02T10:17:58.000Z">
+<meta property="article:modified_time" content="2024-03-05T13:31:18.207Z">
+<meta property="article:author" content="Iceberg">
+<meta property="article:tag" content="Spark">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://vnicl.github.io/en/2017/06/02/Spark%E6%A6%82%E8%BF%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://vnicl.github.io/2017/06/02/Spark%E6%A6%82%E8%BF%B0/","path":"en/2017/06/02/Spark概述/","title":"Spark概述"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spark概述 | 攻城狮也文艺</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">攻城狮也文艺</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">渺小但执着</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#spark%E7%BB%84%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">Spark组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">Spark运行原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark%E4%B8%AD%E7%9A%84rdd"><span class="nav-number">3.</span> <span class="nav-text">Spark中的RDD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rdd%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">RDD操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rdd%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">RDD持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rdd%E6%8C%81%E4%B9%85%E5%8C%96%E7%AD%96%E7%95%A5"><span class="nav-number">6.</span> <span class="nav-text">RDD持久化策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark%E4%B8%AD%E7%9A%84%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F"><span class="nav-number">7.</span> <span class="nav-text">Spark中的共享变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-sql"><span class="nav-number">8.</span> <span class="nav-text">Spark SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-sql%E4%B8%AD%E7%9A%84dataframe"><span class="nav-number">9.</span> <span class="nav-text">Spark SQL中的DataFrame</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-streaming"><span class="nav-number">10.</span> <span class="nav-text">Spark Streaming</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-streaming%E4%B8%AD%E7%9A%84dstream"><span class="nav-number">11.</span> <span class="nav-text">Spark Streaming中的DStream</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Iceberg"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Iceberg</p>
+  <div class="site-description" itemprop="description">一个理想主义者 · 空想家 · LOSER</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_nd.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    Related Posts
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2017/06/13/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/" rel="bookmark">
+        <time class="popular-posts-time">2017-06-13</time>
+        <br>
+      机器学习中的特征工程
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://vnicl.github.io/2017/06/02/Spark%E6%A6%82%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Iceberg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="攻城狮也文艺">
+      <meta itemprop="description" content="一个理想主义者 · 空想家 · LOSER">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spark概述 | 攻城狮也文艺">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spark概述
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-06-02 18:17:58" itemprop="dateCreated datePublished" datetime="2017-06-02T18:17:58+08:00">2017-06-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-03-05 21:31:18" itemprop="dateModified" datetime="2024-03-05T21:31:18+08:00">2024-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">大数据</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Word count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Word count in article: </span>
+      <span>3.2k</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>  Spark是UC Berkeley AMP lab
+(加州大学伯克利分校的AMP实验室)所开源的类似Hadoop
+MapReduce的通用并行框架，它拥有Hadoop
+MapReduce所具有的优点，但不同于MapReduce的是Job中间输出结果可以保存在内存中，从而不需要读写Hdfs，因此Spark能更好的适用于数据挖掘与机器学习等需要迭代的MapReduce算法。</p>
+<p>  Spark是在Scala语言中实现的，它将Scala用作其应用程序的框架。与Hadoop不同的是，Spark和Scala能够紧密集成，其中的Scala可以像操作本地集合对象一样轻松的操作分布式数据集。Spark其实是对Hadoop的补充，可以在Hadoop文件系统中并行运行，通过Mesos的第三方集群框架可以支持此行为。</p>
+<span id="more"></span>
+<p>  在Spark项目开源后，在2013年Spark成为了Apache基金会下的项目，由于其代码量少、轻量级和使用内存的特性受到大数据行业的关注，在众多第三方开发者的维护下，Spark进度高速发展期而成为了Apache基金会的顶级项目。</p>
+<p>  Apache对Spark的定义为：通用的大数据快速处理引擎。Spark是一种专为大规模数据处理而设计的快速通用的计算引擎，使用一个技术堆栈就完美地解决大数据领域的各种计算任务。</p>
+<h2 id="spark组成">Spark组成</h2>
+<hr />
+<p>  Spark是一个一站式的大数据计算框架，其中包括Spark Core、Spark
+Sql、Spark
+Streaming、MLlib和GraphX，分别在大数据领域中解决了离线批处理、交互式查询、实时流计算、机器学习与图计算的所有任务和问题。另外由于Spark基于内存存储的特性，使得Spark的计算性能超过MapReduce和Hive的的数倍以上，所以越来越多的IT公司使用Spark+Hadoop的组合来使用Spark进行大数据的计算任务，用Hadoop解决大数据的存储问题。</p>
+<h2 id="spark运行原理">Spark运行原理</h2>
+<hr />
+<ol type="1">
+<li>我们将写好的Spark应用在Spark集群上的某个节点提交并开始执行；</li>
+<li>应用被提交后，节点生成一个Driver，Driver启动后，对该Spark应用进行初始化操作，并请求集群Master节点进行Spark应用的注册，通知Master进行资源的分配；</li>
+<li>Master节点在收到应用的注册请求后发送给所有节点的Worker，Worker进行资源的调整和分配，即启动Executor；</li>
+<li>节点启动Executor后会与Driver通信进行反注册，即告知Driver在集群中哪些Executor是为该Driver服务的；</li>
+<li>之后Driver开始读取应用中数据源中的数据来创建RDD；</li>
+<li>Driver根据Spark应用中定义的对RDD的操作生成一大推Task并发送给Executor；</li>
+<li>Executor接收到Task后，启动多个线程去执行收到的Task；</li>
+<li>对RDD的partition数据执行完指定操作后形成新的RDD partition；</li>
+</ol>
+<h2 id="spark中的rdd">Spark中的RDD</h2>
+<hr />
+<p>  RDD是Spark提供的核心抽象概念，是Resillient Distributed
+Dataset的缩写，即弹性分布式数据集。</p>
+<p>  RDD在抽象上说是一种元素的集合，包含了数据且是被分区的，其中每个分区被分布在集群中的不同节点上使得RDD中的数据可以被并行操作。</p>
+<p>  RDD具备像MapReduce等数据流模型的容错特性，并允许开发人员在大型集群上执行基于内存的计算，因此有效解决了大数据计算中的迭代算法问题和交互式数据挖掘。</p>
+<p>  RDD是只读的数据集合，是一种高度受限的共享内存，并且只能基于在稳定物理存储中的数据集和其他已有的RDD上执行确定性操作来创建。</p>
+<h2 id="rdd操作">RDD操作</h2>
+<hr />
+<p>  Spark支持两种RDD操作：transformation和action。transformation操作会针对已有的RDD创建一个新的RDD；而action则主要是对RDD进行最后的操作，如遍历、reduce和保存到文件等。</p>
+<p>  transformation操作有lazy特性，该特性表示如果一个Spark应用中只定义了transformation操作，那么即使你执行该该应用，这些操作也不会实际执行。换句话说transformation操作时不会触发Spark程序的执行，它们只是记录了对RDD的操作，只有当transformation操作之后接着执行一个action操作，那么Spark应用才会被实际执行。lazy这种特性使得Spark应用不会产生过多的中间结果。</p>
+<p>  常用的transformation操作如下：</p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">操作</th>
+<th style="text-align: left;">简介</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">map</td>
+<td
+style="text-align: left;">将RDD中的每个元素传入自定义函数并获取一个新的元素，然后用所有的新元素组成新的RDD</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">filter</td>
+<td
+style="text-align: left;">对RDD中每个元素进行判断，如果返回true则保留，否则被剔除</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">flatMap</td>
+<td
+style="text-align: left;">与map类似，但是对每一个元素都可以返回一个或多个新的元素</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">groupByKey</td>
+<td
+style="text-align: left;">根据key进行分组，然后每个key对应一个Iterable<value></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">reduceByKey</td>
+<td style="text-align: left;">对每个key对应的value进行reduce操作</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">sortByKey</td>
+<td style="text-align: left;">对每个key对应的value进行排序操作</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">join</td>
+<td style="text-align: left;">对两个包含&lt;key,
+value&gt;对的RDD进行join操作，每个key
+join上的pair，都会传入自定义函数进行处理</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">cogroup</td>
+<td
+style="text-align: left;">同join，但是每个key对应的Iterable<value>都会传入自定义函数进行处理</td>
+</tr>
+</tbody>
+</table>
+<p>  常用action操作如下：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">操作</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">reduce</td>
+<td>将RDD中的所有元素进行聚合操作，第一个和第二个元素聚合后产生的值与第三个元素聚合，以此类推</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">collect</td>
+<td>将RDD中所有元素获取到本地客户端</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">count</td>
+<td>获取RDD元素</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">take(n)</td>
+<td>获取RDD中前n个元素</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">saveAsTextFile</td>
+<td>将RDD元素保存到文件中，对每个元素调用toString方法</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">countByKey</td>
+<td>对每个key对应的值进行count计数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">foreach</td>
+<td>遍历RDD中的每个元素</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rdd持久化">RDD持久化</h2>
+<hr />
+<p>  RDD的持久化功能室Spark中非常重要的一个功能特性，由于Spark底层的固有特性，当创建了一个RDD之后，使用transformation对该RDD执行下一步操作后，之前的RDD是会被销毁的，也就是Spark默认当对现有的一个RDD进行transformation操作后上一个RDD被处理为没用的RDD而被马上销毁，但是如果在特定业务场景下如果对现有的RDD会有两次以上的操作时，销毁会被认为是没必要的，如果要对RDD进行第二次transformation操作时由于该RDD已经被Spark销毁，所以必须重新构建，如果在一个很大的数据中去构建一个RDD两次以上，这对Spark应用的性能上来说无非是灾难性的，所以Spark会提供一个RDD持久化的功能，这样就保证二次以上的RDD操作无需重新构建RDD，而是直接从被持久化的RDD中进行transformation操作。</p>
+<p>  对RDD执行持久化操作时，每个节点都会将自己操作RDD的partition持久化到内存或硬盘中供之后对该RDD进行反复操作，使二次以上的RDD操作不需要重新构建该RDD而是直接从缓存中读取对应节点操作的partition部分。</p>
+<h2 id="rdd持久化策略">RDD持久化策略</h2>
+<hr />
+<p>  RDD持久化是可以手动指定不同的持久化策略的，如果可以将RDD持久化到内存中、到磁盘中、使用序列化的方式等。</p>
+<p>  RDD持久化的策略列表如下：</p>
+<table>
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">持久化策略</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">MEMORY_ONLY</td>
+<td>以非序列化的Java对象持久化在JVM内存中，如果内存无法完全存储RDD所有的partition，那么那些没用持久化的partition就会在下一次需要使用它的时候重新被计算</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MEMORY_AND_DISK</td>
+<td>同上MEMORY_ONLY，但是当某些partition无法存储在内存中时，会持久化到磁盘中，下次需要使用这些partition时从磁盘读取</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MEMORY_ONLY_SER</td>
+<td>同上MEMORY_ONLY，但是会使用Java序列化的方式，将Java对象序列化之后进行持久化，可以减少内存开销，但是在使用时会进行反序列化操作，所以会加大CPU的开销</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MEMORY_AND_DSK_SER</td>
+<td>同MEMORY_AND_DISK，但是使用序列化方式持久化Java对象</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">DISK_ONLY</td>
+<td>使用非序列化Java对象的方式持久化，完全存储到磁盘上。</td>
+</tr>
+<tr class="even">
+<td
+style="text-align: center;">MEMORY_ONLY_2、MEMORY_AND_DISK_2、等等</td>
+<td>如果尾部加了2的持久化策略，表示会将持久化数据复制一份保存到其他节点而保障数据的容错性能</td>
+</tr>
+</tbody>
+</table>
+<h2 id="spark中的共享变量">Spark中的共享变量</h2>
+<hr />
+<p>  在日常的生产开发中，经常会使用全局变量的情况，在Spark应用中也会有使用全局变量的业务场景，比如全局范围内统计等等，这里的全局变量就是Spark中的共享变量。</p>
+<p>  在Spark中如果要使用一个外部变量时的默认的做法是将该变量拷贝到每个节点中的每个task中，也就是说每个task操作的只是该变量的一个拷贝副本，还达不到共享的功能。当然Spark也解决了使用共享变量的特性。Spark提供了两种共享变量的使用，一种时广播变量（Broadcast
+Variable），另一种时累加变量（Accumulator
+Variable）。广播变量会将使用到的变量为每个节点拷贝一份，而累加变量则可以让多个task共同操作一份变量。</p>
+<p>  广播变量是只读的，并且每个节点只会存在一份副本，而不会为每个task都拷贝一份，这样最大限度的减少了变量到每个节点的网络传输消耗和节点上的内存消耗。</p>
+<p>  累加变量用于多个节点对一个变量进行共享性的操作，值得注意的是Spark中对累加变量的操作只限与累加并且不能读取该累加变量的值，只有Driver程序可以。所以Spark中的累加变量类似于Hadoop
+MapReduce中的计数器组件。</p>
+<h2 id="spark-sql">Spark SQL</h2>
+<hr />
+<p>  提到Spark
+SQL的由来我们必须先说说Hive，Hadoop的Hive是让那些不熟悉Java的数据分析师在无法深入进行MapReduce编程时可以使用他们熟悉的关系型数据库的SQL模型来进行操作Hdfs数据完成数据仓库的建模和建设并针对数据仓库的数据进行统计和分析使用，但是Hive的底层基于MapReduce，因为MapReduce计算是基于磁盘IO和网络IO的，所以导致Hive性能的底下。</p>
+<p>  Spark起初在Hive的基础上推出了Shark，Shark基于Hive的语法解析器和查询优化器等组件但是修改了内存管理、物理计划和执行三个模块并底层使用Spark基于内存的计算模型使得Shark的计算性能较Hive有很大的提升，但是由于Shark和Hive的关系紧密，所以对Shark性能的提升还是造成了制约，所以Spark推出了全新的Spark
+SQL，并且Spark
+SQL可以支持更多的数据源查询，如Hive、RDD、Parquet、Json和JDBC等。</p>
+<p>  Spark SQL是Spark中的一个模块，主要用于进行结构化数据的处理。</p>
+<h2 id="spark-sql中的dataframe">Spark SQL中的DataFrame</h2>
+<hr />
+<p>  DataFrame是Spark
+SQL中最核心的编程抽象，是以列的形式组织的分布式的数据结合，DataFrame和关系型数据库中的表类似。DataFrame可以通过很多的数据源进行构建。</p>
+<h2 id="spark-streaming">Spark Streaming</h2>
+<hr />
+<p>  Spark Streaming是Spark
+Core的一种拓展，它可以用于进行大规模、高吞吐量、容错的实时数据流的处理。Spark
+Streaming支持从很多数据源中读取数据。常见的如Kafka、Flume、Twitter、ZeroMQ、Kinesis以及Tcp
+Socket。</p>
+<p>  Spark
+Streaming的工作流程为接收一个实时输入数据流，然后用时间关系将接收到的数据拆分为多个batch，比如每收集1秒然后将数据封装为一个batch，然后将每个batch交给Spark进行计算处理，最后会生成一个结果数据流并且也是由一个一个batch组成。</p>
+<h2 id="spark-streaming中的dstream">Spark Streaming中的DStream</h2>
+<hr />
+<p>  DStream类似于Spark
+SQL中的DataFrame，也是一种数据的高级抽象概念，通俗的被叫做离散流，表示为一个持续不断的数据流。DStream可以通过输入数据源来创建，也可以通过其他DStream应用的高阶函数来创建。其实在DStream的内部是一系列持续不断产生的RDD，每个RDD中都办函了一个时间段内的数据。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wx.jpg" alt="Iceberg WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="/images/zfb.jpg" alt="Iceberg Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Iceberg
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://vnicl.github.io/2017/06/02/Spark%E6%A6%82%E8%BF%B0/" title="Spark概述">https://vnicl.github.io/2017/06/02/Spark概述/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLW5kLzQuMC9kZWVkLnpoLWhhbnM="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-ND</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Spark/" rel="tag"># Spark</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/17/%E6%A0%91%E5%9B%9E%E5%BD%92/" rel="prev" title="树回归">
+                  <i class="fa fa-angle-left"></i> 树回归
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/06/03/Spark%E5%85%A5%E9%97%A8/" rel="next" title="Spark入门">
+                  Spark入门 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2009 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Iceberg</span>
+  </div>
+  <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.33/fancybox/fancybox.umd.js" integrity="sha256-+2+qOqR8CKoHh/AsVR9k2qaDBKWjYNC2nozhYmv5j9k=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.1.0/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"vnicl","repo":"vnicl.github.io","client_id":"ea50bd82cc935904a602","client_secret":"e32d77f8e6c553622a8db1e7afee5719e2de95ff","admin_user":"vnicl","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"b306e7f44a24ff51ed21d9c07f8b7fbe"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
